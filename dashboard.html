@@ -24,7 +24,7 @@
 
 
 <body>
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: 1;">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="#">ONLINE RENTAL</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,9 @@
                     <a class="dropdown-item" href="#">C2</a>
                   </div>
                 </div>
+                <center>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </center>
           </form>
   		</li>
   	</ul>
@@ -85,28 +87,25 @@
     </ul>
   </div>
 </nav>
-<!--
-<div style="z-index: -1;">
-  <nav class="navbar fixed-top navbar-dark bg-dark" style="margin-top: 56px;">
-    <div class="collapse" id="navbarToggleExternalContent">
-    <div class="bg-dark p-4">
-      <h4 class="text-white">Sort by</h4>
-      <button type="button" class="btn btn-outline-light">Newest First</button>
-      <button type="button" class="btn btn-outline-light">Price - Low to High</button>
-      <button type="button" class="btn btn-outline-light">Price - High to Low</button>
-      <button type="button" class="btn btn-outline-light">Relevance</button>
-      <button type="button" class="btn btn-outline-light">Popularity</button>
-    </div>
-  </div>
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"  style="margin-top: 56px; z-index: 1;">
   <div class="ml-auto">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-      <h5> Sort by </h5>
+    <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
   </div>
-  </nav>
-</div>
--->
-<div style="margin-top: 6%; padding: 2%;">
+  <div class="collapse" id="navbarToggleExternalContent" >
+    <h4 class="text-white">Sort by</h4>
+    <button type="button" class="btn btn-outline-light">Newest First</button>
+    <button type="button" class="btn btn-outline-light">Price - Low to High</button>
+    <button type="button" class="btn btn-outline-light">Price - High to Low</button>
+    <button type="button" class="btn btn-outline-light">Relevance</button>
+    <button type="button" class="btn btn-outline-light">Popularity</button>
+  </div>
+  
+</nav>
+
+<div style="margin-top: 12% ; padding: 2%; z-index:-1"; >
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
