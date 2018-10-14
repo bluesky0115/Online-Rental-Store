@@ -89,12 +89,7 @@
 </nav>
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"  style="margin-top: 56px; z-index: 1;">
-  <div class="ml-auto">
-    <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-  <div class="collapse" id="navbarToggleExternalContent" >
+  <div class="collapse" id="collapseExample">
     <h4 class="text-white">Sort by</h4>
     <button type="button" class="btn btn-outline-light">Newest First</button>
     <button type="button" class="btn btn-outline-light">Price - Low to High</button>
@@ -102,7 +97,11 @@
     <button type="button" class="btn btn-outline-light">Relevance</button>
     <button type="button" class="btn btn-outline-light">Popularity</button>
   </div>
-  
+  <div class="ml-auto">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        SORT BY
+    </button>
+  </div>
 </nav>
 
 <div style="margin-top: 12% ; padding: 2%; z-index:-1"; >
