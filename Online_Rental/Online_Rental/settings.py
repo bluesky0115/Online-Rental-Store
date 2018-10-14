@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ors.apps.OrsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,9 +84,11 @@ WSGI_APPLICATION = 'Online_Rental.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/my.cnf',
-        },
+        'NAME': 'ASE',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'USER': 'ase',
+        'PASSWORD': 'pass',
     }
 }
 
