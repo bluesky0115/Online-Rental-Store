@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en">
-  <head>
+  <head id="LoginForm">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -11,29 +14,55 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 
+    <link rel="stylesheet" href="src/login.css" >
+
     <title>LOGIN</title>
   </head>
-  <body style="background-color: #8c9eff">
-    <div class="wrapper" >
-      <center>
-      <div class="card" style="position: absolute;top: 50%;left:50%;transform: translate(-50%,-50%);">
-            <div class="card-header">LOGIN</div>
-            <div class="card-body">
-              <form action="">
-                <div class="form-group">
-                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-                </div>
-                <center><button type="submit" class="btn btn-block btn-primary">LOGIN</button></center>
-              </form>
-            </div>
-            <div class="card-footer">END</div>
-          </div>
-          </center>
-    </div>
+  <body id="LoginForm" style="background-image: url('src/LoginBlur.jpg'); ">
 
+    <nav class="navbar  sticky-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a href="index.html" class="navbar-brand"> <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">A-10 ONLINE RENTAL STORE</a>
+      </div>
+    </nav>
+
+<div class="container">
+  <div class="login-form" style="margin-top: 5%;">
+    <div class="main-div card">
+      <div class="panel">
+        <h2>LOGO</h2>
+        <p>Please enter your email and password</p>
+      </div>
+      <form id="Login">
+        <div class="form-group">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+        <div class="forgot">
+          <a href="#">Forgot password?</a>
+        </div>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer id="main-footer" class="bg-dark text-white mt-5 p-5" style="bottom: 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="lead text-center">
+            Copyright &copy;
+            <span id="year"></span>
+            Project A-10
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
