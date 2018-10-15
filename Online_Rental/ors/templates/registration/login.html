@@ -4,11 +4,18 @@
     <title>Login</title>
 </head>
 <body><center>
-    <form method="POST">
+    {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+    <form method="POST" action="{% url 'ors:login' %}">
         {% csrf_token %}
         <p>
-            <label>Username</label>
-            <input type="text" name="username">
+            <label>Email</label>
+            <input type="text" name="email">
         </p>
         <p>
             <label>Password</label>

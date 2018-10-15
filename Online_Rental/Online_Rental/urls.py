@@ -17,7 +17,6 @@ from django.urls import path,include
 from django.contrib import admin
 
 urlpatterns = [
-	path('ors/', include('ors.urls')),
-	path('^', include('django.contrib.auth.urls')),
-    path(r'^admin/', admin.site.urls),
+	path('ors/', include('ors.urls', namespace='ors')),
+    path('admin/', admin.site.urls),
 ]
