@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Page</title>
+</head>
+<body>
+	<center>
+  <p><a href="{% url 'ors:dashboard' %}">Home</a></p>
+  <p><a href="{% url 'ors:logout' %}">logout</a></p>
+<h4><b>Product Name: </b>{{product.name}}</h4>
+<h4>Rating: ****</h4>
+<h4><b>Product Description:</b>{{product.description}}</h4>
+<h4><b>Price:</b>{{product.price}}</h4><br>
+<h4><b>Posted on:</b>{{product.postdate}}</h4>
+<h4><b>For {{product.ptype}}</b></h4><br>
+<br>
+
+
+<a href="{% url 'ors:addWishlist' product.id %}"><input type="button" value="Add to Wishlist"></a>
+
+<h4><b>Seller Name:</b>{{product.owner}}</h4>
+<h4><b>Rating:</b>****</h4>
+<h4><b>Mobile:</b>{{product.owner.mobileNumber}}</h4><br>
+<br>
+</center>
+
+
+</body>
+</html>

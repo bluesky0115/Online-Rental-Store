@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Page</title>
+</head>
+<body>
+	<center>
+  <p><a href="{% url 'ors:dashboard' %}">Home</a></p>
+  <p><a href="{% url 'ors:logout' %}">logout</a></p>
+
+  {% if feed %}
+<h4>Feed</h4>
+
+    {% for product in feed %}
+        <p></p>
+        <h5><b>Product Name:</b></h5>
+        <a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a><br>
+        <h5><b>Product Description:</b></h5>
+        {{product.product.description}}
+        <h5><b>Price: {{product.product.price}}</b></h5>
+        <h5><b>{{product.status}}</b></h5><br>
+        <br>
+
+        <p></p>
+    {% endfor %}
+{% endif %}
+</center>
+</body></html>
