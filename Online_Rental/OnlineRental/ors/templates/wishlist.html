@@ -20,8 +20,8 @@
         <h5><b>Price: {{product.product.price}}</b></h5>
         <h5><b>{{product.status}}</b></h5><br>
         <br>
-
-        <p></p>
+        <a href="{% url 'ors:deletefromWishlist' product.id %}">Remove</a><br>
+        <p>----------------------------------------------------------------------------------------------</p>
     {% endfor %}
 {% endif %}
 </center>

@@ -133,6 +133,7 @@ def addProduct(request):
 			pr.save()
 			return HttpResponseRedirect(reverse('ors:dashboard'))
 
+
 def productPage(request, product_id):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
@@ -141,9 +142,20 @@ def productPage(request, product_id):
 		context['product'] = product
 		return render(request, 'productPage.html', context)
 
+
+def wishlist(request):
+	if request.user.is_authenticated:
+		feed = Wishlist.objects.all().order_by('-timestamp')
+		print(feed)
+		context = dict()
+		context['feed'] = feed
+		return render(request, 'wishlist.html', context)
+
+
 def addWishlist(request, product_id):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
+		print(user.id, user.username)
 		userp = UserProfile.objects.get(id=user.id)
 		product = Product.objects.get(id=product_id)
 		quantity = product.quantity
@@ -163,10 +175,12 @@ def addWishlist(request, product_id):
 			print("hai to")
 			return HttpResponseRedirect(reverse('ors:dashboard'))
 
-def wishlist(request):
+
+def deletefromWishlist(request, product_id):
 	if request.user.is_authenticated:
-		feed = Wishlist.objects.all().order_by('-timestamp')
-		print(feed)
+		product = Wishlist.objects.get(id=product_id)
+		product.delete()
 		context = dict()
+		feed = Wishlist.objects.all().order_by('-timestamp')
 		context['feed'] = feed
 		return render(request, 'wishlist.html', context)

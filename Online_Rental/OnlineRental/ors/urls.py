@@ -18,4 +18,5 @@ urlpatterns = [
 	path('productPage/<int:product_id>/', views.productPage, name='productPage'),
 	path('wishlist', views.wishlist, name='wishlist'),
 	path('addWishlist/<int:product_id>', views.addWishlist, name='addWishlist'),
+	path('deletefromWishlist/<int:product_id>', views.deletefromWishlist, name='deletefromWishlist'),
 ]
