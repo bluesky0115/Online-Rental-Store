@@ -19,7 +19,7 @@
         {{product.product.description}}
         <h5><b>Price: {{product.product.price}}</b></h5>
         <h5><b>{{product.status}}</b></h5><br>
-        <br>
+        <br><a href="{% url 'ors:requestSeller' product.id %}">Request Seller</a>&nbsp;&nbsp;&nbsp;
         <a href="{% url 'ors:deletefromWishlist' product.id %}">Remove</a><br>
         <p>----------------------------------------------------------------------------------------------</p>
     {% endfor %}

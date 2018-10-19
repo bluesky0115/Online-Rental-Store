@@ -17,6 +17,7 @@
 
 
 <a href="{% url 'ors:addWishlist' product.id %}"><input type="button" value="Add to Wishlist"></a>
+<a href="{% url 'ors:requestSeller' product.id %}"><input type="button" value="Request Seller"></a>
 
 <h4><b>Seller Name:</b>{{product.owner}}</h4>
 <h4><b>Rating:</b>****</h4>

@@ -74,7 +74,7 @@ class RequestSeller(models.Model):
 	timestamp = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.buyer.name)+'\'s request for '+str(self.product.name)
 
 class ProductRating(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)

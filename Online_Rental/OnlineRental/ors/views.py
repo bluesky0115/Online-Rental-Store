@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -184,3 +184,24 @@ def deletefromWishlist(request, product_id):
 		feed = Wishlist.objects.all().order_by('-timestamp')
 		context['feed'] = feed
 		return render(request, 'wishlist.html', context)
+
+def requestSeller(request, product_id):
+	if request.user.is_authenticated:
+		user = User.objects.get(id=request.user.id)
+		product = Product.objects.get(id=product_id)
+		buyer = UserProfile.objects.get(id=user.id)
+		seller = product.owner
+
+		if product.quantity > 0:
+			exist = RequestSeller.objects.filter(buyer=buyer, product=product).count()
+			if exist == 0:
+				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now())
+				req.save()
+				print("requested")
+				return HttpResponseRedirect(reverse('ors:dashboard'))
+			else:
+				print("already requested")
+				return HttpResponseRedirect(reverse('ors:dashboard'))
+		else:
+			print("OutofStock!!!")
+			return HttpResponseRedirect(reverse('ors:dashboard'))
