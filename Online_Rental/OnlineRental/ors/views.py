@@ -122,7 +122,7 @@ def addProduct(request):
 	if request.method == 'POST':
 		if request.user.is_authenticated:
 			user = User.objects.get(id=request.user.id)
-			owner = UserProfile.objects.get(id=user.id)
+			owner = UserProfile.objects.get(email=user.email)
 			name = request.POST['name']
 			description = request.POST['desc']
 			price = request.POST['price']
@@ -156,7 +156,7 @@ def addWishlist(request, product_id):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
 		print(user.id, user.username)
-		userp = UserProfile.objects.get(id=user.id)
+		userp = UserProfile.objects.get(email=user.email)
 		product = Product.objects.get(id=product_id)
 		quantity = product.quantity
 		if quantity>0:
@@ -185,11 +185,12 @@ def deletefromWishlist(request, product_id):
 		context['feed'] = feed
 		return render(request, 'wishlist.html', context)
 
+
 def requestSeller(request, product_id):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
 		product = Product.objects.get(id=product_id)
-		buyer = UserProfile.objects.get(id=user.id)
+		buyer = UserProfile.objects.get(email=user.email)
 		seller = product.owner
 
 		if product.quantity > 0:
@@ -205,3 +206,12 @@ def requestSeller(request, product_id):
 		else:
 			print("OutofStock!!!")
 			return HttpResponseRedirect(reverse('ors:dashboard'))
+
+def orderHistory(request):
+	if request.user.is_authenticated:
+		user = User.objects.get(id=request.user.id)
+		buyer = UserProfile.objects.get(email=user.email)
+		feed = RequestSeller.objects.filter(buyer=buyer).order_by('-timestamp')
+		context = dict()
+		context['feed'] = feed
+		return render(request, 'orderHistory.html', context)
