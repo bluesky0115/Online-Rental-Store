@@ -31,13 +31,15 @@ class UserProfile(models.Model):
 		return str(self.name)
 
 class LoginTrail(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=False)
 	email = models.EmailField(max_length=60, blank=False)
 	ip = models.CharField(max_length=32)
+	status = models.CharField(max_length=10, choices=(
+												('success','success'),('failed','failed')), default='failed')
+	host_name = models.CharField(max_length=30, default='unknown')
 
 	def __str__(self):
-		return str(self.email)+"\t"+str(self.time)+"\t"+str(ip)
+		return str(self.email)
 
 class Product(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

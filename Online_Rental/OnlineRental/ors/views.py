@@ -93,6 +93,12 @@ def signin(request):
 			return HttpResponseRedirect(reverse('ors:login'))
 
 
+# def loginTrail(request):
+# 	if request.method == 'POST':
+# 		email = request.POST.get('email')
+
+
+
 def dashboard(request):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
@@ -201,16 +207,16 @@ def requestSeller(request, product_id):
 				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now())
 				req.save()
 				print("requested")
-				#return HttpResponseRedirect(path)
-				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+				return HttpResponseRedirect(request.META['HTTP_REFERER'])
+				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 			else:
 				print("already requested")
-				#return HttpResponseRedirect(path)
-				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+				return HttpResponseRedirect(request.META['HTTP_REFERER'])
+				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 		else:
 			print("OutofStock!!!")
-			#return HttpResponseRedirect(path)
-			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(request.META['HTTP_REFERER'])
+			#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 
 
 def orderHistory(request):
@@ -229,7 +235,7 @@ def myPosts(request):
 		context = dict()
 		context['feed'] = feed
 		print(request.get_host())
-		print(request.path)
+		print(request.path, request.META['HTTP_USER_AGENT'], request.META['HTTP_REFERER'])
 		return render(request, 'myPosts.html', context)
 
 
@@ -243,6 +249,4 @@ def deletePost(request, product_id):
 		context = dict()
 		context['feed'] = feed
 		return render(request, 'myPosts.html', context)
-
-
 
