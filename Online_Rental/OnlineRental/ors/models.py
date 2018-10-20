@@ -36,10 +36,13 @@ class LoginTrail(models.Model):
 	ip = models.CharField(max_length=32)
 	status = models.CharField(max_length=10, choices=(
 												('success','success'),('failed','failed')), default='failed')
-	host_name = models.CharField(max_length=30, default='unknown')
+	secure = models.CharField(max_length=5, choices=(
+												('True','True'),('False','False')), default='False')
+	server_name = models.CharField(max_length=30, default='unknown')
+	server_port = models.IntegerField(default=0)
 
 	def __str__(self):
-		return str(self.email)
+		return str(self.email)+'\'s attempt'
 
 class Product(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

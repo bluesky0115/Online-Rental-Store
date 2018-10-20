@@ -84,18 +84,28 @@ def signin(request):
 
 			if user is None:
 				messages.error(request, 'Invalid Cred')
+				loginTrail(request,email,'failed')
 				return HttpResponseRedirect(reverse('ors:login'))
 			else:
+				loginTrail(request,email,'success')
 				login(request, user)
 				return HttpResponsePermanentRedirect(reverse('ors:dashboard'))
 		else:
-			messages.error(request, 'Not found')
+			messages.error(request, 'failed')
+			loginTrail(request,email,'False')
 			return HttpResponseRedirect(reverse('ors:login'))
 
 
-# def loginTrail(request):
-# 	if request.method == 'POST':
-# 		email = request.POST.get('email')
+def loginTrail(request, email, status):
+	email = email
+	ip = request.get_host()
+	server_name = request.META['SERVER_NAME']
+	server_port = request.META['SERVER_PORT']
+	secure = request.is_secure()
+
+	trail = LoginTrail(email=email,ip=ip, server_name=server_name, server_port=server_port, 
+							secure=secure, status=status)
+	trail.save()
 
 
 
@@ -235,7 +245,7 @@ def myPosts(request):
 		context = dict()
 		context['feed'] = feed
 		print(request.get_host())
-		print(request.path, request.META['HTTP_USER_AGENT'], request.META['HTTP_REFERER'])
+		print(request.is_secure(), request.META['HTTP_USER_AGENT'])
 		return render(request, 'myPosts.html', context)
 
 
