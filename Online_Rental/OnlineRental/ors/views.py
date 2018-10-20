@@ -28,7 +28,6 @@ def media(request):
 	return render(request, 'media.html')
 		
 
-
 def signup(request):
 	if request.method == 'GET':
 		return render(request, 'signup.html')
@@ -61,6 +60,7 @@ def signup(request):
 			return HttpResponseRedirect(reverse('ors:login'))
 		print('kuchna')
 	return render(request, 'signup.html')
+
 
 def signin(request):
 	if request.method == 'GET':
@@ -140,6 +140,7 @@ def productPage(request, product_id):
 		product = Product.objects.get(id=product_id)
 		context = dict()
 		context['product'] = product
+		print(str(product.id))
 		return render(request, 'productPage.html', context)
 
 
@@ -170,10 +171,10 @@ def addWishlist(request, product_id):
 			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
 			item.save()
 			print("added")
-			return HttpResponseRedirect(reverse('ors:dashboard'))
+			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 		else:
 			print("hai to")
-			return HttpResponseRedirect(reverse('ors:dashboard'))
+			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 
 
 def deletefromWishlist(request, product_id):
@@ -192,6 +193,7 @@ def requestSeller(request, product_id):
 		product = Product.objects.get(id=product_id)
 		buyer = UserProfile.objects.get(email=user.email)
 		seller = product.owner
+		print(request.path)
 
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product).count()
@@ -199,13 +201,17 @@ def requestSeller(request, product_id):
 				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now())
 				req.save()
 				print("requested")
-				return HttpResponseRedirect(reverse('ors:dashboard'))
+				#return HttpResponseRedirect(path)
+				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 			else:
 				print("already requested")
-				return HttpResponseRedirect(reverse('ors:dashboard'))
+				#return HttpResponseRedirect(path)
+				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 		else:
 			print("OutofStock!!!")
-			return HttpResponseRedirect(reverse('ors:dashboard'))
+			#return HttpResponseRedirect(path)
+			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+
 
 def orderHistory(request):
 	if request.user.is_authenticated:
@@ -215,3 +221,28 @@ def orderHistory(request):
 		context = dict()
 		context['feed'] = feed
 		return render(request, 'orderHistory.html', context)
+
+def myPosts(request):
+	if request.user.is_authenticated:
+		user = UserProfile.objects.get(email=request.user.email)
+		feed = Product.objects.filter(owner=user)
+		context = dict()
+		context['feed'] = feed
+		print(request.get_host())
+		print(request.path)
+		return render(request, 'myPosts.html', context)
+
+
+def deletePost(request, product_id):
+	if request.user.is_authenticated:
+		u = User.objects.get(id=request.user.id)
+		user = UserProfile.objects.get(email=u.email)
+		product = Product.objects.get(id=product_id)
+		product.delete()
+		feed = Product.objects.filter(owner=user).order_by('-postdate')
+		context = dict()
+		context['feed'] = feed
+		return render(request, 'myPosts.html', context)
+
+
+
