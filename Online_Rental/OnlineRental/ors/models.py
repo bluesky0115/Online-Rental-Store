@@ -40,6 +40,11 @@ class LoginTrail(models.Model):
 												('True','True'),('False','False')), default='False')
 	server_name = models.CharField(max_length=30, default='unknown')
 	server_port = models.IntegerField(default=0)
+	device = models.CharField(max_length=42, default='unknown')
+	model = models.CharField(max_length=42, blank=True)
+	brand = models.CharField(max_length=42, blank=True)
+	browser = models.CharField(max_length=42, default='unknown')
+	os = models.CharField(max_length=42, default='unknown')
 
 	def __str__(self):
 		return str(self.email)+'\'s attempt'

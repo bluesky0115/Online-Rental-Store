@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.contrib.auth import authenticate, login
+from django_user_agents.utils import get_user_agent
 from django.contrib import messages
 from django.urls import reverse
 from .models import *
@@ -102,10 +103,24 @@ def loginTrail(request, email, status):
 	server_name = request.META['SERVER_NAME']
 	server_port = request.META['SERVER_PORT']
 	secure = request.is_secure()
+	browser = request.user_agent.browser.family +"\t"+ request.user_agent.browser.version_string
 
-	trail = LoginTrail(email=email,ip=ip, server_name=server_name, server_port=server_port, 
-							secure=secure, status=status)
-	trail.save()
+	if request.user_agent.is_pc:
+		device = 'PC'
+		os = request.user_agent.os.family +"\t"+ request.user_agent.os.version_string
+		trail = LoginTrail(email=email,ip=ip, server_name=server_name, server_port=server_port, 
+							secure=secure, status=status, browser=browser, device=device, os=os)
+		trail.save()
+
+	else:
+		device = request.user_agent.device[0]
+		brand = request.user_agent.device[1]
+		model = request.user_agent.device[2]
+		os = request.user_agent.os.family + request.user_agent.os.version_string
+		trail = LoginTrail(email=email,ip=ip, server_name=server_name, server_port=server_port, 
+							secure=secure, status=status, browser=browser,device=device, brand=brand,
+							model=model, os=os)
+		trail.save()
 
 
 
@@ -244,8 +259,6 @@ def myPosts(request):
 		feed = Product.objects.filter(owner=user)
 		context = dict()
 		context['feed'] = feed
-		print(request.get_host())
-		print(request.is_secure(), request.META['HTTP_USER_AGENT'])
 		return render(request, 'myPosts.html', context)
 
 
