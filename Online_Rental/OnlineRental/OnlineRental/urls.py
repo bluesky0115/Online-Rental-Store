@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('ors/', include('ors.urls', namespace='ors')),
+    
     path('admin/', admin.site.urls),
 ]
 

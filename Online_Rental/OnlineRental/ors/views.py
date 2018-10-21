@@ -69,7 +69,7 @@ def signin(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		print(email)
+		
 		
 		try:
 			u = User.objects.get(email=email)
@@ -99,7 +99,7 @@ def dashboard(request):
 		feed = Product.objects.all()
 		context=dict()
 		context['feed'] = feed
-		return render(request, 'home.html', context)
+		return render(request, 'dashboard.html', context)
 
 
 def searchProduct(request):
