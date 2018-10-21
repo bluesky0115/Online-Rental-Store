@@ -109,12 +109,15 @@
 
 {% if feed %}
   {% for product in feed %}
-  <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+
 <div style="margin-top: 12% ; padding: 2%; z-index:-1"; >
   <div class="card bg-light mb-3" id="Product">
+    
     <div class="card-header">Item # </div>
     <div class="card-body">
+      <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
       <h5 class="card-title">{{product.name}}</h5>
+       </a>
       <div class="row">
         <div class="col-4">
           Profile Photo
@@ -124,19 +127,23 @@
             by - {{product.owner}}
           </div>
           <div class="row">
+            <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
             {{product.description}}<br>
             <h5><b>Price: {{product.price}}</b></h5><br>
+          </a>
             <br>
           </div>
         </div>
+       
         <div class="col-2">
           Options
         </div>
       </div>
     </div>
+
   </div>
 </div>
-</a>
+
    {% endfor %}
 {% endif %}
   <!------------------------------------------------------LOOP------------------------------------------------------>
