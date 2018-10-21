@@ -28,7 +28,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
-            <a class="dropdown-item" href="#">Manage post</a>
+            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
             Orders
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">My Orders</a>
+            <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
@@ -67,26 +67,23 @@
       <h5 class="card-title"><a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a><br></h5>
       <div class="row">
         <div class="col-lg-4 col-xs-12">
-          <img src="src/pixel3.jpg" width="100%">
+          <img img src="{{ product.product.image.url }}" height="200" width="200" >
         </div>
         <div class="col-lg-7 col-xs-12">
           <div class="row" style="padding: 2%;">
-            by - (Seller Name) 
+            by - <h5> {{product.product.owner}} </h5>
           </div>
           <div class="row" style="padding: 2%;">
-            epsum Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
+            {{product.product.description}}
           </div>
         </div>
         <div class="col-lg-1 col-xs-12" style="border: 2px solid black;">
             <div class="row" style="border: 1px dotted green; padding: 4px; height: 100%;" >
               <div class="col-xs-6 col-lg-12" style="border: 1px solid red; ">
-                A
+               <a href="{% url 'ors:requestSeller' product.id %}">Request Seller</a>
               </div>
               <div class="col-xs-6 col-lg-12" style="border: 1px solid blue; ">
-                B
+                <a href="{% url 'ors:deletefromWishlist' product.id %}">Remove</a>
               </div>
             </div>
         </div>

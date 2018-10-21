@@ -148,19 +148,19 @@ def searchProduct(request):
 def addProduct(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:
-			return render(request, 'addProduct.html')
+			return render(request, 'postAd.html')
 
 	if request.method == 'POST' and request.FILES.get('image'):
 		if request.user.is_authenticated:
 			user = User.objects.get(id=request.user.id)
 			owner = UserProfile.objects.get(email=user.email)
+			image = request.FILES.get('image')
 			name = request.POST['name']
 			description = request.POST['desc']
 			price = request.POST['price']
-			image = request.FILES.get('image')
 			category = request.POST['category']
 			ptype = request.POST['ptype']
-
+			print("Found success fully")
 			pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
 			pr.save()
 			return HttpResponseRedirect(reverse('ors:dashboard'))

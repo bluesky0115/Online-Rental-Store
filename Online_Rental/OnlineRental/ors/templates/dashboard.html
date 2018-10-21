@@ -61,7 +61,7 @@
         	</a>
         	<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           	<a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
-          	<a class="dropdown-item" href="#">Manage post</a>
+          	<a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
         	</div>
     	</li>
       <li class="nav-item dropdown">
@@ -69,7 +69,7 @@
           	Orders
         	</a>
         	<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-         		<a class="dropdown-item" href="{% url 'ors:myPosts' %}">My Orders</a>
+         		<a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
           		<a class="dropdown-item" href="#">Requested</a>
         	</div>
     	</li>
@@ -120,7 +120,8 @@
        </a>
       <div class="row">
         <div class="col-4">
-          Profile Photo
+          
+          <img img src="{{ product.image.url }}" height="200" width="200" >
         </div>
         <div class="col-6">
           <div class="row">
@@ -140,7 +141,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -199,7 +199,7 @@
     </div>
   </div> -->
   <!------------------------------------------------------LOOP------------------------------------------------------>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
