@@ -60,6 +60,7 @@ class Product(models.Model):
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
 	duration = models.IntegerField(null=True, blank=True)
 	quantity = models.IntegerField(blank=False, default=1)
+	image = models.FileField(upload_to='product/', blank=False, default='default.jpg')
 	ptype = models.CharField(max_length=4, choices=(
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
 
