@@ -70,7 +70,7 @@ def signin(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		print(email)
+		
 		
 		try:
 			u = User.objects.get(email=email)
@@ -130,7 +130,7 @@ def dashboard(request):
 		feed = Product.objects.all()
 		context=dict()
 		context['feed'] = feed
-		return render(request, 'home.html', context)
+		return render(request, 'dashboard.html', context)
 
 
 def searchProduct(request):
@@ -271,5 +271,19 @@ def deletePost(request, product_id):
 		feed = Product.objects.filter(owner=user).order_by('-postdate')
 		context = dict()
 		context['feed'] = feed
+
 		return render(request, 'myPosts.html', context)
 
+
+
+def profile(request):
+	if request.user.is_authenticated:
+		u = User.objects.get(id=request.user.id)
+		print(u)
+		
+		detail = UserProfile.objects.get(user=u)
+		
+		context = {}
+		context['detail'] = detail
+		
+		return render(request, 'profile_detail.html', context)

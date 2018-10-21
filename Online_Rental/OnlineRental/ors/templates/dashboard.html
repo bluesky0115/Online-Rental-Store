@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +33,9 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
   	<ul class="navbar-nav mr-auto">
   		<li class="nav-item">
-          <form class="form-inline">
-             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <form class="form-inline"  method="POST" action="{% url 'ors:search' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+             <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <div class="dropdown show" style="margin-right: 6px;">
                   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                   Catagory
@@ -58,7 +60,7 @@
           	Post
         	</a>
         	<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          	<a class="dropdown-item" href="#">Post an add</a>
+          	<a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
           	<a class="dropdown-item" href="#">Manage post</a>
         	</div>
     	</li>
@@ -67,7 +69,7 @@
           	Orders
         	</a>
         	<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-         		<a class="dropdown-item" href="#">My Orders</a>
+         		<a class="dropdown-item" href="{% url 'ors:myPosts' %}">My Orders</a>
           		<a class="dropdown-item" href="#">Requested</a>
         	</div>
     	</li>
@@ -79,9 +81,9 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Wishlist</a>
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Sign Out</a>
+            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
+            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
           </div>
       </li>
     </ul>
@@ -105,24 +107,26 @@
   
 </nav>
 
+{% if feed %}
+  {% for product in feed %}
+  <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
 <div style="margin-top: 12% ; padding: 2%; z-index:-1"; >
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
-      <h5 class="card-title">Product Name</h5>
+      <h5 class="card-title">{{product.name}}</h5>
       <div class="row">
         <div class="col-4">
           Profile Photo
         </div>
         <div class="col-6">
           <div class="row">
-            by - (Seller Name) 
+            by - {{product.owner}}
           </div>
           <div class="row">
-            epsum Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
+            {{product.description}}<br>
+            <h5><b>Price: {{product.price}}</b></h5><br>
+            <br>
           </div>
         </div>
         <div class="col-2">
@@ -131,8 +135,12 @@
       </div>
     </div>
   </div>
+</div>
+</a>
+   {% endfor %}
+{% endif %}
   <!------------------------------------------------------LOOP------------------------------------------------------>
-  <div class="card bg-light mb-3" id="Product">
+  <!-- <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
       <h5 class="card-title">Product Name</h5>
@@ -156,9 +164,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!------------------------------------------------------LOOP------------------------------------------------------>
-  <div class="card bg-light mb-3" id="Product">
+  <!-- <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
       <h5 class="card-title">Product Name</h5>
@@ -182,7 +190,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!------------------------------------------------------LOOP------------------------------------------------------>
 </div>
 
