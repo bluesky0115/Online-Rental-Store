@@ -271,5 +271,19 @@ def deletePost(request, product_id):
 		feed = Product.objects.filter(owner=user).order_by('-postdate')
 		context = dict()
 		context['feed'] = feed
+
 		return render(request, 'myPosts.html', context)
 
+
+
+def profile(request):
+	if request.user.is_authenticated:
+		u = User.objects.get(id=request.user.id)
+		print(u)
+		
+		detail = UserProfile.objects.get(user=u)
+		
+		context = {}
+		context['detail'] = detail
+		
+		return render(request, 'profile_detail.html', context)

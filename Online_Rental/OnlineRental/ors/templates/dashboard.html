@@ -69,7 +69,7 @@
           	Orders
         	</a>
         	<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-         		<a class="dropdown-item" href="#">My Orders</a>
+         		<a class="dropdown-item" href="{% url 'ors:myPosts' %}">My Orders</a>
           		<a class="dropdown-item" href="#">Requested</a>
         	</div>
     	</li>
@@ -82,7 +82,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
-            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
           </div>
       </li>

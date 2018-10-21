@@ -23,4 +23,5 @@ urlpatterns = [
 	path('orderHistory', views.orderHistory, name='orderHistory'),
 	path('myPosts', views.myPosts, name='myPosts'),
 	path('deletePost/<int:product_id>', views.deletePost, name='deletePost'),
+	path('profile',views.profile, name='profile'),
 ]
