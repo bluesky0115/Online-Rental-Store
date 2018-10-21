@@ -150,17 +150,18 @@ def addProduct(request):
 		if request.user.is_authenticated:
 			return render(request, 'addProduct.html')
 
-	if request.method == 'POST':
+	if request.method == 'POST' and request.FILES.get('image'):
 		if request.user.is_authenticated:
 			user = User.objects.get(id=request.user.id)
 			owner = UserProfile.objects.get(email=user.email)
 			name = request.POST['name']
 			description = request.POST['desc']
 			price = request.POST['price']
+			image = request.FILES.get('image')
 			category = request.POST['category']
 			ptype = request.POST['ptype']
 
-			pr = Product(owner=owner, name=name, description=description, category=category, price=price, ptype=ptype)
+			pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
 			pr.save()
 			return HttpResponseRedirect(reverse('ors:dashboard'))
 
