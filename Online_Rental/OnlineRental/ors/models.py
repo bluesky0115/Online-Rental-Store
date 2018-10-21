@@ -31,13 +31,23 @@ class UserProfile(models.Model):
 		return str(self.name)
 
 class LoginTrail(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=False)
 	email = models.EmailField(max_length=60, blank=False)
 	ip = models.CharField(max_length=32)
+	status = models.CharField(max_length=10, choices=(
+												('success','success'),('failed','failed')), default='failed')
+	secure = models.CharField(max_length=5, choices=(
+												('True','True'),('False','False')), default='False')
+	server_name = models.CharField(max_length=30, default='unknown')
+	server_port = models.IntegerField(default=0)
+	device = models.CharField(max_length=42, default='unknown')
+	model = models.CharField(max_length=42, blank=True)
+	brand = models.CharField(max_length=42, blank=True)
+	browser = models.CharField(max_length=42, default='unknown')
+	os = models.CharField(max_length=42, default='unknown')
 
 	def __str__(self):
-		return str(self.email)+"\t"+str(self.time)+"\t"+str(ip)
+		return str(self.email)+'\'s attempt'
 
 class Product(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -74,7 +84,7 @@ class RequestSeller(models.Model):
 	timestamp = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.buyer.name)+'\'s request for '+str(self.product.name)
 
 class ProductRating(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)

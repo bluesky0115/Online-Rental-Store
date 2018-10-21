@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Page</title>
+    <title>Order History</title>
 </head>
 <body>
 	<center>
   <p><a href="{% url 'ors:dashboard' %}">Home</a></p>
   <p><a href="{% url 'ors:logout' %}">logout</a></p>
 
-  {% if feed %}
-<h4>Feed</h4>
+{% if feed %}
+<h4>Orders</h4>
 
     {% for product in feed %}
         <p></p>
-        <h5><b>Product Name:</b></h5>
-        <a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a><br>
+        <h5><b>Product Name:</b> <a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a></h5>
         <h5><b>Product Description:</b></h5>
         {{product.product.description}}
         <h5><b>Price: {{product.product.price}}</b></h5>
         <h5><b>{{product.status}}</b></h5><br>
-        <br><a href="{% url 'ors:requestSeller' product.id %}">Request Seller</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'ors:deletefromWishlist' product.id %}">Remove</a><br>
+        <h5><b>Seller: </b>{{product.seller.name}}</h5>
+        <h5><b>Contact: </b>{{product.seller.mobileNumber}}</h5>
+        <h5><b>Date: </b>{{product.timestamp}}</h5>
         <p>----------------------------------------------------------------------------------------------</p>
     {% endfor %}
 {% endif %}

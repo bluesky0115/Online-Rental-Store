@@ -14,13 +14,14 @@
     {% for product in feed %}
         <p></p>
         <h5><b>Product Name:</b></h5>
-        <a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a><br>
+        <a href="{% url 'ors:productPage' product.id %}">{{product.name}}</a><br>
         <h5><b>Product Description:</b></h5>
-        {{product.product.description}}
-        <h5><b>Price: {{product.product.price}}</b></h5>
+        {{product.description}}
+        <h5><b>Price: {{product.price}}</b></h5>
         <h5><b>{{product.status}}</b></h5><br>
-        <br><a href="{% url 'ors:requestSeller' product.id %}">Request Seller</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'ors:deletefromWishlist' product.id %}">Remove</a><br>
+        <h5><b>{{product.postdate}}</b></h5>
+        <br>
+        <a href="{% url 'ors:deletePost' product.id %}">Delete Post</a><br> 
         <p>----------------------------------------------------------------------------------------------</p>
     {% endfor %}
 {% endif %}

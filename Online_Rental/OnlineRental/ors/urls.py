@@ -18,4 +18,9 @@ urlpatterns = [
 	path('productPage/<int:product_id>/', views.productPage, name='productPage'),
 	path('wishlist', views.wishlist, name='wishlist'),
 	path('addWishlist/<int:product_id>', views.addWishlist, name='addWishlist'),
+	path('deletefromWishlist/<int:product_id>', views.deletefromWishlist, name='deletefromWishlist'),
+	path('requestSeller/<int:product_id>', views.requestSeller, name='requestSeller'),
+	path('orderHistory', views.orderHistory, name='orderHistory'),
+	path('myPosts', views.myPosts, name='myPosts'),
+	path('deletePost/<int:product_id>', views.deletePost, name='deletePost'),
 ]
