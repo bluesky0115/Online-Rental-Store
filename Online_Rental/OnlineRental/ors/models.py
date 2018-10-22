@@ -4,6 +4,15 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.forms import ModelForm
 
+
+def user_directory_path(instance, filename):
+    name, extension = filename.split('.')
+    print(extension)
+    return 'dp/{0}.{1}'.format(instance.user.name, extension)
+
+def product_directory_path(instance, filename):
+    return 'products/{0}/{1}/{2}'.format(instance.owner.name, instance.name,filename)
+
 # Create your models here.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
@@ -25,7 +34,7 @@ class UserProfile(models.Model):
 	gender = models.CharField(max_length=1, choices=(
 		('M', 'Male'),('F', 'Female')), null=True)
 
-	dp = models.FileField(upload_to='dp/', blank=True)
+	dp = models.FileField(upload_to=user_directory_path, blank=True)
 
 	def __str__(self):
 		return str(self.name)
@@ -60,12 +69,12 @@ class Product(models.Model):
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
 	duration = models.IntegerField(null=True, blank=True)
 	quantity = models.IntegerField(blank=False, default=1)
-	image = models.FileField(upload_to='product/', blank=False, default='default.jpg')
+	image = models.FileField(upload_to=product_directory_path, blank=False, default='default.jpg')
 	ptype = models.CharField(max_length=4, choices=(
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
 
 	def __str__(self):
-		return str(self.owner.name)+'\'s '+product.name
+		return str(self.name)
 
 class Wishlist(models.Model):
 	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
