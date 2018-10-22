@@ -24,4 +24,6 @@ urlpatterns = [
 	path('myPosts', views.myPosts, name='myPosts'),
 	path('deletePost/<int:product_id>', views.deletePost, name='deletePost'),
 	path('profile',views.profile, name='profile'),
+	path('editProfile', views.editProfile, name='editProfile'),
+	path('rateProduct/<int:product_id>', views.rateProduct, name='rateProduct'),
 ]

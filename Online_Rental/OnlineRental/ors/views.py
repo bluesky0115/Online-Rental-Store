@@ -123,9 +123,9 @@ def loginTrail(request, email, status):
 		trail.save()
 
 
-
 def dashboard(request):
 	if request.user.is_authenticated:
+		print(request.user.email)
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Product.objects.all().exclude(owner=user)
 		context=dict()
@@ -170,9 +170,11 @@ def productPage(request, product_id):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
 		product = Product.objects.get(id=product_id)
+		feed = ProductRating.objects.filter(product=product)
 		context = dict()
 		context['product'] = product
-		print(str(product.id))
+		context['feed'] = feed
+		print(str(product.id), request)
 		return render(request, 'productPage.html', context)
 
 
@@ -254,6 +256,7 @@ def orderHistory(request):
 		context['feed'] = feed
 		return render(request, 'orderHistory.html', context)
 
+
 def myPosts(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
@@ -276,15 +279,64 @@ def deletePost(request, product_id):
 		return render(request, 'myPosts.html', context)
 
 
-
 def profile(request):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
-		print(u)
-		
+		print(u)		
 		detail = UserProfile.objects.get(user=u)
-		
 		context = {}
 		context['detail'] = detail
-		
 		return render(request, 'profile_detail.html', context)
+
+
+def editProfile(request):
+	if request.method == 'GET':
+		if request.user.is_authenticated:
+			print('get')
+			return render(request, 'editProfile.html')
+
+	if request.method == 'POST':
+		if request.user.is_authenticated:
+			print('post')
+			user = UserProfile.objects.get(email=request.user.email)
+			name = request.POST['name']
+			mobileNumber = request.POST['mobileNumber']
+
+
+			if str(name) is not '':
+				user.name = name
+			if str(mobileNumber) is not '':
+				user.mobileNumber = mobileNumber
+			user.save()
+			print('gya')
+			return HttpResponseRedirect(reverse('ors:profile'))
+
+
+def rateProduct(request, product_id):
+	if request.user.is_authenticated:
+		buyer = UserProfile.objects.get(email=request.user.email)
+		product = Product.objects.get(id=product_id)
+		context=dict()
+		context['product_id']=product_id
+
+		if RequestSeller.objects.filter(product=product).count()>0:
+			if (ProductRating.objects.filter(buyer=buyer, product=product).count()==0):
+				if request.method == 'GET':
+					print('get')
+					return render(request, 'rateProduct.html', context)
+
+				if request.method == 'POST':
+					rating = request.POST['rating']
+					comment = request.POST['comment']
+					print('post')
+					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment)
+					review.save()
+					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+			else:
+				print("baar baar nhi...")
+				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+
+		else:
+			print("pahle istemaal kare fir vichaar bate!!!")
+			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+			

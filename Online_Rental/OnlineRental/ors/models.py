@@ -65,7 +65,7 @@ class Product(models.Model):
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
 
 	def __str__(self):
-		return str(self.name)
+		return str(self.owner.name)+'\'s '+product.name
 
 class Wishlist(models.Model):
 	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -95,7 +95,7 @@ class ProductRating(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.buyer.name)+'\'s rating of '+self.product.name
 
 class SellerRating(models.Model):
 	seller = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

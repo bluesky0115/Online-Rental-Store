@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+</head>
+<body>
+    <center>
+    <form method="post" action="{% url 'ors:rateProduct' product_id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        Rating:
+        <input name="rating"><br><br>
+        Comment
+        <input type="charset" name="comment"><br><br>
+        <input type="submit" value="submit">
+
+    </form></center></body></html>

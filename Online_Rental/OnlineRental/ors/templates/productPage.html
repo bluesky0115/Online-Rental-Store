@@ -17,12 +17,21 @@
 
 
 <a href="{% url 'ors:addWishlist' product.id %}"><input type="button" value="Add to Wishlist"></a>
-<a href="{% url 'ors:requestSeller' product.id %}"><input type="button" value="Request Seller"></a>
+<a href="{% url 'ors:requestSeller' product.id %}"><input type="button" value="Request Seller"></a><br>
+<a href="{% url 'ors:rateProduct' product.id %}"><input type="button" value="Rate"></a>
 
 <h4><b>Seller Name:</b>{{product.owner}}</h4>
 <h4><b>Rating:</b>****</h4>
 <h4><b>Mobile:</b>{{product.owner.mobileNumber}}</h4><br>
 <br>
+{% if feed %}
+Reviews:<br>
+	{% for review in feed %}
+	Ratings: {{review.rating}}<br>
+	Comment:
+	{{review.description}}<br><br>
+	{% endfor %}
+{% endif %}
 </center>
 
 
