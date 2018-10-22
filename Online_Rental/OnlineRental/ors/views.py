@@ -201,7 +201,7 @@ def addWishlist(request, product_id):
 
 		exist = Wishlist.objects.filter(user=userp, product=product).count()
 		print(exist)
-		if exist == 0:
+		if (exist == 0) and (product.owner is not userp):
 			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
 			item.save()
 			print("added")
@@ -231,7 +231,7 @@ def requestSeller(request, product_id):
 
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product).count()
-			if exist == 0:
+			if (exist == 0) and (product.owner is not buyer):
 				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now())
 				req.save()
 				print("requested")
