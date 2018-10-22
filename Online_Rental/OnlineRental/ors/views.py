@@ -126,8 +126,8 @@ def loginTrail(request, email, status):
 
 def dashboard(request):
 	if request.user.is_authenticated:
-		user = User.objects.get(id=request.user.id)
-		feed = Product.objects.all()
+		user = UserProfile.objects.get(email=request.user.email)
+		feed = Product.objects.all().exclude(owner=user)
 		context=dict()
 		context['feed'] = feed
 		return render(request, 'dashboard.html', context)
@@ -135,11 +135,11 @@ def dashboard(request):
 
 def searchProduct(request):
 	if request.user.is_authenticated:
-		user = User.objects.get(id=request.user.id)
+		user = UserProfile.objects.get(email=request.user.email)
 
 		if request.method == 'POST':
 			name = request.POST['search']
-			sfeed = Product.objects.filter(name=name)
+			sfeed = Product.objects.filter(name=name).exclude(owner=user)
 			context = dict()
 			context['sfeed'] = sfeed
 			return render(request, 'home.html', context)
