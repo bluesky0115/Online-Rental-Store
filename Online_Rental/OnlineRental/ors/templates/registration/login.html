@@ -62,11 +62,11 @@
       <div class="panel">
         <h2>LOGO</h2>
         {% if messages %}
-          <ul class="messages">
+          <div class="alert alert-danger messages" >
             {% for message in messages %}
-              <li class="{{ message.tags }}">{{ message }}</li>
+            <span class="{{ message.tags }}"> {{ message }} </span>
             {% endfor %}
-          </ul>
+          </div>
         {% endif %} 
       </div>
       <form  method="POST" action="{% url 'ors:login' %}">
