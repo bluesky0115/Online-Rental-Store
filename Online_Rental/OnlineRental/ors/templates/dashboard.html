@@ -1,5 +1,6 @@
 
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
 	<!-- Required meta tags -->
@@ -24,7 +25,7 @@
 </head>
 
 
-<body>
+<body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="#">ONLINE RENTAL</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,6 +107,25 @@
   </div>
   
 </nav>
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"  style="margin-top: 56px; z-index: 1;">
+  <div class="collapse" id="collapseExample">
+    <h4 class="text-white">Sort by</h4>
+    <button type="button" class="btn btn-outline-light">Newest First</button>
+    <button type="button" class="btn btn-outline-light">Price - Low to High</button>
+    <button type="button" class="btn btn-outline-light">Price - High to Low</button>
+    <button type="button" class="btn btn-outline-light">Relevance</button>
+    <button type="button" class="btn btn-outline-light">Popularity</button>
+  </div>
+  <div class="ml-auto">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        SORT BY
+    </button>
+  </div>
+</nav>
+
+
 
 {% if feed %}
   {% for product in feed %}
