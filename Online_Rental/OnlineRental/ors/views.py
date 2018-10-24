@@ -175,7 +175,7 @@ def productPage(request, product_id):
 		context['product'] = product
 		context['feed'] = feed
 		print(str(product.id), request)
-		return render(request, 'productPage.html', context)
+		return render(request, 'product_detail.html', context)
 
 
 def wishlist(request):
@@ -205,10 +205,10 @@ def addWishlist(request, product_id):
 			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
 			item.save()
 			print("added")
-			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(reverse('ors:product_detail', kwargs={'product_id': product_id}))
 		else:
 			print("hai to")
-			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(reverse('ors:product_detail', kwargs={'product_id': product_id}))
 
 
 def deletefromWishlist(request, product_id):
@@ -254,7 +254,7 @@ def orderHistory(request):
 		feed = RequestSeller.objects.filter(buyer=buyer).order_by('-timestamp')
 		context = dict()
 		context['feed'] = feed
-		return render(request, 'orderHistory.html', context)
+		return render(request, 'history.html', context)
 
 
 def myPosts(request):
@@ -263,7 +263,7 @@ def myPosts(request):
 		feed = Product.objects.filter(owner=user)
 		context = dict()
 		context['feed'] = feed
-		return render(request, 'myPosts.html', context)
+		return render(request, 'm1.html', context)
 
 
 def deletePost(request, product_id):
@@ -293,7 +293,7 @@ def editProfile(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:
 			print('get')
-			return render(request, 'editProfile.html')
+			return render(request, 'profile_edit.html')
 
 	if request.method == 'POST':
 		if request.user.is_authenticated:

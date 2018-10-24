@@ -28,7 +28,7 @@ SECRET_KEY = 'r7rmoyp(&k0&vxl^^obru1_g8jm2r#vcvv-h@fv54gfs%05wsc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,13 +79,24 @@ WSGI_APPLICATION = 'OnlineRental.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'default' : {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' : 'OnlineRental',
+        'USER' : 'deepak022',
+        'PASSWORD' : 'qwerty1106',
+        'HOST' : 'deepakdbinstance.chvxxqsxfg09.ap-south-1.rds.amazonaws.com',
+        'PORT' : 3306,
     }
 }
-
+        
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
