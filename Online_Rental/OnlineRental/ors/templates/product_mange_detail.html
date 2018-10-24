@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -27,8 +28,8 @@
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Post an add</a>
-            <a class="dropdown-item" href="#">Manage post</a>
+            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
+            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +37,7 @@
             Orders
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">My Orders</a>
+            <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
@@ -48,9 +49,9 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Wishlist</a>
-            <a class="dropdown-item" href="#">Profile </a>
-            <a class="dropdown-item" href="#">Sign Out</a>
+            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
+            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile </a>
+            <a class="dropdown-item" href="#{% url 'ors:logout' %}">Sign Out</a>
           </div>
       </li>
     </ul>
