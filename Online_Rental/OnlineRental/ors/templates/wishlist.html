@@ -54,7 +54,7 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             User(dave)
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item active" href="{% url 'ors:wishlist' %}">Wishlist<span class="sr-only">(current)</span></a>
             <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
@@ -99,14 +99,12 @@
   </div>
    {% endfor %}
 {% else %}
-<div class="emptyList" style="margin-top:112px;">
-    <div class="col-lg-3"></div>
-    <div class="col-12 col-lg-6" style="display: flex; justify-content: center; align-items: center;">
+<div class="row emptyList" style="margin-top:112px;">
+    <div class="col-xs-12 col-lg-6" style="display: flex; justify-content: center; align-items: center;">
         <div class="alert alert-info" role="alert" >
             NO ITEMS IN WISHLIST
         </div>
     </div>
-    <div class="col-lg-3"></div>
 </div>
 
 {% endif %}
