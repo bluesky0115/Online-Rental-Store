@@ -8,7 +8,7 @@ from django.forms import ModelForm
 def user_directory_path(instance, filename):
     name, extension = filename.split('.')
     print(extension)
-    return 'dp/{0}.{1}'.format(instance.user.name, extension)
+    return 'dp/{0}.{1}'.format(instance.user.username, extension)
 
 def product_directory_path(instance, filename):
     return 'products/{0}/{1}/{2}'.format(instance.owner.name, instance.name,filename)
@@ -31,8 +31,8 @@ class UserProfile(models.Model):
 		('UG1','UG1'),('UG2','UG2'),('UG3','UG3'),('UG4','UG4'),
 		('MS','MS'),('Ph.D','Ph.D'),('faculty','faculty'),('none','none')), default='none')
 	
-	gender = models.CharField(max_length=1, choices=(
-		('M', 'Male'),('F', 'Female')), null=True)
+	gender = models.CharField(max_length=10, choices=(
+		('Male', 'Male'),('Female', 'Female')), null=True)
 
 	dp = models.FileField(upload_to=user_directory_path, blank=True)
 
@@ -63,8 +63,8 @@ class Product(models.Model):
 	name = models.CharField(max_length=33, blank=True)
 	description = models.TextField()
 	category = models.CharField(max_length=20, choices=(
-												('1','electronics'),('2','stationary'),('3','fashion'),
-												('4','sports'),('5', 'lifestyle'),('6', 'other')))
+												('electronics','electronics'),('stationary','stationary'),('fashion','fashion'),
+												('sports','sports'),('lifestyle', 'lifestyle'),('other', 'other')))
 	price = models.FloatField()
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
 	duration = models.IntegerField(null=True, blank=True)
@@ -74,7 +74,7 @@ class Product(models.Model):
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
 
 	def __str__(self):
-		return str(self.name)
+		return str(self.owner.name)+'\'s '+self.name
 
 class Wishlist(models.Model):
 	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -114,7 +114,7 @@ class SellerRating(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.seller.name)+'\'s rating by '+self.buyer.name
 
 class OrderHistory(models.Model):
 	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -124,7 +124,7 @@ class OrderHistory(models.Model):
 	dateEnd = models.DateField()
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.user.name)+'\'s OrderHistory'
 
 class Report(models.Model):
 	complainant = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -134,7 +134,7 @@ class Report(models.Model):
 	complain = models.TextField()
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.complainant)+'\'s report'
 
 class ArchivedProduct(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -150,7 +150,7 @@ class ArchivedProduct(models.Model):
 												('1','sell'),('2','rent')), default='1')
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.owner.name)+'\'s '+self.name
 
 
 class ExampleModel(models.Model):
