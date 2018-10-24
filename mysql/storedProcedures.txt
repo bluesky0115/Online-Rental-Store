@@ -1,0 +1,6 @@
+DELIMITER //
+    -> CREATE PROCEDURE SearchByName( IN query VARCHAR(60))
+    -> BEGIN
+    -> SELECT * FROM ors_product
+    -> WHERE name LIKE query;
+    -> END //
