@@ -48,7 +48,7 @@
 
     <title>LOGIN</title>
   </head>
-  <body id="LoginForm" style="background-image: url({% static 'ors/image/LoginBlur.jpg' %}); ">
+<body id="LoginForm" style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; ">
 
     <nav class="navbar  sticky-top navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
@@ -62,11 +62,11 @@
       <div class="panel">
         <h2>LOGO</h2>
         {% if messages %}
-          <ul class="messages">
+          <div class="alert alert-danger messages" >
             {% for message in messages %}
-              <li class="{{ message.tags }}">{{ message }}</li>
+            <span class="{{ message.tags }}"> {{ message }} </span>
             {% endfor %}
-          </ul>
+          </div>
         {% endif %} 
       </div>
       <form  method="POST" action="{% url 'ors:login' %}">
@@ -87,7 +87,7 @@
   </div>
 </div>
 
-<footer id="main-footer" class="bg-dark text-white mt-5 p-5" style="bottom: 0;">
+<footer id="main-footer" class="bg-dark text-white mt-5 p-4" style="bottom: 0;">
     <div class="container">
       <div class="row">
         <div class="col">

@@ -84,7 +84,7 @@ def signin(request):
 			print(username)
 
 			if user is None:
-				messages.error(request, 'Invalid Cred')
+				messages.error(request, 'Invalid Credentials')
 				loginTrail(request,email,'failed')
 				return HttpResponseRedirect(reverse('ors:login'))
 			else:
@@ -92,7 +92,7 @@ def signin(request):
 				login(request, user)
 				return HttpResponsePermanentRedirect(reverse('ors:dashboard'))
 		else:
-			messages.error(request, 'failed')
+			messages.error(request, 'User not registered')
 			loginTrail(request,email,'False')
 			return HttpResponseRedirect(reverse('ors:login'))
 
