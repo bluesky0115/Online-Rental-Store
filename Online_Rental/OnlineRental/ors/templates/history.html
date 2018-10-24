@@ -20,15 +20,15 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
+        <a class="nav-link" href="#">Home</a>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
-            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
+            <a class="dropdown-item" href="#">Post an add</a>
+            <a class="dropdown-item" href="#">Manage post</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
             Orders
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item active" href="{% url 'ors:orderHistory' %}">My Orders<span class="sr-only">(current)</span></a>
+            <a class="dropdown-item active" href="#">My Orders<span class="sr-only">(current)</span></a>
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
@@ -48,9 +48,9 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
-            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile</a>
-            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
+            <a class="dropdown-item" href="#">Wishlist</a>
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Sign Out</a>
           </div>
       </li>
     </ul>
@@ -58,49 +58,6 @@
 </nav>
 
 <div style="margin-top: 112px ; padding: 2%; z-index:-1" >
-  {% if feed %}
-<h4>Orders</h4>
-{% for product in feed %}
-  <div class="card bg-light mb-3" id="Product">
-    <div class="card-header">Item # </div>
-    <div class="card-body">
-      <h5 class="card-title"><a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a></h5>
-      <div class="row">
-        <div class="col-lg-3 col-xs-12">
-          <img src="src/pixel3.jpg" width="100%">
-        </div>
-        <div class="col-lg-6 col-xs-12">
-          <div class="row" style="padding: 2%;">
-            by - <b>{{product.seller.name}},  {{product.seller.mobileNumber}}</b> 
-          </div>
-          <div class="row" style="padding: 2%;">
-            <pre>
-            {{product.product.description}}
-            <b>{{product.product.price}}</b>
-            {{product.status}}
-            {{product.timestamp}}
-          </pre>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-12" style="border: 2px solid black;">
-            <div class="row" style="border: 1px dotted green; padding: 4px; height: 100%;" >
-              <div class="col-xs-2 col-lg-12 " style="border: 1px solid red; ">
-                ** Rate product **
-              </div>
-              <div class="col-xs-2 col-lg-12 " style="border: 1px solid blue; ">
-                ** date picker **
-              </div>
-              <div class="col-xs-2 col-lg-12" style="border: 1px solid blue; ">
-                <button class="button btn" type="submit">Submit</button>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endfor %}
-{% endif %}
-  <!------------------------------------------------------LOOP------------------------------------------------------
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
@@ -136,7 +93,7 @@
       </div>
     </div>
   </div>
-  ----------------------------------------------------LOOP------------------------------------------------------
+  <!------------------------------------------------------LOOP------------------------------------------------------>
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
@@ -172,7 +129,7 @@
       </div>
     </div>
   </div>
-  
+  <!------------------------------------------------------LOOP------------------------------------------------------>
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
@@ -208,7 +165,43 @@
       </div>
     </div>
   </div>
-  ---------------------------------------------------LOOP------------------------------------------------------ >
+  <!------------------------------------------------------LOOP------------------------------------------------------>
+  <div class="card bg-light mb-3" id="Product">
+    <div class="card-header">Item # </div>
+    <div class="card-body">
+      <h5 class="card-title">Product Name</h5>
+      <div class="row">
+        <div class="col-lg-3 col-xs-12">
+          <img src="src/pixel3.jpg" width="100%">
+        </div>
+        <div class="col-lg-6 col-xs-12">
+          <div class="row" style="padding: 2%;">
+            by - (Seller Name) 
+          </div>
+          <div class="row" style="padding: 2%;">
+            epsum Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-12" style="border: 2px solid black;">
+            <div class="row" style="border: 1px dotted green; padding: 4px; height: 100%;" >
+              <div class="col-xs-2 col-lg-12 " style="border: 1px solid red; ">
+                ** Rate product **
+              </div>
+              <div class="col-xs-2 col-lg-12 " style="border: 1px solid blue; ">
+                ** date picker **
+              </div>
+              <div class="col-xs-2 col-lg-12" style="border: 1px solid blue; ">
+                <button class="button btn" type="submit">Submit</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!------------------------------------------------------LOOP------------------------------------------------------>
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

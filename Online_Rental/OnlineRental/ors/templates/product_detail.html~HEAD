@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Edit Profile</title>
+    <title>Product Detailed</title>
   </head>
   <body>
 
@@ -20,15 +20,15 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Post an add</a>
-            <a class="dropdown-item" href="#">Manage post</a>
+            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
+            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
             Orders
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">My Orders</a>
+            <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
@@ -48,9 +48,9 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Wishlist</a>
-            <a class="dropdown-item active" href="#">Profile<span class="sr-only">(current)</span></a>
-            <a class="dropdown-item" href="#">Sign Out</a>
+            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
+            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile </a>
+            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
           </div>
       </li>
     </ul>
@@ -58,48 +58,66 @@
 </nav>
 
 <div class="container-fluid" style="margin-top:112px;">
-<div class="card" >
-  <div class="card-header">
-    <h4>EDIT PROFILE</h4>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-lg-4 col-xs-12">
-        <img src="src/user.jpg" width="100%">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile">
-          <label class="custom-file-label" for="customFile">Choose file</label>
+  <div class="row" style="margin: 4px; border: solid 1px black;" >
+    <div class="col-lg-8 col-xs-12">
+      <div class="row">
+          ** picture **
+        </div>
+        <div class="row">
+          <pre>
+          <b>Product Name: </b>{{product.name}}
+          <b>Product Description:</b>{{product.description}}
+          <b>Price:</b>{{product.price}}
+          <b>Posted on:</b>{{product.postdate}}
+          <b>For {{product.ptype}}</b>
+        </pre>
         </div>
       </div>
-      <div class="col-lg-6 col-xs12" style="padding: 4px;">
-        <form>
-          <div class="row form-group">
-            <div class="col">
-              <label for="username"> Username </label>
-              <input type="text" class="form-control" placeholder="Username" name="user">
+      <div class="col-lg-4 col-xs-12">
+        <div class="card">
+          <div class="card-header">
+            SELLER:: <b>Seller Name:</b>{{product.owner}}
+          </div>
+          <div class="card-body">
+            <div class="row">
+              ** picture **
             </div>
-            <div class="col">
-              <label for="mobilenumber"> Contact no.</label>
-              <input type="number" class="form-control" placeholder="Mobile number" name="mobilenumber">
+            <div class="row">
+              Description
+              <pre>
+                <b>Seller Name:</b>{{product.owner}}
+                <b>Rating:</b>****
+                <b>Mobile:</b>{{product.owner.mobileNumber}}
+                {% if feed %}
+                  Reviews:<br>
+                  {% for review in feed %}
+                    Ratings: {{review.rating}}<br>
+                    Comment:
+                    {{review.description}}<br><br>
+                  {% endfor %}
+                {% endif %}
+              </pre>
             </div>
           </div>
-          <div class="form-group">
-            <label for="inputpassword"> Password </label>
-            <input type="password" class="form-control" name="inputpassword" placeholder="Password">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Bio</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-         <center> <button type="submit" class="btn btn-primary mb-2">Update</button> </center>
-        </form>
+        <div class="class-footer">
+        </div>
       </div>
     </div>
-  </div>
-  <div class="card-footer">
-    
-  </div>
-</div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Wishlist
+      </div>
+       <div class="col-3">
+        Request
+      </div>
+       <div class="col-3">
+        Share
+      </div>
+       <div class="col-3">
+        Report
+      </div>
+    </div>
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

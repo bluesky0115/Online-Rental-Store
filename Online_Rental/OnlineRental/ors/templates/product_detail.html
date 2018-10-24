@@ -20,15 +20,15 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
+        <a class="nav-link" href="#">Home</a>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
-            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
+            <a class="dropdown-item" href="#">Post an add</a>
+            <a class="dropdown-item" href="#">Manage post</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
             Orders
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
+            <a class="dropdown-item" href="#">My Orders</a>
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
@@ -48,9 +48,9 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
-            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile </a>
-            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
+            <a class="dropdown-item" href="#">Wishlist</a>
+            <a class="dropdown-item" href="#">Profile </a>
+            <a class="dropdown-item" href="#">Sign Out</a>
           </div>
       </li>
     </ul>
@@ -64,19 +64,13 @@
           ** picture **
         </div>
         <div class="row">
-          <pre>
-          <b>Product Name: </b>{{product.name}}
-          <b>Product Description:</b>{{product.description}}
-          <b>Price:</b>{{product.price}}
-          <b>Posted on:</b>{{product.postdate}}
-          <b>For {{product.ptype}}</b>
-        </pre>
+          Description
         </div>
       </div>
       <div class="col-lg-4 col-xs-12">
         <div class="card">
           <div class="card-header">
-            SELLER:: <b>Seller Name:</b>{{product.owner}}
+            SELLER
           </div>
           <div class="card-body">
             <div class="row">
@@ -84,19 +78,6 @@
             </div>
             <div class="row">
               Description
-              <pre>
-                <b>Seller Name:</b>{{product.owner}}
-                <b>Rating:</b>****
-                <b>Mobile:</b>{{product.owner.mobileNumber}}
-                {% if feed %}
-                  Reviews:<br>
-                  {% for review in feed %}
-                    Ratings: {{review.rating}}<br>
-                    Comment:
-                    {{review.description}}<br><br>
-                  {% endfor %}
-                {% endif %}
-              </pre>
             </div>
           </div>
         <div class="class-footer">
