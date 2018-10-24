@@ -11,7 +11,7 @@
 
     <title>POST AD</title>
   </head>
-  <body>
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
@@ -64,7 +64,7 @@
   <div class="card-header">
     <h4>PRODUCT INFO</h4>
   </div>
-  
+
 
         <form method="post" action="{% url 'ors:addProduct' %}" enctype="multipart/form-data">
           {% csrf_token %}
@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="col-lg-6 col-xs12" style="padding: 4px;">
-          
+
           <div class="row form-group">
             <div class="col" style="margin: 0px;">
               <label for="productname"> Product Name</label>
@@ -128,7 +128,7 @@
     </div>
   </div>
   <div class="card-footer">
-    
+
   </div>
 </div>
 </div>
