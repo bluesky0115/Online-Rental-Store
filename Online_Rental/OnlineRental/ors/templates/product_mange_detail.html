@@ -9,25 +9,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Wishlist</title>
-
-    <style>
-        .emptyList {
-            height : 100vh;
-        }
-    </style>
+    <title>Manage Product Detailed</title>
   </head>
-  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
+  <body>
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
-  <a class="navbar-brand" href="{% url 'ors:dashboard' %}">ONLINE RENTAL</a>
+  <a class="navbar-brand" href="#">ONLINE RENTAL</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
+        <a class="nav-link" href="#">Home</a>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
@@ -55,91 +49,55 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item active" href="{% url 'ors:wishlist' %}">Wishlist<span class="sr-only">(current)</span></a>
-            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile</a>
-            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
+            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
+            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile </a>
+            <a class="dropdown-item" href="#{% url 'ors:logout' %}">Sign Out</a>
           </div>
       </li>
     </ul>
   </div>
 </nav>
 
-
-{% if feed %}
-  {% for product in feed %}
-<div style="margin-top: 112px ; padding: 2%; z-index:-1; min-height: 100%;" >
-  <div class="card bg-light mb-3" id="Product">
-    <div class="card-header">Item # </div>
-    <div class="card-body">
-      <h5 class="card-title"><a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a><br></h5>
+<div class="container-fluid" style="margin-top:112px;">
+  <div class="row" style="margin: 4px; border: solid 1px black;" >
+    <div class="col-lg-8 col-xs-12">
       <div class="row">
-        <div class="col-lg-4 col-xs-12">
-          <img img src="{{ product.product.image.url }}" height="200" width="200" >
+          ** picture **
         </div>
-        <div class="col-lg-7 col-xs-12">
-          <div class="row" style="padding: 2%;">
-            by - <h5> {{product.product.owner}} </h5>
-          </div>
-          <div class="row" style="padding: 2%;">
-            {{product.product.description}}
-          </div>
+        <div class="row">
+          Description
         </div>
-        <div class="col-lg-1 col-xs-12" style="border: 2px solid black;">
-            <div class="row" style="border: 1px dotted green; padding: 4px; height: 100%;" >
-              <div class="col-xs-6 col-lg-12" style="border: 1px solid red; ">
-               <a href="{% url 'ors:requestSeller' product.id %}">Request Seller</a>
-              </div>
-              <div class="col-xs-6 col-lg-12" style="border: 1px solid blue; ">
-                <a href="{% url 'ors:deletefromWishlist' product.id %}">Remove</a>
-              </div>
+      </div>
+      <div class="col-lg-4 col-xs-12">
+        <div class="card">
+          <div class="card-header">
+            Requests
+          </div>
+          <div class="card-body">
+            <div class="row">
+              List
             </div>
+          </div>
+        <div class="class-footer">
         </div>
       </div>
     </div>
-  </div>
-   {% endfor %}
-{% else %}
-<div class="emptyList" style="margin-top:112px;">
-    <div class="col-12 col-lg-6" style="display: flex; justify-content: center; align-items: center;">
-        <div class="alert alert-info" role="alert" >
-            NO ITEMS IN WISHLIST
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Edit Icon
+      </div>
+       <div class="col-3">
+        Delete Icon
+      </div>
+       <div class="col-3">
+        
+      </div>
+       <div class="col-3">
+        
+      </div>
     </div>
 </div>
-
-{% endif %}
-</div>
-
-<footer id="page-footer" class="bg-dark text-white mt-5 p-4" style="bottom: 0;">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <p class="lead text-center">
-            Copyright &copy;
-            <span id="year"></span>
-            Project A-10
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-<<<<<<< HEAD
-<footer id="main-footer" class="bg-dark text-white mt-5 p-4" style="bottom: 0;">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <p class="lead text-center">
-            Copyright &copy;
-            <span id="year"></span>
-            Project A-10
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
-=======
->>>>>>> origin
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
