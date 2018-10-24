@@ -70,11 +70,14 @@
           {% csrf_token %}
           <div class="card-body">
           <div class="row">
-            <div class="col-lg-4 col-xs-12">
-              <img src="{% static 'ors/image/upload.png' %}" width="100%">
-              <div class="custom-file">
-                <input type="file" name="image" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Choose file</label>
+            <div class="col-lg-4 col-xs-12" style="height:">
+                <img id="selectedFile" src="{% static 'ors/image/upload.png' %}" width="100%">
+
+                <div class="custom-file" style="margin-bottom: 0px;">
+                    <div class="input-group mb-3">
+                        <input type="file" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);">
+                    <label class="custom-file-label" for="inputGroupFile">Choose file</label>
+                </div>
               </div>
             </div>
             <div class="col-lg-6 col-xs12" style="padding: 4px;">
@@ -146,6 +149,22 @@
       </div>
     </div>
   </footer>
+
+  <script>
+  function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $('#selectedFile')
+                      .attr('src', e.target.result)
+              };
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+  </script>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
