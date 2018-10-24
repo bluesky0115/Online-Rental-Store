@@ -133,8 +133,8 @@
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
  {% if feed %}
   {% for product in feed %}
-  <div class="card bg-light mb-3" id="Product">
-    <div class="card-header">Item # </div>
+  <div class="card bg-light mb-3" id="Product" style="border: hidden;">
+    <div class="card-header" style="background-color:#e0e0e0">Item # </div>
     <div class="card-body">
       <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
         <h5 class="card-title">{{product.name}}</h5>
@@ -239,6 +239,20 @@
   </div> -->
   <!------------------------------------------------------LOOP------------------------------------------------------>
 
+
+<footer id="main-footer" class="bg-dark text-white mt-5 p-4" style="bottom: 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="lead text-center">
+            Copyright &copy;
+            <span id="year"></span>
+            Project A-10
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
