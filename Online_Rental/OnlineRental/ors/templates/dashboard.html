@@ -31,7 +31,7 @@
 
 <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
-  <a class="navbar-brand" href="#">ONLINE RENTAL</a>
+  <a class="navbar-brand" href="#">ONLINE RENTAL STORE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -43,11 +43,11 @@
              <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <div class="dropdown show" style="margin-right: 6px;">
                   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
-                  Catagory
+                  Category
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">C1</a>
-                    <a class="dropdown-item" href="#">C2</a>
+                    <a class="dropdown-item" href="#">Electronic</a>
+                    <a class="dropdown-item" href="#">Lifestyle</a>
                   </div>
                 </div>
                 <center>
@@ -83,7 +83,7 @@
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            User(dave)
+           {{ user.username }}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
@@ -95,31 +95,13 @@
   </div>
 </nav>
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"  style="margin-top: 56px; z-index: 1;">
-  <div class="ml-auto">
-    <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-  <div class="collapse" id="navbarToggleExternalContent" >
-    <h4 class="text-white">Sort by</h4>
-    <button type="button" class="btn btn-outline-light">Newest First</button>
-    <button type="button" class="btn btn-outline-light">Price - Low to High</button>
-    <button type="button" class="btn btn-outline-light">Price - High to Low</button>
-    <button type="button" class="btn btn-outline-light">Relevance</button>
-    <button type="button" class="btn btn-outline-light">Popularity</button>
-  </div>
-  
-</nav>
-
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"  style="margin-top: 56px; z-index: 1;">
   <div class="collapse" id="collapseExample">
-    <h4 class="text-white">Sort by</h4>
     <button type="button" class="btn btn-outline-light">Newest First</button>
     <button type="button" class="btn btn-outline-light">Price - Low to High</button>
     <button type="button" class="btn btn-outline-light">Price - High to Low</button>
-    <button type="button" class="btn btn-outline-light">Relevance</button>
+    <button type="button" class="btn btn-outline-light">Free</button>
     <button type="button" class="btn btn-outline-light">Popularity</button>
   </div>
   <div class="ml-auto">
@@ -150,15 +132,7 @@
             by - {{product.owner}} 
           </div>
           <div class="row" style="padding: 2%; max-height: 155px; overflow-y: hidden;" >
-             epsum Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+             {{ product.description }}
           </div>
           <div class="row" style="padding: 2%;height: 45px;">
             <h5> Price: {{product.price}}</h5> 

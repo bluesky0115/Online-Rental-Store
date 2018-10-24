@@ -6,27 +6,12 @@ from django.contrib import messages
 from django.urls import reverse
 from .models import *
 from django.contrib.auth.models import User
-from ors.functions.functions import handle_uploaded_file
 import datetime
+from django.db import connection
 
 
 def index(request):
 	return HttpResponse("Hello...")
-
-
-def media(request):
-	if request.method == 'GET':
-		return render(request, 'media.html')
-
-	if request.method == 'POST' and request.FILES['image']:
-		# dp = ExampleModel(model_pic=request.FILES['image'])
-		# dp.save()
-		handle_uploaded_file(request.FILES['image'])
-		print('hogya!')
-		messages.success(request, 'Uploaded!!!')
-		return HttpResponseRedirect(reverse('ors:media'))
-
-	return render(request, 'media.html')
 		
 
 def signup(request):
@@ -133,16 +118,29 @@ def dashboard(request):
 		return render(request, 'dashboard.html', context)
 
 
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+
 def searchProduct(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 
 		if request.method == 'POST':
-			name = request.POST['search']
-			sfeed = Product.objects.filter(name=name).exclude(owner=user)
-			context = dict()
-			context['sfeed'] = sfeed
-			return render(request, 'home.html', context)
+			query = request.POST['search']
+			with connection.cursor() as cursor:
+				#sfeed = Product.objects.filter(name=name).exclude(owner=user)
+				cursor.callproc('SearchbyName', ['%'+query+'%'])
+				sfeed = dictfetchall(cursor)
+				#print(sfeed)
+				context = dict()
+				context['sfeed'] = sfeed
+				return render(request, 'home.html', context)
 
 
 def addProduct(request):
