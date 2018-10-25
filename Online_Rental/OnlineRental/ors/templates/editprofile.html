@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Signup</title>
 </head>
-<body>
+<body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
     <center>
     <form method="post" action="{% url 'ors:editProfile' %}" enctype="multipart/form-data">
         {% csrf_token %}
