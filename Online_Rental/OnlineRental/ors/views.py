@@ -134,25 +134,30 @@ def dictfetchall(cursor):
 def searchProduct(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
+		lis=[]
 
 		if request.method == 'POST':
 			query = request.POST['search']
 			with connection.cursor() as cursor:
 				cursor.callproc('SearchbyName', ['%'+query+'%'])
-				feed = dictfetchall(cursor)
+				feeds = dictfetchall(cursor)
+				for i in feeds:
+					lis.append(i['id'])
+				feed = Product.objects.filter(id__in=lis)
+				print(feed)
 				context = dict()
 				context['feed'] = feed
 				return render(request, 'dashboard.html', context)
 
-def searchTag(request, tag, feed):
+def searchTag(request, tag):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		uid = user.id
 		print(tag)
 
 		if tag == 'newest':
-			feed = feed.order_by('-postdate')
-			#feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY postdate DESC', [uid])
+			#feed = feed.order_by('-postdate')
+			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY postdate DESC', [uid])
 
 		if tag == 'pricelow2high':
 			#feed = Product.objects.all().exclude(owner=user).order_by('price')
@@ -169,7 +174,6 @@ def searchTag(request, tag, feed):
 		context = dict()
 		context['feed'] = feed
 		return render(request, 'dashboard.html', context)
-
 
 
 
@@ -241,10 +245,10 @@ def addWishlist(request, product_id):
 			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
 			item.save()
 			print("added")
-			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(request.META['HTTP_REFERER'])
 		else:
 			print("hai to")
-			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def deletefromWishlist(request, product_id):
