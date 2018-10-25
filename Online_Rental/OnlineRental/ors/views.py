@@ -195,6 +195,7 @@ def addProduct(request):
 				ptype = request.POST['ptype']
 				pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
 				pr.save()
+				print("added")
 				return HttpResponseRedirect(reverse('ors:dashboard'))
 			else:
 				print("No image")
@@ -298,6 +299,7 @@ def myPosts(request):
 		feed = Product.objects.filter(owner=user)
 		context = dict()
 		context['feed'] = feed
+		print(feed)
 		return render(request, 'managePosts.html', context)
 
 
