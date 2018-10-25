@@ -125,7 +125,7 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
-
+#----------------------------------------------------------------------------------------------------
 
 def searchProduct(request):
 	if request.user.is_authenticated:
@@ -134,34 +134,46 @@ def searchProduct(request):
 		if request.method == 'POST':
 			query = request.POST['search']
 			with connection.cursor() as cursor:
-				#sfeed = Product.objects.filter(name=name).exclude(owner=user)
 				cursor.callproc('SearchbyName', ['%'+query+'%'])
 				feed = dictfetchall(cursor)
-				#print(sfeed)
 				context = dict()
 				context['feed'] = feed
 				return render(request, 'dashboard.html', context)
 
+# def searchTags(request, tag):
+# 	if request.user.is_authenticated:
+# 		user = UserProfile.objects.get(email=request.user.email)
 
+# 		with connection.cursor() as cursor:
+# 			if tag = 'Newest':
+# 				feed = P
+
+
+
+#------------------------------------------------------------------------------------------------------
 def addProduct(request):
-	if request.method == 'GET':
-		if request.user.is_authenticated:
-			return render(request, 'postAd.html')
+	if request.user.is_authenticated:
+		if request.method == 'GET':
+			if request.user.is_authenticated:
+				return render(request, 'postAd.html')
 
-	if request.method == 'POST' and request.FILES.get('image'):
-		if request.user.is_authenticated:
-			user = User.objects.get(id=request.user.id)
-			owner = UserProfile.objects.get(email=user.email)
-			image = request.FILES.get('image')
-			name = request.POST['name']
-			description = request.POST['desc']
-			price = request.POST['price']
-			category = request.POST['category']
-			ptype = request.POST['ptype']
-			print("Found success fully")
-			pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
-			pr.save()
-			return HttpResponseRedirect(reverse('ors:dashboard'))
+		if request.method == 'POST':
+			if request.FILES.get('image'):
+				user = User.objects.get(id=request.user.id)
+				owner = UserProfile.objects.get(email=user.email)
+				image = request.FILES.get('image')
+				name = request.POST['name']
+				description = request.POST['desc']
+				price = request.POST['price']
+				duration = request.POST['duration']
+				category = request.POST['category']
+				ptype = request.POST['ptype']
+				pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
+				pr.save()
+				return HttpResponseRedirect(reverse('ors:dashboard'))
+			else:
+				print("No image")
+				return HttpResponseRedirect(reverse('ors:dashboard'))
 
 
 def productPage(request, product_id):
