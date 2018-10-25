@@ -1,3 +1,4 @@
+
 from django.urls import path,include
 from django.contrib.auth import views as auth_views
 #from django.contrib.auth import LogoutView
@@ -26,4 +27,5 @@ urlpatterns = [
 	path('profile',views.profile, name='profile'),
 	path('editProfile', views.editProfile, name='editProfile'),
 	path('rateProduct/<int:product_id>', views.rateProduct, name='rateProduct'),
+	path('requested', views.requested, name="requested"),
 ]

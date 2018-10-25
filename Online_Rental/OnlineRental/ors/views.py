@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.contrib.auth import authenticate, login
@@ -373,4 +374,14 @@ def rateProduct(request, product_id):
 		else:
 			print("pahle istemaal kare fir vichaar bate!!!")
 			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
-			
+		
+
+def requested(request):
+	if request.user.is_authenticated:
+		u = User.objects.get(id=request.user.id)
+		print(u)
+		us = UserProfile.objects.get(user=u)		
+		detail = RequestSeller.objects.filter(seller=us)
+		context = {}
+		# print(context)
+		return render(request, 'requested.html', context)
