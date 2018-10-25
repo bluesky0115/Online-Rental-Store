@@ -20,6 +20,12 @@
     .emptyList {
         height : 100vh;
     }
+    body {
+      text-decoration: none;
+    }
+    a { 
+      color: inherit; 
+    }
     </style>
 	<title>
 		Profile Dashboard
@@ -113,12 +119,13 @@
 
 {% if feed%}
   {% for product in feed %}
-  <div class="card bg-light mb-3" id="Product" style="border: hidden;">
-    <div class="card-header" style="background-color:#e0e0e0">Item</div>
-    <div class="card-body">
+  <div class="card bg-light mb-3" id="Product" style="border: hidden; min-height: 155px;" >
+    <div class="card-header" style="background-color:#e0e0e0"> 
       <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
         <h5 class="card-title">{{product.name}}</h5>
       </a>
+    </div>
+    <div class="card-body">
       <div class="row">
         <div class="col-lg-4 col-xs-12 border" style="vertical-align: middle;">
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
@@ -129,11 +136,11 @@
           <div class="row" style="padding: 2%;">
             by - {{product.owner}}
           </div>
-          <div class="row" style="padding: 2%; max-height: 155px; overflow-y: hidden;" >
+          <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
              {{ product.description }}
           </div>
           <div class="row" style="padding: 2%;height: 45px;">
-            <h5> Price: {{product.price}}</h5>
+            <h4> Price: {{product.price}}</h4>
           </div>
         </div>
         <div class="col-lg-1 col-xs-12" style="">
@@ -157,7 +164,9 @@
 
    {% else %}
        <div class="emptyList">
-           NO POSTS FOUND
+          <div class="row">
+            
+          </div>
        </div>
 {% endif %}
 
