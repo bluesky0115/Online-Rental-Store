@@ -1,32 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body><center>
-   {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li class="{{ message.tags }}">{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %} 
-    <form method="POST" action="{% url 'ors:login' %}">
-        {% csrf_token %}
-        <p>
-            <label>Email</label>
-            <input type="text" name="email">
-        </p>
-        <p>
-            <label>Password</label>
-            <input type="password" name="password">
-        </p>
-        <button type="submit">Login</button>
-    </form>
-    </center>
-</body>
-</html> -->
-
 <!doctype html>
 {% load static %}
 <html lang="en">
