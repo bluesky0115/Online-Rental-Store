@@ -20,15 +20,15 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Post an add</a>
-            <a class="dropdown-item" href="#">Manage post</a>
+            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
+            <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
             Orders
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">My Orders</a>
+            <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
@@ -48,9 +48,9 @@
             User(dave)
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Wishlist</a>
-            <a class="dropdown-item active" href="#">Profile<span class="sr-only">(current)</span></a>
-            <a class="dropdown-item" href="#">Sign Out</a>
+            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
+            <a class="dropdown-item active" href="{% url 'ors:profile' %}">Profile<span class="sr-only">(current)</span></a>
+            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
           </div>
       </li>
     </ul>

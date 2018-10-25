@@ -11,7 +11,7 @@ import datetime
 from django.db import connection
 
 
-#feed = Product.objects.none()
+feed = Product.objects.none()
 
 def index(request):
 	return HttpResponse("Hello...")
@@ -151,8 +151,8 @@ def searchTag(request, tag, feed):
 		print(tag)
 
 		if tag == 'newest':
-			#feed = feed.order_by('-postdate')
-			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY postdate DESC', [uid])
+			feed = feed.order_by('-postdate')
+			#feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY postdate DESC', [uid])
 
 		if tag == 'pricelow2high':
 			#feed = Product.objects.all().exclude(owner=user).order_by('price')
@@ -240,10 +240,10 @@ def addWishlist(request, product_id):
 			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
 			item.save()
 			print("added")
-			return HttpResponseRedirect(reverse('ors:product_detail', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 		else:
 			print("hai to")
-			return HttpResponseRedirect(reverse('ors:product_detail', kwargs={'product_id': product_id}))
+			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 
 
 def deletefromWishlist(request, product_id):
@@ -298,7 +298,7 @@ def myPosts(request):
 		feed = Product.objects.filter(owner=user)
 		context = dict()
 		context['feed'] = feed
-		return render(request, 'm1.html', context)
+		return render(request, 'managePosts.html', context)
 
 
 def deletePost(request, product_id):
