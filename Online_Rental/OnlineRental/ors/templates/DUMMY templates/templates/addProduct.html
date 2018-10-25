@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+</head>
+<body>
+    <form method="post" action="{% url 'ors:addProduct' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        Name:
+        <input name="name"><br>
+        Image:
+        <input type="file" name="image"><br>
+        Description:
+        <textarea name="desc"></textarea><br>
+        category
+        <select name="category">
+            <option value="1" selected>electronic</option>
+            <option value="2">stationary</option>
+            <option value="3">fashion</option>
+            <option value="4">sports</option>
+            <option value="5">lifestyle</option>
+            <option value="6">others</option>
+        </select><br><br>
+        Price
+        <input name="price"/><br>
+        Rent/Sell
+        <select name="ptype">
+            <option value="1" selected>sell</option>
+            <option value="2">rent</option>
+            <option value="3">free</option>
+        </select><br><br>
+        <input type="submit" value="POST">
+    </form>
+</body>
+</html>

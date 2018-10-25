@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+</head>
+<body>
+    <center>
+    <form method="post" action="{% url 'ors:editProfile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        Username:
+        <input name="name"><br><br>
+        Phone Number
+        <input type="charset" name="mobileNumber"><br><br>
+        <input type="submit" value="Edit">
+
+    </form></center></body></html>

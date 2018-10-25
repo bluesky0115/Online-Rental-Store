@@ -10,6 +10,8 @@ import datetime
 from django.db import connection
 
 
+#feed = Product.objects.none()
+
 def index(request):
 	return HttpResponse("Hello...")
 		
@@ -113,6 +115,7 @@ def dashboard(request):
 		print(request.user.email)
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Product.objects.all().exclude(owner=user)
+		print(type(feed))
 		context=dict()
 		context['feed'] = feed
 		return render(request, 'dashboard.html', context)
@@ -140,14 +143,14 @@ def searchProduct(request):
 				context['feed'] = feed
 				return render(request, 'dashboard.html', context)
 
-def searchTag(request, tag):
+def searchTag(request, tag, feed):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		uid = user.id
 		print(tag)
 
 		if tag == 'newest':
-			#feed = Product.objects.all().exclude(owner=user).order_by('-postdate')
+			#feed = feed.order_by('-postdate')
 			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY postdate DESC', [uid])
 
 		if tag == 'pricelow2high':
@@ -212,7 +215,7 @@ def productPage(request, product_id):
 def wishlist(request):
 	if request.user.is_authenticated:
 		feed = Wishlist.objects.all().order_by('-timestamp')
-		print(feed)
+		print(type(feed))
 		context = dict()
 		context['feed'] = feed
 		return render(request, 'wishlist.html', context)

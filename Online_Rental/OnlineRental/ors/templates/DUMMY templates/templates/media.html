@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Upload</title>
+</head>
+<body>
+    <center>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+        <form method="post" action="{% url 'authentication:media' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        Profile Photo
+        <input type="file" name="image"><br><br><br>
+        <input type="submit" value="Register">
+    </form>
+    </center>
+</body>
+</html>
