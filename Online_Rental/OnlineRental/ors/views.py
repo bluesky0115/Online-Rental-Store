@@ -136,11 +136,11 @@ def searchProduct(request):
 			with connection.cursor() as cursor:
 				#sfeed = Product.objects.filter(name=name).exclude(owner=user)
 				cursor.callproc('SearchbyName', ['%'+query+'%'])
-				sfeed = dictfetchall(cursor)
+				feed = dictfetchall(cursor)
 				#print(sfeed)
 				context = dict()
-				context['sfeed'] = sfeed
-				return render(request, 'home.html', context)
+				context['feed'] = feed
+				return render(request, 'dashboard.html', context)
 
 
 def addProduct(request):

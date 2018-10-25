@@ -29,7 +29,7 @@
 
 <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
-  <a class="navbar-brand" href="#"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;"> ONLINE RENTAL STORE</a>
+  <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;"> ONLINE RENTAL STORE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -56,7 +56,7 @@
   	</ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
         	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" 	aria-expanded="false">
@@ -110,7 +110,8 @@
 
 
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
- {% if feed %}
+
+{% if feed%}
   {% for product in feed %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;">
     <div class="card-header" style="background-color:#e0e0e0">Item # </div>
@@ -153,11 +154,13 @@
     </div>
   </div>
    {% endfor %}
+
    {% else %}
        <div class="emptyList">
-           NO POSTS YET
+           NO POSTS FOUND
        </div>
 {% endif %}
+
 </div>
 
 <footer id="main-footer" class="bg-dark text-white mt-5 p-4" style="bottom: 0;">
