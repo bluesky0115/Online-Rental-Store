@@ -14,6 +14,7 @@ urlpatterns = [
 	path('logout', auth_views.LogoutView.as_view(), {'next_page': '/login'}, name='logout'),
 	path('dashboard', views.dashboard , name='dashboard'),
 	path('search', views.searchProduct, name='search'),
+	path('searchTag/<slug:tag>', views.searchTag, name='searchTag'),
 	path('addProduct', views.addProduct, name='addProduct'),
 	path('productPage/<int:product_id>/', views.productPage, name='productPage'),
 	path('wishlist', views.wishlist, name='wishlist'),

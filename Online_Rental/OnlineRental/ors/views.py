@@ -141,17 +141,38 @@ def searchProduct(request):
 				context['feed'] = feed
 				return render(request, 'dashboard.html', context)
 
-# def searchTags(request, tag):
-# 	if request.user.is_authenticated:
-# 		user = UserProfile.objects.get(email=request.user.email)
+def searchTag(request, tag):
+	if request.user.is_authenticated:
+		user = UserProfile.objects.get(email=request.user.email)
+		uid = user.id
+		print(tag)
 
-# 		with connection.cursor() as cursor:
-# 			if tag = 'Newest':
-# 				feed = P
+		if tag == 'newest':
+			#feed = Product.objects.all().exclude(owner=user).order_by('-postdate')
+			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY postdate DESC', [uid])
+
+		if tag == 'pricelow2high':
+			#feed = Product.objects.all().exclude(owner=user).order_by('price')
+			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY price', [uid])
+
+		if tag == 'pricehigh2low':
+			#feed = Product.objects.all().exclude(owner=user).order_by('-price')
+			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY price DESC', [uid])
+
+		if tag == 'free':
+			feed = Product.objects.raw('SELECT * from ors_product WHERE ptype=%s', [tag])
+			#feed = Product.objects.filter(ptype=tag).exclude(owner=user)
+
+		context = dict()
+		context['feed'] = feed
+		return render(request, 'dashboard.html', context)
+
 
 
 
 #------------------------------------------------------------------------------------------------------
+
+
 def addProduct(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
