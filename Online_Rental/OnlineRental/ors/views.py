@@ -390,5 +390,6 @@ def requested(request):
 		us = UserProfile.objects.get(user=u)		
 		detail = RequestSeller.objects.filter(seller=us)
 		context = {}
-		# print(context)
+		context['detail'] = detail
+		print(context)
 		return render(request, 'requested.html', context)
