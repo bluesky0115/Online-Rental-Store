@@ -15,7 +15,7 @@
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
-  <a class="navbar-brand" href="{% url 'ors:dashboard' %}">ONLINE RENTAL</a>
+  <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL STORE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -66,25 +66,23 @@
   </div>
 </nav>
 
-
+{% if detail %}
+{% for product in detail %}
 <div style="margin-top: 112px ; padding: 2%; z-index:-1" >
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
-      <h5 class="card-title">Product Name</h5>
+      <h5 class="card-title">{{product.product.name}}</h5>
       <div class="row">
         <div class="col-lg-3 col-xs-12">
-          <img src="src/pixel3.jpg" width="100%">
+          <img src="{{product.product.image.url}}" width="100%">
         </div>
         <div class="col-lg-6 col-xs-12">
           <div class="row" style="padding: 2%;">
-            by - (Seller Name) 
+            by - (<b>{{product.seller}}</b>) 
           </div>
           <div class="row" style="padding: 2%;">
-            epsum Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
+            {{product.product.description}}
           </div>
         </div>
         <div class="col-lg-3 col-xs-12" style="border: 2px solid black;">
@@ -93,13 +91,15 @@
                  <button class="button btn" type="submit">Cancel Req</button>
               </div>
               <div class="col-xs-2 col-lg-12 " style="border: 1px solid blue; ">
-                ** date picker **
+                {{product.timestamp}}
               </div>
             </div>
         </div>
       </div>
     </div>
   </div>
+  {% endfor %}
+{% endif %}
   <!------------------------------------------------------LOOP------------------------------------------------------>
 </div>
     <!-- Optional JavaScript -->

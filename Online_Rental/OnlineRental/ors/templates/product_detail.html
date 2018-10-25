@@ -9,12 +9,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <title>Product Detailed</title>
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
-  <a class="navbar-brand" href="#">ONLINE RENTAL</a>
+  <a class="navbar-brand" href="{% url 'ors:dashboard' %}"> <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL STORE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -38,7 +40,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
-              <a class="dropdown-item" href="#">Requested</a>
+              <a class="dropdown-item" href="{% url 'ors:requested' %}">Requested</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -69,11 +71,14 @@
   <div class="row" style="margin: 4px; border: solid 1px black;" >
     <div class="col-lg-8 col-xs-12">
       <div class="row">
-          ** picture **
+          
+          <img src="{{ product.image.url }}" style="width:40%; max-height: 245px">
+
         </div>
+        {{product.rating}}
         <div class="row">
           <pre>
-          <b>Product Name: </b>{{product.name}}
+          <h3>{{product.name}}</h3>
           <b>Product Description:</b>{{product.description}}
           <b>Price:</b>{{product.price}}
           <b>Posted on:</b>{{product.postdate}}
@@ -84,17 +89,17 @@
       <div class="col-lg-4 col-xs-12">
         <div class="card">
           <div class="card-header">
-            SELLER:: <b>Seller Name:</b>{{product.owner}}
+            <b>Seller Name:</b>{{product.owner}}
           </div>
           <div class="card-body">
             <div class="row">
-              ** picture **
+              <img src="{{ product.owner.dp.url }}" style="width:40%; max-height: 205px">
             </div>
             <div class="row">
               Description
               <pre>
                 <b>Seller Name:</b>{{product.owner}}
-                <b>Rating:</b>****
+                <b>Rating:</b> {{product.owner.rating}}
                 <b>Mobile:</b>{{product.owner.mobileNumber}}
                 {% if feed %}
                   Reviews:<br>
@@ -114,16 +119,37 @@
     </div>
     <div class="row">
       <div class="col-3">
-        Wishlist
+        <a href="{% url 'ors:addWishlist' product.id %}">
+       <i class="material-icons" id="addtowishlist" style="font-size: 48px;">
+                    local_grocery_store
+      </i>
+      </a>
+      <label>Add to wislist</label>
       </div>
        <div class="col-3">
-        Request
+        <a href="{% url 'ors:requestSeller' product.id %}">
+        <i class="material-icons" style="font-size: 48px;">
+                    person_add
+        </i>
+        </a>
+        <label>Request Seller</label>
       </div>
        <div class="col-3">
-        Share
+        <a href="#">
+       <i class="material-icons" style="font-size: 48px;">
+        share
+        </i>
+        </a>
+        <label>Share</label>
       </div>
        <div class="col-3">
-        Report
+        <a href="#">
+        <i class="material-icons" style="font-size: 48px;">
+          report
+          </i>
+        </a>
+          <label>Report</label>
+        
       </div>
     </div>
 </div>

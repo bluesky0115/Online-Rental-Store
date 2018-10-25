@@ -13,91 +13,78 @@
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100%;">
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
-      <a class="navbar-brand" href="#">ONLINE RENTAL</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
-                Post
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
-                <a class="dropdown-item active" href="{% url 'ors:myPosts' %}">Manage posts<span class="sr-only">(current)</span></a>
-              </div>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Orders
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
-                  <a class="dropdown-item" href="#">Requested</a>
-              </div>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               Notification
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Link 1</a>
-                <a class="dropdown-item" href="#">Link 2</a>
-                <a class="dropdown-item" href="#">Link 3</a>
-              </div>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                User(dave)
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
-                <a class="dropdown-item" href="{% url 'ors:profile' %}">Profil</a>
-                <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
-              </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    {% if feed %}
-      {% for product in feed %}
-    <div class="container-fluid" style="margin-top:112px;">
-      <div class="row">
-        <div class="col-lg-4 col-md-4 col-xs-12">
-          <div class="card">
-            <div class="card-header"> 
-              <a href="{% url 'ors:productPage' product.id %}">{{product.name}}</a><br>
-            </div>
-            <div class="card-body"> 
-            <h5><b>Product Description:</b></h5>
-            {{product.description}}
-            </div>
-            <div class="card-footer">   
-            </div>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
+  <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'ors:dashboard' %}">Home</a>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
+            Post
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
+            <a class="dropdown-item active" href="{% url 'ors:myPosts' %}">Manage posts<span class="sr-only">(current)</span></a>
           </div>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Orders
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
+              <a class="dropdown-item" href="{% url 'ors:requested' %}">Requested</a>
+          </div>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Notification
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Link 1</a>
+            <a class="dropdown-item" href="#">Link 2</a>
+            <a class="dropdown-item" href="#">Link 3</a>
+          </div>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            User(dave)
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
+            <a class="dropdown-item" href="{% url 'ors:profile' %}">Profil</a>
+            <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
+          </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% if feed %}
+  {% for product in feed %}
+<div class="container-fluid" style="margin-top:112px;">
+  
+  <div class="row" style=" ">
+    <div class="col-lg-4 col-md-4 col-xs-12" style="margin-bottom: 6px;">
+      <div class="card">
+        <div class="card-header"> 
+          <a href="{% url 'ors:productPage' product.id %}">{{product.name}}</a><br>
         </div>
-         {% endfor %}
-        {% endif %}
+        <div class="card-body"> 
+        <h5><b>Product Description:</b></h5>
+        {{product.description}}
+        </div>
+        <div class="card-footer">   
+        </div>
       </div>
     </div>
-    <footer id="main-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0; position: fixed; width: 100%;">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <p class="lead text-center">
-              Copyright &copy;
-              <span id="year"></span>
-              Project A-10
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+     {% endfor %}
+    {% endif %}
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
