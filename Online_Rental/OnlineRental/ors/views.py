@@ -58,8 +58,7 @@ def signin(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		
-		
+			
 		try:
 			u = User.objects.get(email=email)
 			print(u.password)

@@ -75,7 +75,7 @@
       <h5 class="card-title"><a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a></h5>
       <div class="row">
         <div class="col-lg-3 col-xs-12">
-          <img src="src/pixel3.jpg" width="100%">
+          <img src="{{ product.product.image.url }}" width="100%">
         </div>
         <div class="col-lg-6 col-xs-12">
           <div class="row" style="padding: 2%;">
@@ -84,7 +84,7 @@
           <div class="row" style="padding: 2%;">
             <pre>
             {{product.product.description}}
-            <b>{{product.product.price}}</b>
+            <b>Price: {{product.product.price}}</b>
             {{product.status}}
             {{product.timestamp}}
           </pre>

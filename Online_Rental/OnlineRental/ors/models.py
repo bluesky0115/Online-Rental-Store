@@ -157,7 +157,3 @@ class ArchivedProduct(models.Model):
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name
-
-
-class ExampleModel(models.Model):
-	model_pic = models.ImageField()
