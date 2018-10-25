@@ -80,20 +80,28 @@
 <div style="margin-top: 112px ; padding: 2%; z-index:-1; min-height: 100%;" >
 {% if feed %}
   {% for product in feed %}
-  <div class="card bg-light mb-3" id="Product">
-    <div class="card-header">Item # </div>
+  <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
+    <div class="card-header" style="background-color:#e0e0e0"> 
+      <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+        <h5 class="card-title">{{product.product.name}}</h5>
+      </a>
+    </div>
     <div class="card-body">
-      <h5 class="card-title"><a href="{% url 'ors:productPage' product.id %}">{{product.product.name}}</a><br></h5>
       <div class="row">
-        <div class="col-lg-4 col-xs-12">
-          <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
+        <div class="col-lg-4 col-xs-12 border" style="vertical-align: middle; ">
+          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
+            <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
+          </a>
         </div>
         <div class="col-lg-7 col-xs-12">
-          <div class="row" style="padding: 2%;">
-            by - <h5> {{product.product.owner}} </h5>
+          <div class="row" style="padding: 2%; height: 45px">
+            by - {{product.product.owner}}
           </div>
-          <div class="row" style="padding: 2%;">
+          <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
             {{product.product.description}}
+          </div>
+          <div class="row" style="padding: 2%;height: 45px;">
+            <h4> Price: {{product.product.price}}</h4>
           </div>
         </div>
         <div class="col-lg-1 col-xs-12" style="">

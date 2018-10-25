@@ -66,9 +66,10 @@
   </div>
 </nav>
 
-{% if detail %}
-{% for product in detail %}
+
 <div style="margin-top: 112px ; padding: 2%; z-index:-1" >
+  {% if detail %}
+{% for product in detail %}
   <div class="card bg-light mb-3" id="Product">
     <div class="card-header">Item # </div>
     <div class="card-body">
@@ -85,12 +86,12 @@
             {{product.product.description}}
           </div>
         </div>
-        <div class="col-lg-3 col-xs-12" style="border: 2px solid black;">
-            <div class="row" style="border: 1px dotted green; padding: 4px; height: 100%;" >
-              <div class="col-xs-2 col-lg-12 " style="border: 1px solid red; ">
-                 <button class="button btn" type="submit">Cancel Req</button>
+        <div class="col-lg-3 col-xs-12" style="">
+            <div class="row" style="height: 100%;" >
+              <div class="col-xs-2 col-lg-12 " style=" ">
+                 <button class="btn-primary btn" type="submit">Cancel Request</button>
               </div>
-              <div class="col-xs-2 col-lg-12 " style="border: 1px solid blue; ">
+              <div class="col-xs-2 col-lg-12 " style="">
                 {{product.timestamp}}
               </div>
             </div>
