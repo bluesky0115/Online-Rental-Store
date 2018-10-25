@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
 </head>
-<body>
+<body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
     <form method="post" action="{% url 'ors:addProduct' %}" enctype="multipart/form-data">
         {% csrf_token %}
         Name:

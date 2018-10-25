@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -10,7 +11,7 @@
 
     <title>Edit Profile</title>
   </head>
-  <body>
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="#">ONLINE RENTAL</a>
@@ -40,8 +41,15 @@
               <a class="dropdown-item" href="#">Requested</a>
           </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Notification</a>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Notification
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Link 1</a>
+            <a class="dropdown-item" href="#">Link 2</a>
+            <a class="dropdown-item" href="#">Link 3</a>
+          </div>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,28 +72,26 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-lg-4 col-xs-12">
-        <img src="src/user.jpg" width="100%">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile">
-          <label class="custom-file-label" for="customFile">Choose file</label>
-        </div>
+      <div class="col-xs-12 col-lg-3" >
+        <img id="selectedFile" src="{% static 'ors/image/user.jpg' %}" width="100%" style="height: 200px; overflow-y: hidden;" >
+        <div class="custom-file" style="margin-bottom: 0px;">
+          <div class="input-group mb-3">
+            <input type="file" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);">
+            <label class="custom-file-label" for="inputGroupFile" name="image">Choose file</label>
+          </div>
       </div>
-      <div class="col-lg-6 col-xs12" style="padding: 4px;">
+    </div>
+      <div class="col-xs-12 col-lg-7" style="padding: 4px;">
         <form>
           <div class="row form-group">
-            <div class="col">
+            <div class="col-12 col-lg-6">
               <label for="username"> Username </label>
               <input type="text" class="form-control" placeholder="Username" name="user">
             </div>
-            <div class="col">
+            <div class="col-12 col-lg-6">
               <label for="mobilenumber"> Contact no.</label>
               <input type="number" class="form-control" placeholder="Mobile number" name="mobilenumber">
             </div>
-          </div>
-          <div class="form-group">
-            <label for="inputpassword"> Password </label>
-            <input type="password" class="form-control" name="inputpassword" placeholder="Password">
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Bio</label>
@@ -99,8 +105,26 @@
   <div class="card-footer">
     
   </div>
+
 </div>
 </div>
+
+  <script>
+  function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $('#selectedFile')
+                      .attr('src', e.target.result)
+              };
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+  </script>
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
