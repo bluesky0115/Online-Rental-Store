@@ -181,7 +181,7 @@
 
 {% if feed %}
   {% for product in feed %}
-  <div class="card bg-light mb-3" id="Product" style="border: hidden; min-height: 155px;" >
+  <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
       <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
         <h5 class="card-title">{{product.name}}</h5>
@@ -235,7 +235,7 @@
 
 </div>
 
-<footer id="main-footer" class="bg-dark text-white mt-5 p-4" style="bottom: 0;">
+<footer id="main-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0;">
     <div class="container">
       <div class="row">
         <div class="col">
