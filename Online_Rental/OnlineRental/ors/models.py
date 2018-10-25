@@ -34,6 +34,8 @@ class UserProfile(models.Model):
 	gender = models.CharField(max_length=10, choices=(
 		('Male', 'Male'),('Female', 'Female')), null=True)
 
+	bio = models.TextField(blank=True)
+
 	dp = models.FileField(upload_to=user_directory_path, blank=True)
 
 	def __str__(self):
@@ -65,10 +67,12 @@ class Product(models.Model):
 	category = models.CharField(max_length=20, choices=(
 												('electronics','electronics'),('stationary','stationary'),('fashion','fashion'),
 												('sports','sports'),('lifestyle', 'lifestyle'),('other', 'other')))
-	price = models.FloatField()
+	price = models.FloatField(blank=True, null=True)
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
 	duration = models.IntegerField(null=True, blank=True)
 	quantity = models.IntegerField(blank=False, default=1)
+	status = models.CharField(max_length=10, choices=(
+												('InStock','InStock'),('OutofStock','OutofStock')), default='InStock')
 	image = models.FileField(upload_to=product_directory_path, blank=False, default='default.jpg')
 	ptype = models.CharField(max_length=4, choices=(
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
@@ -122,6 +126,8 @@ class OrderHistory(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 	dateStart = models.DateField()
 	dateEnd = models.DateField()
+	status = models.CharField(max_length=20, choices=(
+							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
 
 	def __str__(self):
 		return str(self.user.name)+'\'s OrderHistory'
@@ -140,14 +146,14 @@ class ArchivedProduct(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 	description = models.TextField()
 	category = models.CharField(max_length=20, choices=(
-												('1','electronics'),('2','stationary'),('3','fashion'),
-												('4','sports'),('5', 'lifestyle'),('6', 'other')))
+												('electronics','electronics'),('stationary','stationary'),('fashion','fashion'),
+												('sports','sports'),('lifestyle', 'lifestyle'),('other', 'other')))
 	price = models.FloatField()
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
 	duration = models.IntegerField(blank=True)
 	quantity = models.IntegerField(blank=False, default=1)
 	ptype = models.CharField(max_length=4, choices=(
-												('1','sell'),('2','rent')), default='1')
+												('sell','sell'),('rent','rent'),('free','free')), default='free')
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name

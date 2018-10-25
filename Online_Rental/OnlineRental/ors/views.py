@@ -144,7 +144,7 @@ def searchProduct(request):
 				for i in feeds:
 					lis.append(i['id'])
 				feed = Product.objects.filter(id__in=lis)
-				print(feed)
+				#print(feed)
 				context = dict()
 				context['feed'] = feed
 				return render(request, 'dashboard.html', context)
@@ -244,9 +244,11 @@ def addWishlist(request, product_id):
 			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
 			item.save()
 			print("added")
+			messages.success(request, "Added to Wishlist!")
 			return HttpResponseRedirect(request.META['HTTP_REFERER'])
 		else:
 			print("hai to")
+			messages.error(request, "Already in Wishlist!")
 			return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
