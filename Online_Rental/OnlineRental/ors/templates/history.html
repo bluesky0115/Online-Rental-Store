@@ -86,17 +86,17 @@
     <div class="card-header" style="background-color:#e0e0e0"> 
       <div class="row" style="width: 100%">
         <div class="col-11">
-          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
-            <h5 class="card-title">{{product.name}}</h5>
+          <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
+            <h5 class="card-title">{{product.product.name}}</h5>
           </a>
       </div>
       <div class="col-1">
         {% if request.status == "rejected" %}
           <button type="button" class="btn btn-danger" disabled>REJECTED</button>
         {% elif request.status == "requested" %}
-          <button type="button" class="btn btn-info" disabled>REQUESTED</button>
+          <button type="button" class="btn btn-warning" disabled>REQUESTED</button>
         {% else %}
-          <button type="button" class="btn btn-warning" disabled>ACCEPTED</button>
+          <button type="button" class="btn btn-success" disabled>ACCEPTED</button>
         {% endif %}
       </div>
     </div>
@@ -122,7 +122,7 @@
         <div class="col-lg-2 col-xs-12" style="">
             <div class="row" style=" height: 100%;">
               {% if request.status == "accepted" %}
-                <div class="col-6 col-lg-12">
+                <div class="col-lg-12">
                   <div class="form-group">
                     <!-- ** Rate product ** -->
                     <label for = "sell1">Select Rating:</label>
@@ -135,7 +135,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-6 col-lg-12">
+                <div class="col-lg-12">
                   <div class="row form-group">
                     <label for="usr">Comment:</label>
                     <input type="text" class="form-control" id="usr" style="width: 100%;">
