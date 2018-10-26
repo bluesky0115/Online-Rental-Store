@@ -92,6 +92,9 @@
         <div class="col-12"><h5> ROLL NO: </h5><b>{{detail.roll_no}}</b></div>
         <div class="col-12"><h5> YEAR: </h5><b>{{detail.year}}</b></div>
         <div class="col-12"><h5> GENDER: </h5><b>{{detail.gender}}</b></div>
+        {% if detail.bio %}
+        <div class="col-12"><h5> BIO: </h5><b>{{detail.bio}}</b></div>
+        {% endif %}
       </div>
     </div>
   </div>
