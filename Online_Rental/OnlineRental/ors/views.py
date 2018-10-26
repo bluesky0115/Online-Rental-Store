@@ -344,7 +344,11 @@ def editProfile(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:
 			print('get')
-			return render(request, 'profile_edit.html')
+			user = UserProfile.objects.get(email=request.user.email)
+			context = {}
+			context['user'] = user
+			print(context)
+			return render(request, 'profile_edit.html', context)
 
 	if request.method == 'POST':
 		if request.user.is_authenticated:
@@ -361,7 +365,8 @@ def editProfile(request):
 			user.modified_by = request.user.email
 			user.modified_at = datetime.datetime.now()
 			user.save()
-			print('gya')
+			print()
+			
 			return HttpResponseRedirect(reverse('ors:profile'))
 
 

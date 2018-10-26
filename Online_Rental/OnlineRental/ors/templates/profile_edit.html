@@ -73,7 +73,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-xs-12 col-lg-3" >
-        <img id="selectedFile" src="{% static 'ors/image/user.jpg' %}" width="100%" style="height: 200px; overflow-y: hidden;" >
+        <img id="selectedFile" src="{{ user.dp.url }}" width="100%" style="height: 200px; overflow-y: hidden;" >
         <div class="custom-file" style="margin-bottom: 0px;">
           <div class="input-group mb-3">
             <input type="file" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);">
