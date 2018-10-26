@@ -12,6 +12,48 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <title>Product Detailed</title>
+
+    <style>
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+</style>
+
+
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
@@ -120,33 +162,42 @@
     <div class="row">
       <div class="col-3">
         <a href="{% url 'ors:addWishlist' product.id %}">
+          <button class="btn">
        <i class="material-icons" id="addtowishlist" style="font-size: 48px;">
                     local_grocery_store
       </i>
+    </button>
       </a>
       <label>Add to wislist</label>
       </div>
        <div class="col-3">
         <a href="{% url 'ors:requestSeller' product.id %}">
+          <button class="btn">
         <i class="material-icons" style="font-size: 48px;">
                     person_add
         </i>
+      </button>
         </a>
         <label>Request Seller</label>
       </div>
        <div class="col-3">
-        <a href="#">
-       <i class="material-icons" style="font-size: 48px;">
-        share
+        <a href="http://www.facebook.com/sharer/sharer.php?u=http://pythonanywhere.com{{ request.get_full_path|urlencode }}">
+        <button class="btn">
+        <i class="material-icons" style="font-size: 48px;">
+          share
         </i>
+        </button>
         </a>
-        <label>Share</label>
+        
+        
       </div>
        <div class="col-3">
         <a href="#">
+          <button class="btn">
         <i class="material-icons" style="font-size: 48px;">
           report
           </i>
+        </button>
         </a>
           <label>Report</label>
         
@@ -154,6 +205,22 @@
     </div>
 </div>
     <!-- Optional JavaScript -->
+
+    <script>
+      function myFunction() {
+        var copyText = document.getElementById("myInput");
+        copyText.select();
+        document.execCommand("copy");
+        
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied: " + copyText.value;
+      }
+
+      function outFunc() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+      }
+</script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
