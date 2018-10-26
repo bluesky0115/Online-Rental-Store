@@ -118,6 +118,7 @@ def dashboard(request):
 		print(type(feed))
 		context=dict()
 		context['feed'] = feed
+		context['user'] = user
 		return render(request, 'dashboard.html', context)
 
 
@@ -147,7 +148,9 @@ def searchProduct(request):
 				context = dict()
 				context['feed'] = feed
 				messages.success(request, str(feed.count())+" products found !!!")
+				#return HttpResponseRedirect(reverse('ors:dashboard', kwargs={'feed':feed}))
 				return render(request, 'dashboard.html', context)
+		return HttpResponseRedirect(reverse('ors:dashboard'))
 
 def searchTag(request, tag):
 	if request.user.is_authenticated:
@@ -184,7 +187,8 @@ def addProduct(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
 			if request.user.is_authenticated:
-				return render(request, 'postAd.html')
+				u = UserProfile.objects.get(email=request.user.email)
+				return render(request, 'postAd.html', {'user': u})
 
 		if request.method == 'POST':
 			if request.FILES.get('image'):
@@ -210,12 +214,13 @@ def addProduct(request):
 
 def productPage(request, product_id):
 	if request.user.is_authenticated:
-		user = User.objects.get(id=request.user.id)
+		user = UserProfile.objects.get(email=request.user.email)
 		product = Product.objects.get(id=product_id)
 		feed = ProductRating.objects.filter(product=product)
 		context = dict()
 		context['product'] = product
 		context['feed'] = feed
+		context['user'] = user
 		form = ReportForm()
 		context['form']=form
 		return render(request, 'product_detail.html', context)
@@ -223,10 +228,12 @@ def productPage(request, product_id):
 
 def wishlist(request):
 	if request.user.is_authenticated:
+		user = UserProfile.objects.get(email=request.user.email)
 		feed = Wishlist.objects.all().order_by('-timestamp')
 		print(type(feed))
 		context = dict()
 		context['feed'] = feed
+		context['user'] = user
 		return render(request, 'wishlist.html', context)
 
 
@@ -258,13 +265,16 @@ def addWishlist(request, product_id):
 
 def deletefromWishlist(request, product_id):
 	if request.user.is_authenticated:
-		product = Wishlist.objects.get(id=product_id)
+		item = Product.objects.get(id=product_id)
+		product = Wishlist.objects.get(product=item)
 		product.delete()
 		context = dict()
+
 		feed = Wishlist.objects.all().order_by('-timestamp')
 		context['feed'] = feed
 		messages.success(request, "Product successfully removed from your Wishlist!")
-		return render(request, 'wishlist.html', context)
+		#return render(request, 'wishlist.html', context)
+		return HttpResponseRedirect(reverse('ors:wishlist'))
 
 
 def requestSeller(request, product_id):
@@ -315,6 +325,7 @@ def myPosts(request):
 		feed = Product.objects.filter(owner=user)
 		context = dict()
 		context['feed'] = feed
+		context['user'] = user
 		print(feed)
 		return render(request, 'managePosts.html', context)
 
@@ -412,10 +423,11 @@ def requests(request):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
 		print(u)
-		us = UserProfile.objects.get(user=u)		
-		detail = RequestSeller.objects.filter(seller=us)
+		user = UserProfile.objects.get(user=u)		
+		detail = RequestSeller.objects.filter(seller=user)
 		context = {}
 		context['detail'] = detail
+		context['user'] = user
 		print(context)
 		return render(request, 'requested.html', context)
 
