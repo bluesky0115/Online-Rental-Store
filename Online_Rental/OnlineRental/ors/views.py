@@ -305,6 +305,7 @@ def orderHistory(request):
 		feed = OrderHistory.objects.all().order_by('-timestamp')
 		context = dict()
 		context['feed'] = feed
+		context['user'] = buyer
 		return render(request, 'history.html', context)
 
 

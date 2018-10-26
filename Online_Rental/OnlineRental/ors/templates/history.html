@@ -65,9 +65,9 @@
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            User(dave)
+            {{ user.name }}
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
             <a class="dropdown-item" href="{% url 'ors:profile' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'ors:logout' %}">Sign Out</a>
@@ -84,15 +84,11 @@
   {% for product in feed %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
-      <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+      <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
         <h5 class="card-title">{{product.product.name}}</h5>
       </a>
     </div>
     <div class="card-body">
-<<<<<<< HEAD
-      <h5 class="card-title"><a href="{% url 'ors:productPage' product.product.id %}">{{product.product.name}}</a></h5>
-=======
->>>>>>> 4a08540fb6a96f1f49ce7206794f1f84fb4b8db8
       <div class="row">
         <div class="col-lg-3 col-xs-12 border" style="vertical-align: middle; ">
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
