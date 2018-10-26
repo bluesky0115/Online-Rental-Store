@@ -429,10 +429,10 @@ def rateProduct(request, product_id):
 			if (ProductRating.objects.filter(buyer=buyer, product=product).count()==0):
 				if request.method == 'GET':
 					print('get')
-					return render(request, 'rateProduct.html', context)
+					return render(request, 'product_detail.html', context)
 
 				if request.method == 'POST':
-					rating = request.POST['rating']
+					rating = request.POST.get('rating')
 					comment = request.POST['comment']
 					print('post')
 					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment, created_by=request.user.email, created_at=datetime.datetime.now())
@@ -484,9 +484,9 @@ def report(request):
 				
 				print("Hiiiiiii")
 				report_form.timestamp = datetime.datetime.now()
-				report_form.created_by = us
+				report_form.created_by = us.name
 				report_form.created_at = datetime.datetime.now()
-				report_form.modified_by = us
+				report_form.modified_by = us.name
 				report_form.modified_at = datetime.datetime.now() 
 				print(us,u)
 				report_form.save()

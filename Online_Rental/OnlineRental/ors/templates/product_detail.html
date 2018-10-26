@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -81,6 +82,15 @@
   </div>
 </nav>
 
+{% for message in messages %}
+      <div class="alert alert-info" id="message" style="display:none; z-index: 2; padding: 10px; width: 100%; position: fixed;">
+        <center>
+          {{ message }}
+        <!-- <a href="#" class="del-msg">&times;</a> -->
+        </center>
+      </div>
+  {% endfor %}
+
 <div class="card" style="margin-top:112px; margin-left: 10px; margin-right: 10px; margin-bottom: 60px;">
   <div class="card-header">
     <div class="row" style="width: 100%">
@@ -104,7 +114,7 @@
         <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center>
       </div>
       <div class="col-12 col-lg-4">
-        <form action="requestuser">
+        <form action="{% url 'ors:requestSeller' product.id %}">
           {% if product.ptype != "free" %}
             <input class="form-control" type="text" placeholder="PRICE: {{product.price}}" readonly>
           {% else %}
@@ -119,10 +129,7 @@
         </form>
         <form action="{% url 'ors:addWishlist' product.id %}" style="margin: 3px;">
               <center><button type="submit" class="btn btn-warning">
-              ADD{% for message in messages %}
-                {% if message %}ED
-                {% endif %}
-                {% endfor %} TO WISHLIST
+              ADD TO WISHLIST
               
                 </button>
               </center>
@@ -188,7 +195,7 @@
           <div class="form-group">
                     <!-- ** Rate product ** -->
             <label for = "sell1">Select Rating:</label>
-              <select class = "form-control" id="sell1" required>
+              <select class = "form-control" id="sell1" name="rating" required>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -198,7 +205,7 @@
           </div>
           <div class="row form-group">
             <label for="usr">Comment:</label>
-            <input type="text" class="form-control" id="usr" style="width: 100%;" required>
+            <input type="text" class="form-control" id="usr" name="comment" style="width: 100%;">
           </div>
           <center><input class="btn btn-warning" type="submit"/></center>
         </form>
@@ -259,9 +266,17 @@
         var tooltip = document.getElementById("myTooltip");
         tooltip.innerHTML = "Copy to clipboard";
       }
+</script-->
+<script>  
+  $(document).ready(function(){
+          $("#message").fadeIn();
+          $("#message").fadeOut(6000);
+      });
 </script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
