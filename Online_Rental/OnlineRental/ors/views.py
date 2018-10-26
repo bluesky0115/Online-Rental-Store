@@ -369,7 +369,8 @@ def editProfile(request):
 			user.modified_by = request.user.email
 			user.modified_at = datetime.datetime.now()
 			user.save()
-			print('gya')
+			print()
+			
 			return HttpResponseRedirect(reverse('ors:profile'))
 
 

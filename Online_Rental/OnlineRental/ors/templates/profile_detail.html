@@ -11,7 +11,12 @@
     <style type="text/css">
       .info h5,
       .info b{
-        display: inline;
+        display: inline; 
+      }
+      .f {
+        border: 1px solid grey;
+        padding: 1px;
+        margin: 2px;
       }
     </style>
 
@@ -73,18 +78,18 @@
 
 <div class="container-fluid" style="margin-top:112px;">
   <div class="row" style="margin: 4px;" >
-    <div class="col-xs-12 col-lg-6">
-      <img img src="{{ detail.dp.url }} " style="max-width: 100%;max-width: 100%">
+    <div class="col-xs-12 col-lg-6 bg-light" style="width: 100%">
+      <img img src="{{ detail.dp.url }} " style="max-width: 100%;max-height: 400px;">
     </div>
     <div class="card bg-light col-xs-12 col-lg-6">
       <div class="card-body info" style="align-items: center;">
-        <h5> NAME: </h5><b>{{detail.name}}</b><br>
-        <h5> EMAIL: </h5><b>{{detail.email}}</b><br>
-        <h5> MOBILE NUMBER:</h5><b>{{detail.mobileNumber}}</b><br>
-        <h5> ROLL NO: </h5><b>{{detail.roll_no}}</b><br>
-        <h5> YEAR: </h5><b>{{detail.year}}</b><br>
-        <h5> GENDER: </h5><b>{{detail.gender}}</b><br>
-        
+        <div class="f"><h5> NAME: </h5><b>{{detail.name}}</b><br></div>
+        <div class="f"><h5> EMAIL: </h5><b>{{detail.email}}</b><br></div>
+        <div class="f"><h5> MOBILE NUMBER:</h5><b>{{detail.mobileNumber}}</b><br></div>
+        <div class="f"><h5> ROLL NO: </h5><b>{{detail.roll_no}}</b><br></div>
+        <div class="f"><h5> YEAR: </h5><b>{{detail.year}}</b><br></div>
+        <div class="f"><h5> GENDER: </h5><b>{{detail.gender}}</b><br></div>
+        <div class="f"><h7> current profile photo:</h7>{{detail.dp}}<br></div>
       </div>
     </div>
   </div>
