@@ -4,3 +4,4 @@ from django.urls import reverse
 
 def direct(request):
 	return HttpResponseRedirect(reverse('ors:login'))
+

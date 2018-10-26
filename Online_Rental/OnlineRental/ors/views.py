@@ -11,7 +11,6 @@ import datetime
 from django.db import connection
 from .forms import ReportForm
 
-feed = Product.objects.none()
 
 def index(request):
 	return HttpResponse("Hello...")
@@ -120,6 +119,8 @@ def dashboard(request):
 		context['feed'] = feed
 		context['user'] = user
 		return render(request, 'dashboard.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def dictfetchall(cursor):
@@ -151,6 +152,9 @@ def searchProduct(request):
 				#return HttpResponseRedirect(reverse('ors:dashboard', kwargs={'feed':feed}))
 				return render(request, 'dashboard.html', context)
 		return HttpResponseRedirect(reverse('ors:dashboard'))
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
+
 
 def searchTag(request, tag):
 	if request.user.is_authenticated:
@@ -177,6 +181,8 @@ def searchTag(request, tag):
 		context = dict()
 		context['feed'] = feed
 		return render(request, 'dashboard.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 
@@ -210,6 +216,8 @@ def addProduct(request):
 				print("No image")
 				messages.success(request, "Please select an image for the Product.")
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def productPage(request, product_id):
@@ -224,6 +232,8 @@ def productPage(request, product_id):
 		form = ReportForm()
 		context['form']=form
 		return render(request, 'product_detail.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def wishlist(request):
@@ -235,6 +245,8 @@ def wishlist(request):
 		context['feed'] = feed
 		context['user'] = user
 		return render(request, 'wishlist.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def addWishlist(request, product_id):
@@ -261,6 +273,8 @@ def addWishlist(request, product_id):
 			print("hai to")
 			messages.error(request, "Already in Wishlist!")
 			return HttpResponseRedirect(request.META['HTTP_REFERER'])
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def deletefromWishlist(request, product_id):
@@ -275,6 +289,8 @@ def deletefromWishlist(request, product_id):
 		messages.success(request, "Product successfully removed from your Wishlist!")
 		#return render(request, 'wishlist.html', context)
 		return HttpResponseRedirect(reverse('ors:wishlist'))
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def requestSeller(request, product_id):
@@ -306,6 +322,8 @@ def requestSeller(request, product_id):
 			messages.success(request, "Sorry! Product is currently OutofStock.")
 			return HttpResponseRedirect(request.META['HTTP_REFERER'])
 			#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def orderHistory(request):
@@ -317,6 +335,8 @@ def orderHistory(request):
 		context['feed'] = feed
 		context['user'] = buyer
 		return render(request, 'history.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def myPosts(request):
@@ -328,6 +348,8 @@ def myPosts(request):
 		context['user'] = user
 		print(feed)
 		return render(request, 'managePosts.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def deletePost(request, product_id):
@@ -341,6 +363,8 @@ def deletePost(request, product_id):
 		context['feed'] = feed
 		messages.success(request, "Post successfully deleted!")
 		return render(request, 'myPosts.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def profile(request):
@@ -351,6 +375,8 @@ def profile(request):
 		context = {}
 		context['detail'] = detail
 		return render(request, 'profile_detail.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def editProfile(request):
@@ -361,6 +387,8 @@ def editProfile(request):
 			context = {}
 			context['user'] = user
 			return render(request, 'profile_edit.html', context)
+		else:
+			return HttpResponseRedirect(reverse('ors:login'))
 
 	if request.method == 'POST':
 		if request.user.is_authenticated:
@@ -385,6 +413,9 @@ def editProfile(request):
 			print()
 			
 			return HttpResponseRedirect(reverse('ors:profile'))
+
+		else:
+			return HttpResponseRedirect(reverse('ors:login'))
 
 
 def rateProduct(request, product_id):
@@ -417,6 +448,8 @@ def rateProduct(request, product_id):
 			print("pahle istemaal kare fir vichaar bate!!!")
 			messages.error(request, "Can't review Products you haven't used.")
 			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 		
 
 def requests(request):
@@ -430,6 +463,8 @@ def requests(request):
 		context['user'] = user
 		print(context)
 		return render(request, 'requested.html', context)
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
 
 
 def report(request):
@@ -465,3 +500,6 @@ def report(request):
 		context={'form':form}
 		#context['form'] = form
 		return render(request,'product_detail.html', context=context)
+		
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))

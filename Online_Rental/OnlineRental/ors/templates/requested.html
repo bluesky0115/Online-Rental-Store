@@ -84,14 +84,14 @@
   {% for product in detail %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
-      <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+      <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
         <h5 class="card-title">{{product.product.name}}</h5>
       </a>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-lg-3 col-xs-12 border" style="vertical-align: middle; ">
-          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
+          <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none; padding: auto;">
             <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
           </a>
         </div>
