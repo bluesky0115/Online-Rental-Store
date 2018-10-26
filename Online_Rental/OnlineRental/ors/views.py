@@ -203,11 +203,12 @@ def addProduct(request):
 				image = request.FILES.get('image')
 				name = request.POST['name']
 				description = request.POST['desc']
-				price = request.POST['price']
+				quantity = request.POST['quantity']
+				price = request.POST.get('price')
 				duration = request.POST.get('duration')
 				category = request.POST['category']
 				ptype = request.POST['ptype']
-				pr = Product(owner=owner, name=name, image=image, description=description,category=category, 
+				pr = Product(owner=owner, name=name, image=image, description=description,category=category, quantity=quantity,
 								price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
 				pr.save()
 				messages.success(request, "Product successfully added !!!")
