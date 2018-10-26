@@ -13,47 +13,19 @@
       rel="stylesheet">
     <title>Product Detailed</title>
 
-    <style>
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
+     <style type="text/css">
+    .emptyList {
+        height : 100vh;
+    }
+    body {
+      text-decoration: none;
+    }
+    a { 
+      color: inherit; 
+    }
+    </style>
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 140px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -75px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-</style>
-
-
+  
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
@@ -109,100 +81,67 @@
   </div>
 </nav>
 
-<div class="container-fluid" style="margin-top:112px;">
-  <div class="row" style="margin: 4px; border: solid 1px black;" >
-    <div class="col-lg-8 col-xs-12">
-      <div class="row">
-          
-          <img src="{{ product.image.url }}" style="width:40%; max-height: 245px">
-
-        </div>
-        {{product.rating}}
-        <div class="row">
-          <pre>
-          <h3>{{product.name}}</h3>
-          <b>Product Description:</b>{{product.description}}
-          <b>Price:</b>{{product.price}}
-          <b>Posted on:</b>{{product.postdate}}
-          <b>For {{product.ptype}}</b>
-        </pre>
-        </div>
-      </div>
-      <div class="col-lg-4 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            <b>Seller Name:</b>{{product.owner}}
-          </div>
+<div class="container-fluid" style="margin-top:112px; background-color: white;">
+  <div class="row">
+    <div class="col-lg-5">
+      <div class="card" style="height: 400px;">
+        <img class="card-header" src="{{ product.image.url }}" style="width: 100%; height: 300px;">
           <div class="card-body">
-            <div class="row">
-              <img src="{{ product.owner.dp.url }}" style="width:40%; max-height: 205px">
-            </div>
-            <div class="row">
-              Description
-              <pre>
-                <b>Seller Name:</b>{{product.owner}}
-                <b>Rating:</b> {{product.owner.rating}}
-                <b>Mobile:</b>{{product.owner.mobileNumber}}
-                {% if feed %}
-                  Reviews:<br>
-                  {% for review in feed %}
-                    Ratings: {{review.rating}}<br>
-                    Comment:
-                    {{review.description}}<br><br>
-                  {% endfor %}
-                {% endif %}
-              </pre>
-            </div>
+            <p class="card-text">
+              <center>{{product.name}}</center>
+            </p>
           </div>
-        <div class="class-footer">
+        </div>
+      </div>
+    <div class="col-lg-4">
+      <div class="card" style=" height: 400px;">
+        <div class="card-header">
+          ajdhka
+        </div>
+        <div class="card-body"> 
+          <form>
+            
+          </form>
         </div>
       </div>
     </div>
+    <div class="col-lg-3">
+      <div class="row">
+        <div class="card" style="width: 100%; height: 400px;">
+          <img class="card-header" src="{{ product.owner.dp.url }}" alt="Card image cap" style="max-height: 300px;">
+          <div class="card-body">
+            <p class="card-text">
+              <b>Seller Name:</b>{{product.owner}}<br>
+              <b>Rating:</b> {{product.owner.rating}}<br>
+              <b>Mobile:</b>{{product.owner.mobileNumber}}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <div class="col-3">
-        <a href="{% url 'ors:addWishlist' product.id %}">
-          <button class="btn">
-       <i class="material-icons" id="addtowishlist" style="font-size: 48px;">
-                    local_grocery_store
-      </i>
-    </button>
-      </a>
-      <label>Add to wislist</label>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-10">
+      <div class="card">
+        <div class="card-header"> DESCRIPTION </div>
+        <div class="card-body">{{product.description}}</div>
       </div>
-       <div class="col-3">
-        <a href="{% url 'ors:requestSeller' product.id %}">
-          <button class="btn">
-        <i class="material-icons" style="font-size: 48px;">
-                    person_add
-        </i>
-      </button>
-        </a>
-        <label>Request Seller</label>
-      </div>
-       <div class="col-3">
-        <a href="http://www.facebook.com/sharer/sharer.php?u=http://pythonanywhere.com{{ request.get_full_path|urlencode }}">
-        <button class="btn">
-        <i class="material-icons" style="font-size: 48px;">
-          share
-        </i>
-        </button>
-        </a>
-        
-        
-      </div>
-       <div class="col-3">
-        <a href="#">
-          <button class="btn">
-        <i class="material-icons" style="font-size: 48px;">
-          report
+    </div>
+    <div class="col-12 col-lg-2" style="background-color: white;">
+      <div class="row">
+        <div class="col-6 col-lg-12">
+          <i class="material-icons" style="font-size: 48px; display: flex; justify-content: center; align-items: center;">
+            share
           </i>
-        </button>
-        </a>
-          <label>Report</label>
-        
+        </div>
+        <div class="col-6 col-lg-12">
+          <i class="material-icons" style="font-size: 48px; display: flex; justify-content: center; align-items: center;">
+            report
+            </i>
+        </div>
       </div>
     </div>
+  </div>
 </div>
     <!-- Optional JavaScript -->
 

@@ -11,7 +11,8 @@
 
     <title>Manage post</title>
   </head>
-  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100%;">
+  
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100vh;">
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL</a>
@@ -64,12 +65,12 @@
     </ul>
   </div>
 </nav>
-{% if feed %}
-  {% for product in feed %}
+
 <div class="container-fluid" style="margin-top:112px;">
-  
+{% if feed %}
+  {% for product in feed %}  
   <div class="row" style=" ">
-    <div class="col-lg-4 col-md-4 col-xs-12" style="margin-bottom: 6px;">
+    <div class="col-xs-12 col-lg-4 col-md-3" style="margin-bottom: 6px;">
       <div class="card">
         <div class="card-header"> 
           <a href="{% url 'ors:productPage' product.id %}">{{product.name}}</a><br>
@@ -82,9 +83,10 @@
         </div>
       </div>
     </div>
-     {% endfor %}
-    {% endif %}
-
+  </div>
+  {% endfor %}
+{% endif %}
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
