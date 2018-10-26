@@ -194,7 +194,7 @@ def addProduct(request):
 				name = request.POST['name']
 				description = request.POST['desc']
 				price = request.POST['price']
-				duration = request.POST['duration']
+				duration = request.POST.get('duration')
 				category = request.POST['category']
 				ptype = request.POST['ptype']
 				pr = Product(owner=owner, name=name, image=image, description=description,category=category, 
