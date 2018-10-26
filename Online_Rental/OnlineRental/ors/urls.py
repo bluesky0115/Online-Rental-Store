@@ -28,4 +28,5 @@ urlpatterns = [
 	path('editProfile', views.editProfile, name='editProfile'),
 	path('rateProduct/<int:product_id>', views.rateProduct, name='rateProduct'),
 	path('requests', views.requests, name="requests"),
+	path('report', views.report, name="report"),
 ]

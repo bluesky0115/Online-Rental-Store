@@ -130,21 +130,58 @@
     <div class="col-12 col-lg-2" style="background-color: white;">
       <div class="row">
         <div class="col-6 col-lg-12">
+          <a href="http://www.facebook.com/sharer/sharer.php?u=http://http://127.0.0.1:8000{{ request.get_full_path|urlencode }}">
           <i class="material-icons" style="font-size: 48px; display: flex; justify-content: center; align-items: center;">
             share
           </i>
+        </a>
         </div>
+
+      
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Report</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body">
+                <form action="{% url 'ors:report' %}" method="POST" class="form-container">
+                  {% csrf_token %}
+                  
+                  {{ form.complain }}
+                  <input type="hidden" value="{{ product.id }}" name="product_id" />
+                  
+                  <input type="submit"  />
+                
+
+                </form>
+              </div>
+              
+              <!-- Modal footer -->
+              
+              
+            </div>
+          </div>
+      </div>
+
+       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+              Report
+        </button>
         <div class="col-6 col-lg-12">
-          <i class="material-icons" style="font-size: 48px; display: flex; justify-content: center; align-items: center;">
-            report
-            </i>
+          
+      </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-    <!-- Optional JavaScript -->
-
+    <!-- Optional JavaScript
+   
     <script>
       function myFunction() {
         var copyText = document.getElementById("myInput");

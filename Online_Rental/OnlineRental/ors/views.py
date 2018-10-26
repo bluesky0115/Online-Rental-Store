@@ -9,7 +9,7 @@ from .models import *
 from django.contrib.auth.models import User
 import datetime
 from django.db import connection
-
+from .forms import ReportForm
 
 feed = Product.objects.none()
 
@@ -216,7 +216,8 @@ def productPage(request, product_id):
 		context = dict()
 		context['product'] = product
 		context['feed'] = feed
-		
+		form = ReportForm()
+		context['form']=form
 		return render(request, 'product_detail.html', context)
 
 
@@ -407,3 +408,38 @@ def requests(request):
 		context['detail'] = detail
 		print(context)
 		return render(request, 'requested.html', context)
+
+
+def report(request):
+	print("Report")
+	if request.user.is_authenticated:
+		u = User.objects.get(id=request.user.id)
+		us = UserProfile.objects.get(user=u)
+		print("HIIIIIIIIIII")
+		if request.method == 'POST':
+			form = ReportForm(request.POST)
+			if form.is_valid():
+				report_form = form.save(commit=False)
+				report_form.complainant = us
+				report_form.respondant = us
+				print(request.POST['product_id'])
+				report_form.product = Product.objects.get(id=request.POST['product_id'])
+				
+				print("Hiiiiiii")
+				report_form.timestamp = datetime.datetime.now()
+				report_form.created_by = us
+				report_form.created_at = datetime.datetime.now()
+				report_form.modified_by = us
+				report_form.modified_at = datetime.datetime.now() 
+				print(us,u)
+				report_form.save()
+
+				return redirect('ors:dashboard') 
+			form = ReportForm()
+			context={'form':form}
+			#context['form'] = form
+			return render(request,'product_detail.html', context=context)
+		form = ReportForm()
+		context={'form':form}
+		#context['form'] = form
+		return render(request,'product_detail.html', context=context)
