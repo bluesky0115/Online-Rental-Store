@@ -16,14 +16,14 @@
 
     <style>
         .emptyList {
-          height : 100vh;
+          
         }
         a { 
           color: inherit; 
         }
     </style>
   </head>
-  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100vh;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL STORE</a>
@@ -127,18 +127,18 @@
   </div>
    {% endfor %}
 {% else %}
-  <div class="row emptyList" style="margin-top:112px;">
-      <div class="col-xs-12 col-lg-6" style="display: flex; justify-content: center; align-items: center;">
-          <div class="alert alert-info" role="alert" >
-              NO ITEMS IN WISHLIST
-          </div>
-      </div>
+  <div class="emptyList" style="margin-top:112px;">
+        <div class="alert alert-info" role="alert" >
+          <center>
+            NO ITEMS IN WISHLIST
+          </center>
+        </div>
   </div>
 
 {% endif %}
 </div>
 
-  <footer id="page-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0;>
+  <footer id="page-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0;position: fixed; width: 100%; >
     <div class="container">
       <div class="row">
         <div class="col">

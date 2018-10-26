@@ -84,18 +84,31 @@
   {% for product in feed %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
-      <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
-        <h5 class="card-title">{{product.product.name}}</h5>
-      </a>
+      <div class="row" style="width: 100%">
+        <div class="col-11">
+          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+            <h5 class="card-title">{{product.name}}</h5>
+          </a>
+      </div>
+      <div class="col-1">
+        {% if request.status == "rejected" %}
+          <button type="button" class="btn btn-danger" disabled>REJECTED</button>
+        {% elif request.status == "requested" %}
+          <button type="button" class="btn btn-info" disabled>REQUESTED</button>
+        {% else %}
+          <button type="button" class="btn btn-warning" disabled>ACCEPTED</button>
+        {% endif %}
+      </div>
+    </div>
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-lg-3 col-xs-12 border" style="vertical-align: middle; ">
+        <div class="col-lg-4 col-xs-12 border" style="vertical-align: middle; ">
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
-            <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
+            <center><img src="{{ product.product.image.url }}" style="height:100%;max-height: 245px;"></center>
           </a>
         </div>
-        <div class="col-lg-5 col-xs-12">
+        <div class="col-lg-6 col-xs-12">
           <div class="row" style="padding: 2%; height: 45px">
             by - {{product.product.owner}}
           </div>
@@ -106,30 +119,40 @@
             <h4> Price: {{product.product.price}}</h4>
           </div>
         </div>
-        <div class="col-lg-4 col-xs-12" style="">
+        <div class="col-lg-2 col-xs-12" style="">
             <div class="row" style=" height: 100%;">
-              <div class="col-6 col-lg-12">
-                <div class="form-group">
-                  <!-- ** Rate product ** -->
-                  <label for = "sell1">Select Rating:</label>
-                  <select class = "form-control" id="sell1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
+              {% if request.status == "accepted" %}
+                <div class="col-6 col-lg-12">
+                  <div class="form-group">
+                    <!-- ** Rate product ** -->
+                    <label for = "sell1">Select Rating:</label>
+                    <select class = "form-control" id="sell1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-6 col-lg-12">
-                <div class="row form-group">
-                  <label for="usr">Comment:</label>
-                  <input type="text" class="form-control" id="usr" style="width: 100%;">
+                <div class="col-6 col-lg-12">
+                  <div class="row form-group">
+                    <label for="usr">Comment:</label>
+                    <input type="text" class="form-control" id="usr" style="width: 100%;">
+                  </div>
                 </div>
-              </div>
-              <div class="col-12">
-                <center><button class="row btn btn-primary" type="submit">Submit</button></center>
-              </div>
+                <div class="col-12">
+                  <center><button class="row btn btn-primary" type="submit">Submit</button></center>
+                </div>
+              {% elif request.status == "requested" %}
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                  <button class="btn btn-danger">CANCEL REQ</button>
+                </div>
+              {% else %}
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                  <button class="btn btn-warning">OKAY</button>
+                </div>
+              {% endif %}
             </div>
         </div>
       </div>

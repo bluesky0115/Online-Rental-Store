@@ -139,16 +139,29 @@
 {% if feed %}
   {% for product in feed %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
-    <div class="card-header" style="background-color:#e0e0e0"> 
-      <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
-        <h5 class="card-title">{{product.name}}</h5>
-      </a>
+    <div class="card-header" style="background-color:#e0e0e0">
+      <div class="row" style="width: 100%">
+        <div class="col-11">
+          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+            <h5 class="card-title">{{product.name}}</h5>
+          </a>
+      </div>
+      <div class="col-1">
+        {% if product.ptype == "free" %}
+          <button type="button" class="btn btn-danger" disabled>FREE</button>
+        {% elif product.ptype == "rent" %}
+          <button type="button" class="btn btn-info" disabled>RENT</button>
+        {% else %}
+          <button type="button" class="btn btn-warning" disabled>SELL</button>
+        {% endif %}
+      </div>
+    </div>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-lg-4 col-xs-12 border" style="vertical-align: middle; ">
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
-            <img src="{{ product.image.url }}" style="width:100%; max-height: 245px">
+            <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center>
           </a>
         </div>
         <div class="col-lg-7 col-xs-12">
