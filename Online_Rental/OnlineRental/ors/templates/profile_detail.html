@@ -17,6 +17,7 @@
         border: 1px solid grey;
         padding: 1px;
         margin: 2px;
+        margin-bottom: 10px;
       }
     </style>
 
@@ -79,21 +80,23 @@
 <div class="container-fluid" style="margin-top:112px;">
   <div class="row" style="margin: 4px;" >
     <div class="col-xs-12 col-lg-6 bg-light" style="width: 100%">
-      <img img src="{{ detail.dp.url }} " style="max-width: 100%;max-height: 400px;">
+      <center>
+        <img img src="{{ detail.dp.url }} " style="max-width: 100%;max-height: 400px;">
+      </center>
     </div>
     <div class="card bg-light col-xs-12 col-lg-6">
-      <div class="card-body info" style="align-items: center;">
-        <div class="f"><h5> NAME: </h5><b>{{detail.name}}</b><br></div>
-        <div class="f"><h5> EMAIL: </h5><b>{{detail.email}}</b><br></div>
-        <div class="f"><h5> MOBILE NUMBER:</h5><b>{{detail.mobileNumber}}</b><br></div>
-        <div class="f"><h5> ROLL NO: </h5><b>{{detail.roll_no}}</b><br></div>
-        <div class="f"><h5> YEAR: </h5><b>{{detail.year}}</b><br></div>
-        <div class="f"><h5> GENDER: </h5><b>{{detail.gender}}</b><br></div>
+      <div class="card-body info row" style="align-items: center;">
+        <div class="col-12"><h5> NAME: </h5><b>{{detail.name}}</b></div>
+        <div class="col-12"><h5> EMAIL: </h5><b>{{detail.email}}</b></div>
+        <div class="col-12"><h5> MOBILE NUMBER:</h5><b>{{detail.mobileNumber}}</b></div>
+        <div class="col-12"><h5> ROLL NO: </h5><b>{{detail.roll_no}}</b></div>
+        <div class="col-12"><h5> YEAR: </h5><b>{{detail.year}}</b></div>
+        <div class="col-12"><h5> GENDER: </h5><b>{{detail.gender}}</b></div>
       </div>
     </div>
   </div>
 </div>
-<div> <center> <button class="btn btn-primary" onclick="location.href='{% url 'ors:editProfile' %}';" > EDIT PROFILE </button> </center> </div>
+<div style="margin-bottom: 56px;"> <center> <button class="btn btn-primary" onclick="location.href='{% url 'ors:editProfile' %}';" > EDIT PROFILE </button> </center> </div>
 </div>
 
   <footer id="main-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0; position: fixed; width: 100%;">
