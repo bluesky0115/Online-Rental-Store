@@ -152,19 +152,11 @@
               <div class="modal-body">
                 <form action="{% url 'ors:report' %}" method="POST" class="form-container">
                   {% csrf_token %}
-                  
                   {{ form.complain }}
                   <input type="hidden" value="{{ product.id }}" name="product_id" />
-                  
-                  <input type="submit"  />
-                
-
+                  <center><input class="btn btn-warning" type="submit"/></center>
                 </form>
-              </div>
-              
-              <!-- Modal footer -->
-              
-              
+              </div>       
             </div>
           </div>
       </div>
@@ -173,7 +165,6 @@
               Report
         </button>
         <div class="col-6 col-lg-12">
-          
       </div>
         </div>
       </div>
