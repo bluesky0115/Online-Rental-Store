@@ -106,10 +106,7 @@
                   </div>
                 </div>
                 <center>
-                <button is="sr" class="btn btn-outline-success my-2 my-sm-0" type="submit" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" 
-                data-content="{% for message in messages %} {{ message }} {% endfor %}"
-                >Search
-                </button>
+                <button is="sr" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </center>
           </form>
   		</li>
@@ -161,6 +158,14 @@
 </nav>
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"  style="margin-top: 56px; z-index: 1;">
+  {% for message in messages %}
+      <div class="mr-auto bg-light" id="message" style="display: none; z-index: 2; padding: 0px 2px 2px 0px; width: 100%;">
+        <center>
+          {{ message }}
+        <!-- <a href="#" class="del-msg">&times;</a> -->
+        </center>
+      </div>
+  {% endfor %}
   <div class="collapse" id="collapseExample">
     <a href="{% url 'ors:searchTag' 'newest' %}"> <button type="button" class="btn btn-outline-light" >Newest First</button></a>
     <a href="{% url 'ors:searchTag' 'pricelow2high' %}"><button type="button" class="btn btn-outline-light">Price - Low to High</button></a>
@@ -177,14 +182,6 @@
 
 
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
- <center>
-{% for message in messages %}
-    <div class="alert alert-primary" id="message" style="display: none;">
-        {{ message }}
-        <!-- <a href="#" class="del-msg">&times;</a> -->
-    </div>
-{% endfor %}
-</center>
 
 {% if feed %}
   {% for product in feed %}
@@ -264,16 +261,6 @@
           $("#message").fadeIn();
           $("#message").fadeOut(6000);
       });
-
-  $(function () {
-    $('[data-toggle="popover"]').popover('show')
-    hide();
-  })
-
-  setTimeout(function hide() {
-        $('[data-toggle="popover"]').popover('hide');
-    }, 6000);
-
 
 </script>
 
