@@ -27,7 +27,7 @@
 
   
   </head>
-  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100vh;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="{% url 'ors:dashboard' %}"> <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL STORE</a>
@@ -81,15 +81,168 @@
   </div>
 </nav>
 
-<div class="card" style="margin-top:112px;">
+<div class="card" style="margin-top:112px; margin-left: 10px; margin-right: 10px; margin-bottom: 60px;">
   <div class="card-header">
-    <h5>{{product.name}}</h5>
+    <div class="row" style="width: 100%">
+        <div class="col-11">
+          <h5 class="card-title">{{product.name}}</h5>
+      </div>
+      <div class="col-1">
+        {% if product.ptype == "free" %}
+          <button type="button" class="btn btn-danger" disabled>FREE</button>
+        {% elif product.ptype == "rent" %}
+          <button type="button" class="btn btn-info" disabled>RENT</button>
+        {% else %}
+          <button type="button" class="btn btn-warning" disabled>SELL</button>
+        {% endif %}
+      </div>
+    </div>
   </div>
   <div class="card-body">
-    
+    <div class="row">
+      <div class="col-12 col-lg-4">
+        <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center>
+      </div>
+      <div class="col-12 col-lg-4">
+        <form action="requestuser">
+          {% if product.ptype != "free" %}
+            <input class="form-control" type="text" placeholder="PRICE: {{product.price}}" readonly>
+          {% else %}
+            <input class="form-control" type="text" placeholder="FREE PRODUCT" readonly>
+          {% endif %}
+          {% if product.ptype == "rent" %}
+            <input type="number" max="{{ product.duration }}" placeholder="DURATION">
+          {% endif %}
+            <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})">
+            <input type="number" class="form-control" placeholder="RATING: {{product.rating}}" readonly>
+            <center><button type="submit" class="btn btn-success">REQUEST SELLER</button></center>
+        </form>
+        <form action="{% url 'ors:addWishlist' product.id %}" style="margin: 3px;">
+              <center><button type="submit" class="btn btn-warning">
+              ADD{% for message in messages %}
+                {% if message %}ED
+                {% endif %}
+                {% endfor %} TO WISHLIST
+              
+                </button>
+              </center>
+            
+        </form>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            <h5>{{product.owner.name}}</h5>
+          </div>
+          <div class="card-body">
+          <center><img src="{{ product.owner.dp.url }}" style="height: 100%; max-height: 150px;"></center>
+          </div>
+          <div class="card-footer">
+            <b>Rating:</b> {{product.owner.rating}}<br>
+            <b>Mobile:</b>{{product.owner.mobileNumber}}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
+  <div class="card-footer">
+    <div class="row"> 
+      <div class="col-12 col-lg-10">
+        <b>DESCRIPTION: </b>{{product.description}}
+      </div>
+      <div class="col-12 col-lg-2">
+        <div class="row">
+          <div class="col-6">
+            <center><button class="btn btn-info" onclick="location.href('http://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000{{ request.get_full_path|urlencode }}')"><i class="material-icons">share</i></button></center>
+          </div>
+          <div class="col-6">
+            <center><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="material-icons">flag</i></button></center>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row" style="max-height: 300px; height: 200px; width: 100%; overflow-y: auto; margin-top: 20px;">
+      <div class="col-12" style="width: 100%;">
+        <center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#RateModal">RATE PRODUCT</button></center>
+      </div>
+      <div class="col-12" style="width: 100%;">
+        
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="modal" id="RateModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">RATE</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+    <!-- Modal body -->
+      <div class="modal-body">
+        <form action="{% url 'ors:rateProduct' product.id %}" method="POST" class="form-container">
+        {% csrf_token %}
+          <div class="form-group">
+                    <!-- ** Rate product ** -->
+            <label for = "sell1">Select Rating:</label>
+              <select class = "form-control" id="sell1" required>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+          </div>
+          <div class="row form-group">
+            <label for="usr">Comment:</label>
+            <input type="text" class="form-control" id="usr" style="width: 100%;" required>
+          </div>
+          <center><input class="btn btn-warning" type="submit"/></center>
+        </form>
+      </div>       
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Report</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+    <!-- Modal body -->
+      <div class="modal-body">
+        <form action="{% url 'ors:report' %}" method="POST" class="form-container">
+        {% csrf_token %}
+        {{ form.complain }}
+          <input type="hidden" value="{{ product.id }}" name="product_id" />
+          <center><input class="btn btn-warning" type="submit"/></center>
+        </form>
+      </div>       
+    </div>
+  </div>
+</div>
+
+
+<footer id="main-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0; position: fixed; width: 100%;">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="lead text-center">
+            Copyright &copy;
+            <span id="year"></span>
+            Project A-10
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
     <!-- Optional JavaScript
    
     <script>

@@ -145,17 +145,17 @@
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
             <h5 class="card-title">{{product.name}}</h5>
           </a>
+        </div>
+        <div class="col-1">
+          {% if product.ptype == "free" %}
+            <button type="button" class="btn btn-danger" disabled>FREE</button>
+          {% elif product.ptype == "rent" %}
+            <button type="button" class="btn btn-info" disabled>RENT</button>
+          {% else %}
+            <button type="button" class="btn btn-warning" disabled>SELL</button>
+          {% endif %}
+        </div>
       </div>
-      <div class="col-1">
-        {% if product.ptype == "free" %}
-          <button type="button" class="btn btn-danger" disabled>FREE</button>
-        {% elif product.ptype == "rent" %}
-          <button type="button" class="btn btn-info" disabled>RENT</button>
-        {% else %}
-          <button type="button" class="btn btn-warning" disabled>SELL</button>
-        {% endif %}
-      </div>
-    </div>
     </div>
     <div class="card-body">
       <div class="row">
