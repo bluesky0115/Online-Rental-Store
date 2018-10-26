@@ -106,7 +106,10 @@
                   </div>
                 </div>
                 <center>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button is="sr" class="btn btn-outline-success my-2 my-sm-0" type="submit" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" 
+                data-content="{% for message in messages %} {{ message }} {% endfor %}"
+                >Search
+                </button>
                 </center>
           </form>
   		</li>
@@ -174,9 +177,9 @@
 
 
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
-<center>
+ <center>
 {% for message in messages %}
-    <div id="message" style="display: none;">
+    <div class="alert alert-primary" id="message" style="display: none;">
         {{ message }}
         <!-- <a href="#" class="del-msg">&times;</a> -->
     </div>
@@ -257,10 +260,21 @@
 
 
 <script>  
-$(document).ready(function(){
-        $("#message").fadeIn();
-        $("#message").fadeOut(6000);
-    });
+  $(document).ready(function(){
+          $("#message").fadeIn();
+          $("#message").fadeOut(6000);
+      });
+
+  $(function () {
+    $('[data-toggle="popover"]').popover('show')
+    hide();
+  })
+
+  setTimeout(function hide() {
+        $('[data-toggle="popover"]').popover('hide');
+    }, 6000);
+
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
