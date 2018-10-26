@@ -24,7 +24,7 @@
         }
     </style>
   </head>
-  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100vh;">
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL STORE</a>
@@ -87,7 +87,10 @@
       </div>
   {% endfor %}
 
-<div style="margin-top: 112px ; padding: 2%; z-index:-1; min-height: 100%;" >
+<!-- <div style="margin-top: 112px ; padding: 2%; z-index:-1; min-height: 100%;" > -->
+
+
+<div style="margin-top: 112px ; padding: 2%; z-index:-1; min-height: 100%; margin-bottom: 60px;" >
 
 {% if feed %}
   {% for product in feed %}
@@ -101,7 +104,7 @@
       <div class="row">
         <div class="col-lg-4 col-xs-12 border" style="vertical-align: middle; ">
           <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none; padding: auto;">
-            <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
+            <center><img src="{{ product.product.image.url }}" style="height: 100%; max-height: 245px"></center>
           </a>
         </div>
         <div class="col-lg-7 col-xs-12">
