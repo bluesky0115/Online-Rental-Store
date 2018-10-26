@@ -50,7 +50,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item active" href="{% url 'ors:orderHistory' %}">My Orders<span class="sr-only">(current)</span></a>
-              <a class="dropdown-item" href="{% url 'ors:requested' %}">Requested</a>
+              <a class="dropdown-item" href="{% url 'ors:requests' %}">requests</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -89,6 +89,10 @@
       </a>
     </div>
     <div class="card-body">
+<<<<<<< HEAD
+      <h5 class="card-title"><a href="{% url 'ors:productPage' product.product.id %}">{{product.product.name}}</a></h5>
+=======
+>>>>>>> 4a08540fb6a96f1f49ce7206794f1f84fb4b8db8
       <div class="row">
         <div class="col-lg-3 col-xs-12 border" style="vertical-align: middle; ">
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">

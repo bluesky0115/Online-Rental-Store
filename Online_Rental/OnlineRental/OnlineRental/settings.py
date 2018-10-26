@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'OnlineRental.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME' : 'OnlineRental',
+        'NAME' : 'ors',
         'USER' : 'deepak022',
         'PASSWORD' : 'qwerty1106',
         'HOST' : 'deepakdbinstance.chvxxqsxfg09.ap-south-1.rds.amazonaws.com',

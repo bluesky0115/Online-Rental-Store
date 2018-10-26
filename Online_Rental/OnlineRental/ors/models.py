@@ -37,6 +37,10 @@ class UserProfile(models.Model):
 	bio = models.TextField(blank=True)
 
 	dp = models.FileField(upload_to=user_directory_path, blank=True)
+	created_by = models.CharField(max_length=60, default=user)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.name)
@@ -76,6 +80,10 @@ class Product(models.Model):
 	image = models.FileField(upload_to=product_directory_path, blank=False, default='default.jpg')
 	ptype = models.CharField(max_length=4, choices=(
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
+	created_by = models.CharField(max_length=60, default=owner)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name
@@ -87,6 +95,10 @@ class Wishlist(models.Model):
 												('InStock','InStock'),('OutofStock','OutofStock')), default='InStock')
 	quantity = models.IntegerField(blank=False, default=1)
 	timestamp = models.DateTimeField(default=datetime.now, blank=True)
+	created_by = models.CharField(max_length=60, default=user)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.user.name)+'\'s Wishlist'
@@ -96,9 +108,31 @@ class RequestSeller(models.Model):
 	seller = models.ForeignKey(UserProfile, related_name='buyer', on_delete=models.CASCADE)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(default=datetime.now, blank=True)
+	created_by = models.CharField(max_length=60, default=buyer)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.buyer.name)+'\'s request for '+str(self.product.name)
+
+class OrderHistory(models.Model):
+	customer = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+	seller = models.ForeignKey(UserProfile, related_name='customer', on_delete=models.CASCADE)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE)
+	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+	dateStart = models.DateField()
+	dateEnd = models.DateField()
+	status = models.CharField(max_length=20, choices=(
+							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
+	created_by = models.CharField(max_length=60, default=customer)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+
+	def __str__(self):
+		return str(self.user.name)+'\'s OrderHistory'
+
 
 class ProductRating(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -106,6 +140,10 @@ class ProductRating(models.Model):
 	rating = models.DecimalField(max_digits=2, decimal_places=1, blank=False, default=1)
 	description = models.TextField(blank=True)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+	created_by = models.CharField(max_length=60, default=buyer)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.buyer.name)+'\'s rating of '+self.product.name
@@ -116,21 +154,14 @@ class SellerRating(models.Model):
 	rating = models.DecimalField(max_digits=2, decimal_places=1, blank=False, default=1)
 	description = models.TextField(blank=True)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+	created_by = models.CharField(max_length=60, default=buyer)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.seller.name)+'\'s rating by '+self.buyer.name
 
-class OrderHistory(models.Model):
-	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-	product = models.ForeignKey(Product, on_delete=models.CASCADE)
-	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
-	dateStart = models.DateField()
-	dateEnd = models.DateField()
-	status = models.CharField(max_length=20, choices=(
-							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
-
-	def __str__(self):
-		return str(self.user.name)+'\'s OrderHistory'
 
 class Report(models.Model):
 	complainant = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -138,6 +169,10 @@ class Report(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 	complain = models.TextField()
+	created_by = models.CharField(max_length=60, default=complainant)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.complainant)+'\'s report'
@@ -154,6 +189,10 @@ class ArchivedProduct(models.Model):
 	quantity = models.IntegerField(blank=False, default=1)
 	ptype = models.CharField(max_length=4, choices=(
 												('sell','sell'),('rent','rent'),('free','free')), default='free')
+	created_by = models.CharField(max_length=60, blank=True)
+	created_at = models.DateTimeField(default=datetime.now, blank=False)
+	modified_by = models.CharField(max_length=60, null=True)
+	modified_at = models.DateTimeField(default=datetime.now, blank=True)
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name
