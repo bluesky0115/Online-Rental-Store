@@ -42,8 +42,8 @@ def signup(request):
 		except User.DoesNotExist:
 			user = User.objects.create_user(username=username, email=email, password=password)
 			user.save()
-			userp = UserProfile(user=user, name=fullname, email=email, roll_no=roll_no, mobileNumber=phone_number, dp=dp, year=batchYear,
-                               gender=gender)
+			userp = UserProfile(user=user, name=fullname, email=email, roll_no=roll_no, mobileNumber=phone_number,
+								 dp=dp, year=batchYear, gender=gender, created_by=user.email, created_at=datetime.datetime.now())
 			userp.save()
 			print('hogya!')
 			return HttpResponseRedirect(reverse('ors:login'))
@@ -197,7 +197,8 @@ def addProduct(request):
 				duration = request.POST['duration']
 				category = request.POST['category']
 				ptype = request.POST['ptype']
-				pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
+				pr = Product(owner=owner, name=name, image=image, description=description,category=category, 
+								price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
 				pr.save()
 				messages.success(request, "Product successfully added !!!")
 				return HttpResponseRedirect(reverse('ors:dashboard'))
@@ -276,8 +277,10 @@ def requestSeller(request, product_id):
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product).count()
 			if (exist == 0) and (product.owner is not buyer):
-				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now())
+				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
 				req.save()
+				history = OrderHistory(customer=buyer, seller=seller, product=product, status='requested', created_by=user.email, created_at=datetime.datetime.now())
+				history.save()
 				print("requested")
 				messages.success(request, "Requested the Seller")
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
@@ -298,7 +301,7 @@ def orderHistory(request):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
 		buyer = UserProfile.objects.get(email=user.email)
-		feed = RequestSeller.objects.filter(buyer=buyer).order_by('-timestamp')
+		feed = OrderHistory.objects.all().order_by('-timestamp')
 		context = dict()
 		context['feed'] = feed
 		return render(request, 'history.html', context)
@@ -355,6 +358,8 @@ def editProfile(request):
 				user.name = name
 			if str(mobileNumber) is not '':
 				user.mobileNumber = mobileNumber
+			user.modified_by = request.user.email
+			user.modified_at = datetime.datetime.now()
 			user.save()
 			print('gya')
 			return HttpResponseRedirect(reverse('ors:profile'))
@@ -377,7 +382,7 @@ def rateProduct(request, product_id):
 					rating = request.POST['rating']
 					comment = request.POST['comment']
 					print('post')
-					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment)
+					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment, created_by=request.user.email, created_at=datetime.datetime.now())
 					review.save()
 					messages.success(request, "Thanks for your review !")
 					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
@@ -392,7 +397,7 @@ def rateProduct(request, product_id):
 			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 		
 
-def requested(request):
+def requests(request):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
 		print(u)
