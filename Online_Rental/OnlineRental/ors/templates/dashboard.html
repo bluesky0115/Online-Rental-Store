@@ -9,12 +9,14 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+
 
     <style type="text/css">
     .emptyList {
@@ -77,6 +79,8 @@
     background-color: #3e8e41;
 }
 </style>
+
+
 </head>
 
 
@@ -172,9 +176,9 @@
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
 <center>
 {% for message in messages %}
-    <div class="message" id="message" style="display: none;">
+    <div id="message" style="display: none;">
         {{ message }}
-        <a href="#" class="del-msg">&times;</a>
+        <!-- <a href="#" class="del-msg">&times;</a> -->
     </div>
 {% endfor %}
 </center>
@@ -209,7 +213,7 @@
             <div class="row" style=" height: 100%;">
               <div class="col-6 col-lg-12" style="display: flex; justify-content: center; align-items: center;">
                   <a href="{% url 'ors:addWishlist' product.id %}">
-                    <i class="material-icons" id="addtowishlist" style="font-size: 48px;">
+                    <i class="material-icons" id="addwishlist" style="font-size: 48px;">
                     local_grocery_store
                   </i></a>
               </div>
@@ -251,17 +255,17 @@
     </div>
   </footer>
 
-<script>
-  $(document).ready(function() {
-    $('#addtowishlist').click(myFunction);
-  });
 
-function myFunction() {
-  document.getElementById("message").display="block";
-}
+<script>  
+$(document).ready(function(){
+        $("#message").fadeIn();
+        $("#message").fadeOut(6000);
+    });
 </script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -146,6 +146,7 @@ def searchProduct(request):
 				#print(feed)
 				context = dict()
 				context['feed'] = feed
+				messages.success(request, str(feed.count())+" products found !!!")
 				return render(request, 'dashboard.html', context)
 
 def searchTag(request, tag):
@@ -198,11 +199,12 @@ def addProduct(request):
 				ptype = request.POST['ptype']
 				pr = Product(owner=owner, name=name, image=image, description=description, category=category, price=price, ptype=ptype)
 				pr.save()
-				print("added")
+				messages.success(request, "Product successfully added !!!")
 				return HttpResponseRedirect(reverse('ors:dashboard'))
 			else:
 				print("No image")
-				return HttpResponseRedirect(reverse('ors:dashboard'))
+				messages.success(request, "Please select an image for the Product.")
+				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def productPage(request, product_id):
@@ -213,7 +215,7 @@ def productPage(request, product_id):
 		context = dict()
 		context['product'] = product
 		context['feed'] = feed
-		print(str(product.id), request)
+		
 		return render(request, 'product_detail.html', context)
 
 
@@ -259,6 +261,7 @@ def deletefromWishlist(request, product_id):
 		context = dict()
 		feed = Wishlist.objects.all().order_by('-timestamp')
 		context['feed'] = feed
+		messages.success(request, "Product successfully removed from your Wishlist!")
 		return render(request, 'wishlist.html', context)
 
 
@@ -276,14 +279,17 @@ def requestSeller(request, product_id):
 				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now())
 				req.save()
 				print("requested")
+				messages.success(request, "Requested the Seller")
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 			else:
 				print("already requested")
+				messages.warning(request, "Product already requested! Please wait for seller to repond.")
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 		else:
 			print("OutofStock!!!")
+			messages.success(request, "Sorry! Product is currently OutofStock.")
 			return HttpResponseRedirect(request.META['HTTP_REFERER'])
 			#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 
@@ -317,7 +323,7 @@ def deletePost(request, product_id):
 		feed = Product.objects.filter(owner=user).order_by('-postdate')
 		context = dict()
 		context['feed'] = feed
-
+		messages.success(request, "Post successfully deleted!")
 		return render(request, 'myPosts.html', context)
 
 
@@ -373,13 +379,16 @@ def rateProduct(request, product_id):
 					print('post')
 					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment)
 					review.save()
+					messages.success(request, "Thanks for your review !")
 					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 			else:
 				print("baar baar nhi...")
+				messages.warning(request, "You have already reviewed this Product")
 				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 
 		else:
 			print("pahle istemaal kare fir vichaar bate!!!")
+			messages.error(request, "Can't review Products you haven't used.")
 			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 		
 
