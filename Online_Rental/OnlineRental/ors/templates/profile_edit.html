@@ -11,7 +11,7 @@
 
     <title>Edit Profile</title>
   </head>
-  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
+  <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat; height: 100vh;">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="z-index: +2;">
   <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;">ONLINE RENTAL STORE</a>
@@ -74,8 +74,10 @@
     <form method="post" action="{% url 'ors:editProfile' %}" enctype="multipart/form-data">
           {% csrf_token %}
     <div class="row">
-      <div class="col-xs-12 col-lg-3" >
-        <img id="selectedFile" src="{{ user.dp.url }}" width="100%" style="height: 200px; overflow-y: hidden;" >
+      <div class="col-xs-12 col-lg-5" >
+        <center>
+          <img id="selectedFile" src="{{ user.dp.url }}" style="height: 200px; overflow-y: hidden;" >
+        </center>
         <div class="custom-file" style="margin-bottom: 0px;">
           <div class="input-group mb-3">
             <input type="file" class="custom-file-input" name="image" id="inputGroupFile" onchange="readURL(this);">
@@ -109,6 +111,20 @@
 
 </div>
 </div>
+
+<footer id="main-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0; position: fixed; width: 100%;">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="lead text-center">
+            Copyright &copy;
+            <span id="year"></span>
+            Project A-10
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
   function readURL(input) {
