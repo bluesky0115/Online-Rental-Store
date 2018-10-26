@@ -121,8 +121,8 @@ class OrderHistory(models.Model):
 	seller = models.ForeignKey(UserProfile, related_name='customer', on_delete=models.CASCADE)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
-	dateStart = models.DateField()
-	dateEnd = models.DateField()
+	dateStart = models.DateField(null=True)
+	dateEnd = models.DateField(null=True)
 	status = models.CharField(max_length=20, choices=(
 							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
 	created_by = models.CharField(max_length=60, default=customer)
