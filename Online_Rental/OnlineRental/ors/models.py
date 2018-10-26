@@ -40,7 +40,7 @@ class UserProfile(models.Model):
 	created_by = models.CharField(max_length=60, default=user)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.name)
@@ -83,7 +83,7 @@ class Product(models.Model):
 	created_by = models.CharField(max_length=60, default=owner)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name
@@ -98,7 +98,7 @@ class Wishlist(models.Model):
 	created_by = models.CharField(max_length=60, default=user)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.user.name)+'\'s Wishlist'
@@ -111,7 +111,7 @@ class RequestSeller(models.Model):
 	created_by = models.CharField(max_length=60, default=buyer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.buyer.name)+'\'s request for '+str(self.product.name)
@@ -128,7 +128,7 @@ class OrderHistory(models.Model):
 	created_by = models.CharField(max_length=60, default=customer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.user.name)+'\'s OrderHistory'
@@ -143,7 +143,7 @@ class ProductRating(models.Model):
 	created_by = models.CharField(max_length=60, default=buyer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.buyer.name)+'\'s rating of '+self.product.name
@@ -157,7 +157,7 @@ class SellerRating(models.Model):
 	created_by = models.CharField(max_length=60, default=buyer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.seller.name)+'\'s rating by '+self.buyer.name
@@ -172,7 +172,7 @@ class Report(models.Model):
 	created_by = models.CharField(max_length=60, default=complainant)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.complainant)+'\'s report'
@@ -192,7 +192,7 @@ class ArchivedProduct(models.Model):
 	created_by = models.CharField(max_length=60, blank=True)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
-	modified_at = models.DateTimeField(default=datetime.now, blank=True)
+	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name
