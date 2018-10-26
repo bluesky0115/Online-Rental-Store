@@ -80,7 +80,7 @@
           <div class="card-body">
           <div class="row">
             <div class="col-lg-4 col-xs-12" style="height:">
-                <img id="selectedFile" src="{% static 'ors/image/upload.png' %}" width="100%">
+                <img id="selectedFile" src="{{ Product.image.url }}" width="100%">
 
                 <div class="custom-file" style="margin-bottom: 0px;">
                     <div class="input-group mb-3">
@@ -94,11 +94,11 @@
           <div class="row form-group">
             <div class="col" style="margin: 0px;">
               <label for="productname"> Product Name</label>
-              <input type="text" class="form-control" placeholder="Product Name" name="name">
+              <input type="text" class="form-control" placeholder="{{ product.name }}" name="name">
             </div>
             <div class="form-group" >
               <label for="quantity"> Quantity</label>
-              <input type="number" min="0" class="form-control" placeholder="Quantity" name="quantity">
+              <input type="number" min="0" class="form-control" placeholder="{{ product.quantity }}" name="quantity">
             </div>
           
           </div>
@@ -106,32 +106,26 @@
           
           <div class="form-group">
               <label for="category">FOR</label>
-                <select name="ptype" class="form-control" id="for_drop" onChange="changetextbox();">
-                  <option value="rent" selected>Rent</option>
+                <select name="ptype" class="form-control" id="for_drop" onChange="changetextbox();" selected="{{ product.ptype }}">
+                  <option value="rent">Rent</option>
                   <option value="sell">Sell</option>
                   <option value="free">Free</option>
                 </select>
-              
-                <!-- <div class="row">
-                  <input type="radio" name="for" value="rent" id="rent">Rent
-                  <input type="radio" name="for" value="sell" id="sell">Sell 
-                  <input type="radio" name="for" value="free" id="free" onChange="changetextbox();">Free
-                </div> -->
           </div>
           <div class="row form-group">
             <div class="col" style="margin: 0px;">
               <label for="price"> Price</label>
-              <input type="number" min="0" class="form-control" placeholder="Price" name="price" id="price_drop">
+              <input type="number" min="0" class="form-control" placeholder="{{ product.price }}" name="price" id="price_drop">
             </div>
             <div class="col">
               <label for="Duration"> Duration </label>
-              <input type="number" min="0" class="form-control" placeholder="Duration" name="duration" id="duration_drop">
+              <input type="number" min="0" class="form-control" placeholder="{{ product.duration }}" name="duration" id="duration_drop">
             </div>
           </div>
           <div class="col">
               <label for="tttype">Category</label>
-                <select name="category" class="form-control" id="tttype">
-                  <option value="electronics" selected>Electronic</option>
+                <select name="category" class="form-control" id="tttype" selected="{{ product.category }}">
+                  <option value="electronics">Electronic</option>
                   <option value="stationary">Stationary</option>
                   <option value="fashion">Fashion</option>
                   <option value="sports">Sports</option>
@@ -141,9 +135,12 @@
             </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Description</label>
-            <textarea  name="desc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea  name="desc" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="{{product.description}}"></textarea>
           </div>
-         <center> <button type="submit" class="btn btn-primary mb-2">POST</button> </center>
+         <center> <button type="submit" class="btn btn-primary mb-2">UPDATE</button> </center>
+        </form>
+        <form  method="post" action="{% url 'ors:deleteProduct' %}" enctype="multipart/form-data">
+          <center> <button type="submit" class="btn btn-danger mb-2">DELETE</button></center>
         </form>
       </div>
     </div>

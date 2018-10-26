@@ -194,7 +194,7 @@ def addProduct(request):
 				name = request.POST['name']
 				description = request.POST['desc']
 				price = request.POST['price']
-				duration = request.POST['duration']
+				duration = request.POST.get('duration')
 				category = request.POST['category']
 				ptype = request.POST['ptype']
 				pr = Product(owner=owner, name=name, image=image, description=description,category=category, 
@@ -344,25 +344,34 @@ def profile(request):
 def editProfile(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:
-			print('get')
-			return render(request, 'profile_edit.html')
+			user = UserProfile.objects.get(email=request.user.email)
+			print("get")
+			context = {}
+			context['user'] = user
+			return render(request, 'profile_edit.html', context)
 
 	if request.method == 'POST':
 		if request.user.is_authenticated:
 			print('post')
 			user = UserProfile.objects.get(email=request.user.email)
 			name = request.POST['name']
-			mobileNumber = request.POST['mobileNumber']
-
-
-			if str(name) is not '':
+			mobileNumber = request.POST.get('mobileNumber')
+			bio = request.POST.get('bio')
+			dp = request.FILES.get('image')
+			print(dp,"1     ",name,"2...   ",bio)
+			if name is not '':
 				user.name = name
-			if str(mobileNumber) is not '':
+			if mobileNumber is not '':
 				user.mobileNumber = mobileNumber
+			if bio is not '':
+				user.bio = bio
+			if dp is not None:
+				user.dp = dp
 			user.modified_by = request.user.email
 			user.modified_at = datetime.datetime.now()
 			user.save()
-			print('gya')
+			print()
+			
 			return HttpResponseRedirect(reverse('ors:profile'))
 
 

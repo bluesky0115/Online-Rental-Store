@@ -66,16 +66,16 @@
   </div>
 </nav>
 
-<div class="container-fluid" style="margin-top:112px;">
-{% if feed %}
-  {% for product in feed %}  
+<div class="container-fluid" style="margin-top:112px;">  
   <div class="row" style=" ">
+    {% if feed %}
+  {% for product in feed %}
     <div class="col-xs-12 col-lg-4 col-md-3" style="margin-bottom: 6px;">
       <div class="card">
         <div class="card-header"> 
           <a href="{% url 'ors:productPage' product.id %}">{{product.name}}</a><br>
         </div>
-        <div class="card-body"> 
+        <div class="card-body" style="height: 152px; overflow-y: hidden;"> 
         <h5><b>Product Description:</b></h5>
         {{product.description}}
         </div>
@@ -83,9 +83,9 @@
         </div>
       </div>
     </div>
-  </div>
-  {% endfor %}
+    {% endfor %}
 {% endif %}
+  </div>
 </div>
 
     <!-- Optional JavaScript -->
