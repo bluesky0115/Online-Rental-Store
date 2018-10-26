@@ -17,11 +17,11 @@ from django.contrib import admin
 from django.urls import include,path
 from django.conf import settings
 from django.conf.urls.static import static
-
+from . import views
 
 urlpatterns = [
     path('ors/', include('ors.urls', namespace='ors')),
-    
+    path('',views.direct,name="direct"),
     path('admin/', admin.site.urls),
 ]
 
