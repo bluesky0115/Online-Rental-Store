@@ -180,6 +180,7 @@ def searchTag(request, tag):
 
 		context = dict()
 		context['feed'] = feed
+		context['user'] = user
 		return render(request, 'dashboard.html', context)
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
