@@ -91,12 +91,12 @@
           </a>
       </div>
       <div class="col-1">
-        {% if request.status == "rejected" %}
-          <button type="button" class="btn btn-danger" disabled>REJECTED</button>
-        {% elif request.status == "requested" %}
-          <button type="button" class="btn btn-warning" disabled>REQUESTED</button>
-        {% else %}
+        {% if request.status == "accepted" %}
           <button type="button" class="btn btn-success" disabled>ACCEPTED</button>
+        {% elif request.status == "rejected" %}
+          <button type="button" class="btn btn-danger" disabled>REJECTED</button>
+        {% else %}
+          <button type="button" class="btn btn-warning" disabled>REQUESTED</button>
         {% endif %}
       </div>
     </div>
@@ -144,13 +144,13 @@
                 <div class="col-12">
                   <center><button class="row btn btn-primary" type="submit">Submit</button></center>
                 </div>
-              {% elif request.status == "requested" %}
+              {% elif request.status == "rejected" %}
                 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                  <button class="btn btn-danger">CANCEL REQ</button>
+                  <button class="btn btn-warning">OKAY</button>
                 </div>
               {% else %}
                 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                  <button class="btn btn-warning">OKAY</button>
+                  <button class="btn btn-danger">CANCEL REQ</button>
                 </div>
               {% endif %}
             </div>
