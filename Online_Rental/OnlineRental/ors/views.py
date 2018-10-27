@@ -201,7 +201,7 @@ def addProduct(request):
 				user = User.objects.get(id=request.user.id)
 				owner = UserProfile.objects.get(email=user.email)
 				image = request.FILES.get('image')
-				name = request.POST['name']
+				name = request.POST.get('name')
 				description = request.POST['desc']
 				quantity = request.POST['quantity']
 				price = request.POST.get('price')
