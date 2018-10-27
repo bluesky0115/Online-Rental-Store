@@ -263,13 +263,17 @@ def addWishlist(request, product_id):
 			status = 'OutofStock'
 
 		exist = Wishlist.objects.filter(user=userp, product=product).count()
-		print(exist)
-		if (exist == 0) and (product.owner is not userp):
-			item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
-			item.save()
-			print("added")
-			messages.success(request, "Added to Wishlist!")
-			return HttpResponseRedirect(request.META['HTTP_REFERER'])
+		print(exist, product.owner, userp)
+		if exist == 0:
+			if product.owner != userp:
+				item = Wishlist(user=userp, product=product, status=status, quantity=quantity, timestamp=datetime.datetime.now())
+				item.save()
+				print("added")
+				messages.success(request, "Added to Wishlist!")
+				return HttpResponseRedirect(request.META['HTTP_REFERER'])
+			else:
+				messages.error(request, "Same user/owner")
+				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 		else:
 			print("hai to")
 			messages.error(request, "Already in Wishlist!")
@@ -304,7 +308,7 @@ def requestSeller(request, product_id):
 
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product).count()
-			if (exist == 0) and (product.owner is not buyer):
+			if (exist == 0) and (product.owner != buyer):
 				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
 				req.save()
 				history = OrderHistory(customer=buyer, seller=seller, product=product, status='requested', created_by=user.email, created_at=datetime.datetime.now())
@@ -313,6 +317,10 @@ def requestSeller(request, product_id):
 				messages.success(request, "Requested the Seller")
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
+			elif product.owner==buyer:
+				messages.error(request, "Same user/owner")
+				return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
 			else:
 				print("already requested")
 				messages.warning(request, "Product already requested! Please wait for seller to repond.")
