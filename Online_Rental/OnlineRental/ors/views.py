@@ -241,7 +241,7 @@ def productPage(request, product_id):
 def wishlist(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
-		feed = Wishlist.objects.all().order_by('-timestamp')
+		feed = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		print(type(feed))
 		context = dict()
 		context['feed'] = feed
@@ -286,7 +286,8 @@ def addWishlist(request, product_id):
 def deletefromWishlist(request, product_id):
 	if request.user.is_authenticated:
 		item = Product.objects.get(id=product_id)
-		product = Wishlist.objects.get(product=item)
+		user = UserProfile.objects.get(email=request.user.email)
+		product = Wishlist.objects.get(user=user, product=item)
 		product.delete()
 		context = dict()
 
@@ -352,7 +353,7 @@ def orderHistory(request):
 def myPosts(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
-		feed = Product.objects.filter(owner=user)
+		feed = Product.objects.filter(owner=user).order_by('-postdate')
 		context = dict()
 		context['feed'] = feed
 		context['user'] = user
@@ -362,17 +363,68 @@ def myPosts(request):
 		return HttpResponseRedirect(reverse('ors:login'))
 
 
+def editPost(request, product_id):
+	if request.user.is_authenticated:
+		user = UserProfile.objects.get(email=request.user.email)
+		product = Product.objects.get(id=product_id)
+
+		if request.method == 'GET':
+			context = dict()
+			context['user'] = user
+			context['product'] = product
+			return render(request, 'edit_product.html', context)
+
+		if request.method == 'POST':
+			name = request.POST.get('name')
+			quantity = request.POST.get('quantity')
+			ptype = request.POST.get('ptype')
+			image = request.FILES.get('image')
+			price = request.POST.get('price')
+			category = request.POST.get('category')
+			duration = request.POST.get('duration')
+			description = request.POST.get('desc') 
+			#print(dp,"1     ",name,"2...   ",bio)
+			if name is not '':
+				product.name = name
+			if quantity is not '':
+				product.quantity = quantity
+			if ptype is not product.ptype:
+				product.ptype = ptype
+			if price is not '':
+				product.price = price
+			if category is not product.category:
+				product.category = category
+			if duration is not '':
+				product.duration = duration
+			if description is not '':
+				product.description = description
+			if image is not None:
+				product.image = image
+			product.modified_by = request.user.email
+			product.modified_at = datetime.datetime.now()
+			product.save()
+			return HttpResponseRedirect(reverse('ors:myPosts'))
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
+
+
 def deletePost(request, product_id):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
 		user = UserProfile.objects.get(email=u.email)
-		product = Product.objects.get(id=product_id)
-		product.delete()
-		feed = Product.objects.filter(owner=user).order_by('-postdate')
-		context = dict()
-		context['feed'] = feed
-		messages.success(request, "Post successfully deleted!")
-		return render(request, 'myPosts.html', context)
+		product = Product.objects.get(owner=user, id=product_id)
+		product.quantity = 0
+		if product.quantity == 0:
+			product.status = "OutofStock"
+		else:
+			product.status = "InStock"
+		product.save()
+		# feed = Product.objects.filter(owner=user).order_by('-postdate')
+		# context = dict()
+		# context['feed'] = feed
+		#messages.success(request, "Post successfully deleted!")
+		#return render(request, 'myPosts.html', context)
+		return HttpResponseRedirect(reverse('ors:myPosts'))
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
 
@@ -419,9 +471,7 @@ def editProfile(request):
 				user.dp = dp
 			user.modified_by = request.user.email
 			user.modified_at = datetime.datetime.now()
-			user.save()
-			print()
-			
+			user.save()			
 			return HttpResponseRedirect(reverse('ors:profile'))
 
 		else:

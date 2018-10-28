@@ -97,7 +97,7 @@
 
                 <div class="custom-file" style="margin-bottom: 0px;">
                     <div class="input-group mb-3">
-                        <input name="image" type="file" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);">
+                        <input name="image" type="file" accept="image/*" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);">
                     <label class="custom-file-label" for="inputGroupFile" name="image">Choose file</label>
                 </div>
               </div>
@@ -196,6 +196,18 @@
 
               reader.readAsDataURL(input.files[0]);
           }
+          var formData = new FormData();
+ 
+          var file = document.getElementById("inputGroupFile").files[0];
+       
+          formData.append("Filedata", file);
+          var t = file.type.split('/').pop().toLowerCase();
+          if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
+              alert('Please select a valid image file');
+              document.getElementById("inputGroupFile").value = '';
+              return false;
+            }
+          return true;
       }
   </script>
 
