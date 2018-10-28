@@ -23,6 +23,7 @@ urlpatterns = [
 	path('requestSeller/<int:product_id>', views.requestSeller, name='requestSeller'),
 	path('history', views.orderHistory, name='orderHistory'),
 	path('myPosts', views.myPosts, name='myPosts'),
+	path('editPost/<int:product_id>', views.editPost, name='editPost'),
 	path('deletePost/<int:product_id>', views.deletePost, name='deletePost'),
 	path('profile',views.profile, name='profile'),
 	path('editProfile', views.editProfile, name='editProfile'),

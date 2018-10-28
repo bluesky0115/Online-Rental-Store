@@ -75,12 +75,12 @@
 
 <div class="container-fluid" style="margin-top:112px;">  
   <div class="row" style=" ">
-    {% if feed %}
+  {% if feed %}
   {% for product in feed %}
     <div class="col-xs-12 col-lg-4 col-md-3" style="margin-bottom: 6px;">
       <div class="card">
         <div class="card-header"> 
-          <a href="{% url 'ors:productPage' product.id %}">{{product.name}}</a><br>
+          <a href="{% url 'ors:editPost' product.id %}">{{product.name}}</a><br>
         </div>
         <div class="card-body" style="height: 152px; overflow-y: hidden;"> 
         <h5><b>Product Description:</b></h5>
