@@ -177,6 +177,7 @@ class Report(models.Model):
 	def __str__(self):
 		return str(self.complainant)+'\'s report'
 
+
 class ArchivedProduct(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 	description = models.TextField()
@@ -196,3 +197,13 @@ class ArchivedProduct(models.Model):
 
 	def __str__(self):
 		return str(self.owner.name)+'\'s '+self.name
+
+
+class Notification(models.Model):
+	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+	message = models.CharField(max_length=255, choices=(
+								('request', 'product request!!!'),('your request','rejected')), default='request')
+	viewed = models.BooleanField(default=False)
+
+	def __str__(self):
+		return str(self.user.name) + '\'s Notification'
