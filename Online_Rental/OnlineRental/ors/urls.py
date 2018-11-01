@@ -1,5 +1,5 @@
 
-from django.urls import path,include
+from django.urls import path,include,re_path
 from django.contrib.auth import views as auth_views
 #from django.contrib.auth import LogoutView
 from django.views.generic.base import TemplateView
@@ -30,4 +30,5 @@ urlpatterns = [
 	path('rateProduct/<int:product_id>', views.rateProduct, name='rateProduct'),
 	path('requests', views.requests, name="requests"),
 	path('report', views.report, name="report"),
+
 ]

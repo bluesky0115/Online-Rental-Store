@@ -14,15 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include,path
+from django.urls import include,path,re_path
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
     path('ors/', include('ors.urls', namespace='ors')),
     path('',views.direct,name="direct"),
-    path('admin/', admin.site.urls),
+    url('^auth/iiits/callback/(?P<token_id>.+)$',views.login_api,name="login_api"),
+    path('admin/', admin.site.urls)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
