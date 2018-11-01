@@ -76,6 +76,9 @@ def signin(request):
 			else:
 				loginTrail(request,email,'success')
 				login(request, user)
+				userp = UserProfile.objects.get(user=user)
+				notifications = Notification(user=userp, message='request')
+				notifications.save()
 				return HttpResponsePermanentRedirect(reverse('ors:dashboard'))
 		else:
 			messages.error(request, 'User not registered')
@@ -118,6 +121,7 @@ def dashboard(request):
 		context=dict()
 		context['feed'] = feed
 		context['user'] = user
+		context['notifications'] = Notification.objects.filter(user=user)
 		return render(request, 'dashboard.html', context)
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -508,6 +512,17 @@ def rateProduct(request, product_id):
 			print("pahle istemaal kare fir vichaar bate!!!")
 			messages.error(request, "Can't review Products you haven't used.")
 			return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+	else:
+		return HttpResponseRedirect(reverse('ors:login'))
+
+
+def notificationShow(request, notification_id):
+	if request.user.is_authenticated:
+		user = UserProfile.objects.get(user=request.user)
+		notification = Notification.objects.get(id=notification_id)
+		notification.viewed = True
+		notification.save()
+		return HttpResponseRedirect(request.META['HTTP_REFERER'])
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
 		

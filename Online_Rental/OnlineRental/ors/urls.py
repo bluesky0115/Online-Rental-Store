@@ -30,5 +30,6 @@ urlpatterns = [
 	path('rateProduct/<int:product_id>', views.rateProduct, name='rateProduct'),
 	path('requests', views.requests, name="requests"),
 	path('report', views.report, name="report"),
+	path('notification/<int:notification_id>', views.notificationShow, name='notificationShow'),
 
 ]
