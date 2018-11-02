@@ -24,8 +24,8 @@ class UserProfile(models.Model):
 	mobileNumber_validator = RegexValidator(regex=r'^\d{4}([- ])\d{7}|(\+91[\-\s]?)?[0]?[0-9]\d{9}$')
 	mobileNumber = models.CharField(validators=[mobileNumber_validator], max_length=12, blank=True)
 	
-	rollNo_validator = RegexValidator(regex=r'^\d{9}$')
-	roll_no = models.CharField(validators=[rollNo_validator], max_length=9, blank=False,default='000000000', help_text='Unique identifier for the student')
+	#rollNo_validator = RegexValidator(regex=r'^\d{9}$')
+	roll_no = models.CharField(max_length=12, blank=False,default='000000000', help_text='Unique identifier for the student')
 	
 	year = models.CharField(max_length=8, choices=(
 		('UG1','UG1'),('UG2','UG2'),('UG3','UG3'),('UG4','UG4'),
@@ -121,8 +121,8 @@ class OrderHistory(models.Model):
 	seller = models.ForeignKey(UserProfile, related_name='customer', on_delete=models.CASCADE)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
-	dateStart = models.DateField(null=True)
-	dateEnd = models.DateField(null=True)
+	dateStart = models.DateField(blank=True,null=True)
+	dateEnd = models.DateField(blank=True,null=True)
 	status = models.CharField(max_length=20, choices=(
 							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
 	created_by = models.CharField(max_length=60, default=customer)
@@ -131,7 +131,7 @@ class OrderHistory(models.Model):
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.user.name)+'\'s OrderHistory'
+		return str(self.customer.name)+'\'s OrderHistory'
 
 
 class ProductRating(models.Model):

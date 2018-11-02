@@ -246,6 +246,8 @@ def wishlist(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Wishlist.objects.filter(user=user).order_by('-timestamp')
+		notifications = Notification(user=user, message='request')
+		notifications.save()
 		print(type(feed))
 		context = dict()
 		context['feed'] = feed

@@ -91,9 +91,9 @@
           </a>
       </div>
       <div class="col-1">
-        {% if request.status == "accepted" %}
+        {% if product.status == "accepted" %}
           <button type="button" class="btn btn-success" disabled>ACCEPTED</button>
-        {% elif request.status == "rejected" %}
+        {% elif product.status == "rejected" %}
           <button type="button" class="btn btn-danger" disabled>REJECTED</button>
         {% else %}
           <button type="button" class="btn btn-warning" disabled>REQUESTED</button>
@@ -121,7 +121,7 @@
         </div>
         <div class="col-lg-2 col-xs-12" style="">
             <div class="row" style=" height: 100%;">
-              {% if request.status == "accepted" %}
+              {% if product.status == "accepted" %}
                 <div class="col-lg-12">
                   <div class="form-group">
                     <!-- ** Rate product ** -->
@@ -144,7 +144,7 @@
                 <div class="col-12">
                   <center><button class="row btn btn-primary" type="submit">Submit</button></center>
                 </div>
-              {% elif request.status == "rejected" %}
+              {% elif product.status == "rejected" %}
                 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
                   <button class="btn btn-warning">OKAY</button>
                 </div>
