@@ -30,5 +30,6 @@ urlpatterns = [
 	path('requests', views.requests, name="requests"),
 	path('report', views.report, name="report"),
 	path('notification/<int:notification_id>', views.notificationShow, name='notificationShow'),
+	path('home', views.home, name='home'),
 
 ]
