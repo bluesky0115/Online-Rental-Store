@@ -8,7 +8,6 @@ from . import views
 app_name = 'ors'
 
 urlpatterns = [
-	path('', views.index, name='index'),
 	path('signup', views.signup, name='signup'),
 	path('login', views.signin, name='login'),
 	path('logout', auth_views.LogoutView.as_view(), {'next_page': '/login'}, name='logout'),
@@ -31,6 +30,7 @@ urlpatterns = [
 	path('requests', views.requests, name="requests"),
 	path('report', views.report, name="report"),
 	path('notification/<int:notification_id>', views.notificationShow, name='notificationShow'),
+	path('home', views.home, name='home'),
 
 
 ]

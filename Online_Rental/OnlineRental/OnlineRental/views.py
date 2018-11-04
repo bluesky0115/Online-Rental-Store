@@ -83,7 +83,7 @@ def login_api(request,token_id):
 				return HttpResponsePermanentRedirect(reverse('ors:dashboard'))
 	else:
 			
-			loginTrail(request,email,'New User Added')
+			loginTrail(request,email,'success')
 			addNewUser(data)
 			try:
 				u = User.objects.get(email=email)

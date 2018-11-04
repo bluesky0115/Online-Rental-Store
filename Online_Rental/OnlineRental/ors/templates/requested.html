@@ -84,9 +84,22 @@
   {% for product in detail %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
-      <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
-        <h5 class="card-title">{{product.product.name}}</h5>
-      </a>
+      <div class="row" style="width: 100%">
+        <div class="col-11">
+          <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
+            <h5 class="card-title">{{product.product.name}}</h5>
+          </a>
+        </div>
+        <div class="col-1">
+          {% if product.product.ptype == "free" %}
+            <button type="button" class="btn btn-danger" disabled>FREE</button>
+          {% elif product.product.ptype == "rent" %}
+            <button type="button" class="btn btn-info" disabled>RENT</button>
+          {% else %}
+            <button type="button" class="btn btn-warning" disabled>SELL</button>
+          {% endif %}
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="row">
@@ -95,7 +108,7 @@
             <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
           </a>
         </div>
-        <div class="col-lg-5 col-xs-12">
+        <div class="col-lg-3 col-xs-12">
           <div class="row" style="padding: 2%; height: 45px">
             by - {{product.product.owner}}
           </div>
@@ -106,21 +119,33 @@
             <h4> Price: {{product.product.price}}</h4>
           </div>
         </div>
-        <div class="col-lg-4 col-xs-12" style="border: 1px solid; overflow-y: auto;">
-            <div class="row" style="display: flex; justify-content: center; align-items: center;">
-              <div class="col-3">
-                <img src="{{ product.product.owner.dp.url }}" style="width: 100%">
+        <div class="col-lg-6 col-xs-12" style="border: 1px solid; overflow-y: auto;">
+          <!-- for loop start -->
+            <div class="row">
+              <div class="col-2">
+                <img src="{{ product.buyer.dp.url }}" style="width: 100%">
               </div>
-              <div class="col-3">
+              <div class="col-2">
                 {{product.buyer.name}}
               </div>
-              <div class="col-3" style="">
+              <div class="col-2">
+                 *no.* 
+              </div>
+              <div class="col-2">
+                 *price* 
+              </div>
+              <div class="col-5" style="justify-content: center;">
+                from : *start date* to *end date*
+              </div>
+              <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
                 <button type="submit" class="btn btn-info">APPROVE</button>
               </div>
-              <div class="col-3" > 
+              <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
                 <button type="submit" class="btn btn-danger">DECLINE</button>
               </div>
             </div>
+            <hr>
+            <!-- for loop end -->
         </div>
       </div>
     </div>

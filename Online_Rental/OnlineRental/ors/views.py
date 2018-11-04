@@ -10,10 +10,8 @@ from django.contrib.auth.models import User
 import datetime
 from django.db import connection
 from .forms import ReportForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
-def index(request):
-	return HttpResponse("Hello...")
 		
 
 def signup(request):
@@ -119,9 +117,20 @@ def dashboard(request):
 		feed = Product.objects.all().exclude(owner=user)
 		print(type(feed))
 		context=dict()
-		context['feed'] = feed
+		
 		context['user'] = user
 		context['notifications'] = Notification.objects.filter(user=user)
+		numbers_list = range(1, feed.count())
+		page = request.GET.get('page', 1)
+		paginator = Paginator(feed, 10)
+		try:
+			feed = paginator.page(page)
+		except PageNotAnInteger:
+			feed = paginator.page(1)
+		except EmptyPage:
+			feed = paginator.page(paginator.num_pages)
+		context['feed'] = feed
+		#return render(request, 'home.html', {'numbers': numbers})
 		return render(request, 'dashboard.html', context)
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -150,11 +159,11 @@ def searchProduct(request):
 					lis.append(i['id'])
 				feed = Product.objects.filter(id__in=lis)
 				#print(feed)
-				context = dict()
-				context['feed'] = feed
-				messages.success(request, str(feed.count())+" products found !!!")
+			context = dict()
+			context['feed'] = feed
+			messages.success(request, str(feed.count())+" products found !!!")
 				#return HttpResponseRedirect(reverse('ors:dashboard', kwargs={'feed':feed}))
-				return render(request, 'dashboard.html', context)
+			return render(request, 'dashboard.html', context)
 		return HttpResponseRedirect(reverse('ors:dashboard'))
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -246,6 +255,8 @@ def wishlist(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Wishlist.objects.filter(user=user).order_by('-timestamp')
+		notifications = Notification(user=user, message='request')
+		notifications.save()
 		print(type(feed))
 		context = dict()
 		context['feed'] = feed
@@ -586,4 +597,16 @@ def report(request):
 		
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
+
+def home(request):
+    numbers_list = range(1, 1000)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(numbers_list, 20)
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+    return render(request, 'home.html', {'numbers': numbers})
 
