@@ -344,12 +344,20 @@ def requestSeller(request, product_id):
 def orderHistory(request):
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
+		print(user)
+		u = UserProfile.objects.get(user=user).id
+		print(u)
+		if request.method == "POST":
+			product_id = request.POST['cancel']
+			OrderHistory.objects.filter(customer=u, product=product_id).delete()
+			return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
-		feed = OrderHistory.objects.all().order_by('-timestamp')
+		feed = OrderHistory.objects.filter(customer=u).order_by('-timestamp')
 		context = dict()
 		context['feed'] = feed
 		context['user'] = buyer
 		return render(request, 'history.html', context)
+
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
 
@@ -578,3 +586,4 @@ def report(request):
 		
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
+

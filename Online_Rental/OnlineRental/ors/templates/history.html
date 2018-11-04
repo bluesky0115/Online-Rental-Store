@@ -78,10 +78,15 @@
 </nav>
 
 
+
+
+
+
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
 
 {% if feed %}
   {% for product in feed %}
+
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
       <div class="row" style="width: 100%">
@@ -150,7 +155,11 @@
                 </div>
               {% else %}
                 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                  <button class="btn btn-danger">CANCEL REQ</button>
+                  <form method="POST">
+                    {% csrf_token %}
+                    <input value="{{product.product.id}}" type="hidden" name="cancel">
+                   <button class="btn btn-danger" id = "{{product.product.id}}" >CANCEL REQ</button>
+                  </form>
                 </div>
               {% endif %}
             </div>
@@ -184,6 +193,13 @@
       </div>
     </div>
   </footer>
+  <script>
+    {% block javaScript %}
+    function deleteFn(product_id){
+
+    }
+    {%endblock%}
+  </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

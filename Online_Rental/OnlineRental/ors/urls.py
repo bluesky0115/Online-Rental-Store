@@ -32,4 +32,5 @@ urlpatterns = [
 	path('report', views.report, name="report"),
 	path('notification/<int:notification_id>', views.notificationShow, name='notificationShow'),
 
+
 ]

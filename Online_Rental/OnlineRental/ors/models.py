@@ -131,7 +131,7 @@ class OrderHistory(models.Model):
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.user.name)+'\'s OrderHistory'
+		return str(self.customer.name)+'\'s OrderHistory'
 
 
 class ProductRating(models.Model):
