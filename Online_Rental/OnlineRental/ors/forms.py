@@ -15,3 +15,10 @@ class ReportForm(forms.ModelForm):
     class Meta:
     	model = Report
     	fields = ['complain']
+
+class Images(forms.ModelForm):
+    image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    class Meta:
+        model = Product
+        fields = ['image']

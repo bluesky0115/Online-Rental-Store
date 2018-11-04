@@ -11,9 +11,6 @@ import datetime
 from django.db import connection
 from .forms import ReportForm
 
-
-def index(request):
-	return HttpResponse("Hello...")
 		
 
 def signup(request):
@@ -150,11 +147,11 @@ def searchProduct(request):
 					lis.append(i['id'])
 				feed = Product.objects.filter(id__in=lis)
 				#print(feed)
-				context = dict()
-				context['feed'] = feed
-				messages.success(request, str(feed.count())+" products found !!!")
+			context = dict()
+			context['feed'] = feed
+			messages.success(request, str(feed.count())+" products found !!!")
 				#return HttpResponseRedirect(reverse('ors:dashboard', kwargs={'feed':feed}))
-				return render(request, 'dashboard.html', context)
+			return render(request, 'dashboard.html', context)
 		return HttpResponseRedirect(reverse('ors:dashboard'))
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))

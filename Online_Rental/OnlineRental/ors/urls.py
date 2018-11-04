@@ -8,7 +8,6 @@ from . import views
 app_name = 'ors'
 
 urlpatterns = [
-	path('', views.index, name='index'),
 	path('signup', views.signup, name='signup'),
 	path('login', views.signin, name='login'),
 	path('logout', auth_views.LogoutView.as_view(), {'next_page': '/login'}, name='logout'),
