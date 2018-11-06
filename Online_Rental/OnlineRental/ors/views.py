@@ -226,12 +226,12 @@ def addProduct(request):
 				ptype = request.POST['ptype']
 				image_r=image[0]
 				print(image, "naya wala")
-				pr = Product(owner=owner, name=name, image=image_r, description=description,category=category, quantity=quantity,
-								price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
+				pr = Product(owner=owner, name=name, image=image_r, description=description, category=category, quantity=quantity,
+								duration=duration, price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
 				pr.save()
 				
 				for i in range(len(image)):
-					pro = productImage(product_id=pr, owner=owner, name = pr, image=image[i] )
+					pro = ProductImage(product=pr, owner=owner, image=image[i] )
 					print(pro)
 					pro.save()
 				messages.success(request, "Product successfully added !!!")

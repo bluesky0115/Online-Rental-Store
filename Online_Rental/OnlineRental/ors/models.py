@@ -13,6 +13,9 @@ def user_directory_path(instance, filename):
 def product_directory_path(instance, filename):
     return 'products/{0}/{1}/{2}'.format(instance.owner.name, instance.name,filename)
 
+def image_directory_path(instance, filename):
+    return 'products/{0}/{1}/{2}'.format(instance.owner.name, instance.product.name,filename)
+
 # Create your models here.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
@@ -212,11 +215,11 @@ class Notification(models.Model):
 	def __str__(self):
 		return str(self.user.name) + '\'s Notification'
 
-class productImage(models.Model):
-	product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+class ProductImage(models.Model):
+	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-	name = models.ForeignKey(Product, related_name="product_id", on_delete=models.CASCADE)
-	image = models.FileField(upload_to=product_directory_path, blank=False, default='default.jpg')
+	#name = models.ForeignKey(Product, related_name="product_id", on_delete=models.CASCADE)
+	image = models.FileField(upload_to=image_directory_path, blank=False, default='default.jpg')
 
 	def __str__(self):
-		return str(self.name.name) + '\'s Product Image'
+		return str(self.product.name) + '\'s Product Image'

@@ -97,7 +97,7 @@
 
                 <div class="custom-file" style="margin-bottom: 0px;">
                     <div class="input-group mb-3">
-                        <input name="image" type="file" accept="image/*" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);" multiple>
+                        <input name="image" type="file" accept="image/*" class="custom-file-input" id="inputGroupFile" onchange="readURL(this);" multiple required>
                     <label class="custom-file-label" for="inputGroupFile" name="image">Choose file</label>
                 </div>
               </div>
@@ -134,11 +134,11 @@
           <div class="row form-group">
             <div class="col" style="margin: 0px;">
               <label for="price"> Price</label>
-              <input type="number" min="0" class="form-control" placeholder="Price" name="price" id="price_drop">
+              <input type="number" min="0" class="form-control" placeholder="Price" name="price" id="price_drop" required>
             </div>
             <div class="col">
               <label for="Duration"> Duration </label>
-              <input type="number" min="0" class="form-control" placeholder="Duration" name="duration" id="duration_drop">
+              <input type="number" min="0" class="form-control" placeholder="Duration" name="duration" id="duration_drop" required>
             </div>
           </div>
           <div class="col">
@@ -154,7 +154,7 @@
             </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Description</label>
-            <textarea  name="desc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea  name="desc" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
           </div>
          <center> <button type="submit" class="btn btn-primary mb-2">POST</button> </center>
         </form>
