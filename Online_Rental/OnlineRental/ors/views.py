@@ -49,6 +49,8 @@ def signup(request):
 
 
 def signin(request):
+	if request.user.is_authenticated:
+		return HttpResponseRedirect(reverse('ors:dashboard'))
 	if request.method == 'GET':
 		return render(request, 'registration/login.html')
 
