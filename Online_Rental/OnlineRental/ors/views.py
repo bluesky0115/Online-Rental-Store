@@ -238,7 +238,7 @@ def addProduct(request):
 				return HttpResponseRedirect(reverse('ors:dashboard'))
 			else:
 				print("No image")
-				messages.success(request, "Please select an image for the Product.")
+				messages.error(request, "Please select an image for the Product.")
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -333,11 +333,15 @@ def requestSeller(request, product_id):
 		print(request.path)
 
 		if product.quantity > 0:
-			exist = RequestSeller.objects.filter(buyer=buyer, product=product).count()
+			exist = RequestSeller.objects.filter(buyer=buyer, product=product, seller=seller).count()
 			if (exist == 0) and (product.owner != buyer):
 				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
+				req.created_by = buyer.name
+				req.created_at = datetime.datetime.now()
 				req.save()
 				history = OrderHistory(customer=buyer, seller=seller, product=product, status='requested', created_by=user.email, created_at=datetime.datetime.now())
+				history.created_by = buyer.name
+				history.created_at = datetime.datetime.now()
 				history.save()
 				print("requested")
 				messages.success(request, "Requested the Seller")
@@ -369,11 +373,12 @@ def orderHistory(request):
 		print(u)
 		if request.method == "POST":
 			product_id = request.POST['cancel']
-			OrderHistory.objects.filter(customer=u, product=product_id).delete()
+			OrderHistory.objects.get(customer=u, product=product_id).delete()
 			RequestSeller.objects.get(customer=u, product=product_id).delete()
 			return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
 		feed = OrderHistory.objects.filter(customer=buyer).order_by('-timestamp')
+		print(feed[0], feed[0].status)
 		context = dict()
 		context['feed'] = feed
 		context['user'] = buyer
@@ -561,7 +566,8 @@ def requests(request):
 		u = User.objects.get(id=request.user.id)
 		print(u)
 		user = UserProfile.objects.get(user=u)		
-		detail = RequestSeller.objects.filter(seller=user)
+		detail = RequestSeller.objects.filter(seller=user).order_by('-timestamp')
+		print(detail)
 		context = {}
 		context['detail'] = detail
 		context['user'] = user
@@ -575,8 +581,10 @@ def approveRequest(request, req_id):
 		user = UserProfile.objects.get(user=request.user)
 		#product = Product.objects.get(id=product_id)
 		req = RequestSeller.objects.get(id=req_id)
+		print("+++++++++  ",req.buyer,user,req.product)
 		print(OrderHistory.objects.get(seller=user, product=req.product))
-		history = OrderHistory.objects.get(seller=user, product=req.product)
+		history = OrderHistory.objects.get(customer=req.buyer, seller=user, product=req.product)
+		print(history)
 
 		if request.method == 'POST':
 			quantity = request.POST['quantity']
@@ -599,6 +607,7 @@ def approveRequest(request, req_id):
 		req.modified_at = datetime.datetime.now()
 		history.save()
 		req.save()
+		print(history.status)
 		notification = Notification(user=req.buyer, message='your request')
 		notification.save()
 		return HttpResponseRedirect(reverse('ors:requests'))

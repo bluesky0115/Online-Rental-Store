@@ -131,7 +131,8 @@ class OrderHistory(models.Model):
 	dateStart = models.DateField(blank=True,null=True)
 	dateEnd = models.DateField(blank=True,null=True)
 	status = models.CharField(max_length=20, choices=(
-							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
+							('requested','requested'),('accepted','accepted'),('rejected','rejected'),
+							('confirmed','confirmed')), default='requested')
 	created_by = models.CharField(max_length=60, default=customer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)

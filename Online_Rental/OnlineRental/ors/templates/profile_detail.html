@@ -80,9 +80,10 @@
 <div class="container-fluid" style="margin-top:112px;">
   <div class="row" style="margin: 4px;" >
     <div class="col-xs-12 col-lg-6 bg-light" style="width: 100%">
+      <a href="{{ detail.dp.url }}">
       <center>
         <img img src="{{ detail.dp.url }} " style="max-width: 100%;max-height: 400px;">
-      </center>
+      </center></a>
     </div>
     <div class="card bg-light col-xs-12 col-lg-6">
       <div class="card-body info row" style="align-items: center;">
@@ -92,7 +93,6 @@
         <div class="col-12"><h5> ROLL NO: </h5><b>{{detail.roll_no}}</b></div>
         <div class="col-12"><h5> YEAR: </h5><b>{{detail.year}}</b></div>
         <div class="col-12"><h5> GENDER: </h5><b>{{detail.gender}}</b></div>
-        {{detail.id}}
         {% if detail.bio %}
         <div class="col-12"><h5> BIO: </h5><b>{{detail.bio}}</b></div>
         {% endif %}

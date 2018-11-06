@@ -110,8 +110,8 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-12 col-lg-4">
-        <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center>
+      <div class="col-12 col-lg-4"><a href="{{ product.image.url }}">
+        <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center></a>
       </div>
       <div class="col-12 col-lg-4">
         <form action="{% url 'ors:requestSeller' product.id %}">
