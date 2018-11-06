@@ -128,21 +128,24 @@
               <div class="col-2">
                 {{product.buyer.name}}
               </div>
-              <div class="col-2">
-                 *no.* 
+              <form method="post" action="{% url 'ors:approveRequest' product.id  %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="col-10">
+                 <input type="number" min="0" value="1" class="form-control" placeholder="Quantity" name="quantity" required> {{product.timestamp}}
               </div>
-              <div class="col-2">
-                 *price* 
+              <div class="col-10">
+                 {{product.product.price}}
               </div>
-              <div class="col-5" style="justify-content: center;">
-                from : *start date* to *end date*
+              <div class="col-10" style="justify-content: center;">
+                from : *start date* to *end date* {{product.status}}
               </div>
               <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
-                <button type="submit" class="btn btn-info">APPROVE</button>
+                <button type="submit" name="status" value="approve" class="btn btn-info">APPROVE</button>
               </div>
               <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
-                <button type="submit" class="btn btn-danger">DECLINE</button>
+                <button type="submit" class="btn btn-danger" name="status" value="decline">DECLINE</button>
               </div>
+            </form>
             </div>
             <hr>
             <!-- for loop end -->

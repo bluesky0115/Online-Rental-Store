@@ -368,9 +368,10 @@ def orderHistory(request):
 		if request.method == "POST":
 			product_id = request.POST['cancel']
 			OrderHistory.objects.filter(customer=u, product=product_id).delete()
+			RequestSeller.objects.get(customer=u, product=product_id).delete()
 			return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
-		feed = OrderHistory.objects.filter(customer=u).order_by('-timestamp')
+		feed = OrderHistory.objects.filter(customer=buyer).order_by('-timestamp')
 		context = dict()
 		context['feed'] = feed
 		context['user'] = buyer
@@ -567,6 +568,41 @@ def requests(request):
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
 
+def approveRequest(request, req_id):
+	if request.user.is_authenticated:
+		user = UserProfile.objects.get(user=request.user)
+		#product = Product.objects.get(id=product_id)
+		req = RequestSeller.objects.get(id=req_id)
+		print(OrderHistory.objects.get(seller=user, product=req.product))
+		history = OrderHistory.objects.get(seller=user, product=req.product)
+
+		if request.method == 'POST':
+			quantity = request.POST['quantity']
+			dateStart = request.POST.get('dateStart')
+			dateEnd = request.POST.get('dateEnd')
+			status = request.POST['status']
+			if status == 'approve':
+				product.quantity = product.quantity - quantity
+				product.save()
+				req.status = 'accepted'
+				history.status = 'accepted'
+
+			else:
+				req.status = 'rejected'
+				history.status = 'rejected'
+
+		history.modified_by = user.name
+		req.modified_by = user.name
+		history.modified_at = datetime.datetime.now()
+		req.modified_at = datetime.datetime.now()
+		history.save()
+		req.save()
+		notification = Notification(user=req.buyer, message='your request')
+		notification.save()
+		return HttpResponseRedirect(reverse('ors:requests'))
+
+
+
 
 def report(request):
 	print("Report")
@@ -579,16 +615,14 @@ def report(request):
 			if form.is_valid():
 				report_form = form.save(commit=False)
 				report_form.complainant = us
-				report_form.respondant = us
 				print(request.POST['product_id'])
 				report_form.product = Product.objects.get(id=request.POST['product_id'])
+				report_form.respondant = report_form.product.owner
 				
 				print("Hiiiiiii")
 				report_form.timestamp = datetime.datetime.now()
 				report_form.created_by = us.name
 				report_form.created_at = datetime.datetime.now()
-				report_form.modified_by = us.name
-				report_form.modified_at = datetime.datetime.now() 
 				print(us,u)
 				report_form.save()
 
@@ -604,16 +638,4 @@ def report(request):
 		
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
-
-def home(request):
-    numbers_list = range(1, 1000)
-    page = request.GET.get('page', 1)
-    paginator = Paginator(numbers_list, 20)
-    try:
-        numbers = paginator.page(page)
-    except PageNotAnInteger:
-        numbers = paginator.page(1)
-    except EmptyPage:
-        numbers = paginator.page(paginator.num_pages)
-    return render(request, 'home.html', {'numbers': numbers})
 
