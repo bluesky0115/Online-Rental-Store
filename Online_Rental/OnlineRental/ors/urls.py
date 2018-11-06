@@ -28,9 +28,7 @@ urlpatterns = [
 	path('editProfile', views.editProfile, name='editProfile'),
 	path('rateProduct/<int:product_id>', views.rateProduct, name='rateProduct'),
 	path('requests', views.requests, name="requests"),
+	path('approveRequest/<int:req_id>', views.approveRequest, name="approveRequest"),
 	path('report', views.report, name="report"),
 	path('notification/<int:notification_id>', views.notificationShow, name='notificationShow'),
-	path('home', views.home, name='home'),
-
-
 ]
