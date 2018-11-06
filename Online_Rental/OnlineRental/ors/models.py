@@ -207,3 +207,12 @@ class Notification(models.Model):
 
 	def __str__(self):
 		return str(self.user.name) + '\'s Notification'
+
+class productImage(models.Model):
+	product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+	name = models.ForeignKey(Product, related_name="product_id", on_delete=models.CASCADE)
+	image = models.FileField(upload_to=product_directory_path, blank=False, default='default.jpg')
+
+	def __str__(self):
+		return str(self.name.name) + '\'s Product Image'

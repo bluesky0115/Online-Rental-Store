@@ -214,7 +214,7 @@ def addProduct(request):
 			if request.FILES.get('image'):
 				user = User.objects.get(id=request.user.id)
 				owner = UserProfile.objects.get(email=user.email)
-				image = request.FILES.get('image')
+				image = request.FILES.getlist('image')
 				name = request.POST.get('name')
 				description = request.POST['desc']
 				quantity = request.POST['quantity']
@@ -222,9 +222,19 @@ def addProduct(request):
 				duration = request.POST.get('duration')
 				category = request.POST['category']
 				ptype = request.POST['ptype']
-				pr = Product(owner=owner, name=name, image=image, description=description,category=category, quantity=quantity,
+				image_r=image[0]
+				print(image, "naya wala")
+				pr = Product(owner=owner, name=name, image=image_r, description=description,category=category, quantity=quantity,
 								price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
 				pr.save()
+				# print(pr.id,pr.owner,"******************************")
+				# s=productImage(product_id=pr,owner=owner,image=image_r)
+				# s.save()
+				for i in range(len(image)):
+					print(image[i], "image")
+					pro = productImage(product_id=pr, owner=owner, name = pr, image=image[i] )
+					print(pro)
+					pro.save()
 				messages.success(request, "Product successfully added !!!")
 				return HttpResponseRedirect(reverse('ors:dashboard'))
 			else:
