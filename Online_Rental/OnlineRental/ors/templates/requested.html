@@ -80,20 +80,20 @@
 
 <div style="margin-top: 112px ; padding: 2%; z-index:-1" url-endpoint="/ors/api/chart/data" >
 
-{% if detail %}
-  {% for product in detail %}
+{% if products %}
+  {% for product in products %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0"> 
       <div class="row" style="width: 100%">
         <div class="col-11">
-          <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
-            <h5 class="card-title">{{product.product.name}}</h5>
+          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
+            <h5 class="card-title">{{product.name}}</h5>
           </a>
         </div>
         <div class="col-1">
-          {% if product.product.ptype == "free" %}
+          {% if product.ptype == "free" %}
             <button type="button" class="btn btn-danger" disabled>FREE</button>
-          {% elif product.product.ptype == "rent" %}
+          {% elif product.ptype == "rent" %}
             <button type="button" class="btn btn-info" disabled>RENT</button>
           {% else %}
             <button type="button" class="btn btn-warning" disabled>SELL</button>
@@ -104,40 +104,43 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-3 col-xs-12 border" style="vertical-align: middle; ">
-          <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none; padding: auto;">
-            <img src="{{ product.product.image.url }}" style="width:100%; max-height: 245px">
+          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
+            <img src="{{ product.image.url }}" style="width:100%; max-height: 245px">
           </a>
         </div>
         <div class="col-lg-3 col-xs-12">
           <div class="row" style="padding: 2%; height: 45px">
-            by - {{product.product.owner}}
+            by - {{product.owner}}
           </div>
           <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
-             {{ product.product.description }}
+             {{ product.description }}
           </div>
           <div class="row" style="padding: 2%;height: 45px;">
-            <h4> Price: {{product.product.price}}</h4>
+            <h4> Price: {{product.price}}</h4>
           </div>
         </div>
-        <div class="col-lg-6 col-xs-12" style="border: 1px solid; overflow-y: auto;">
+        <div class="col-lg-6 col-xs-12" style="border: 1px solid; overflow-y : auto; height: 400px ">
           <!-- for loop start -->
+          {% if requests %}
+          {% for request in requests %}
+              {% if request.product.id == product.id %}
             <div class="row">
               <div class="col-2">
-                <img src="{{ product.buyer.dp.url }}" style="width: 100%">
+                <img src="{{ request.buyer.dp.url }}" style="width: 100%">
               </div>
               <div class="col-2">
-                {{product.buyer.name}}
+                {{request.buyer.name}}
               </div>
               <form method="post" action="{% url 'ors:approveRequest' product.id  %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="col-10">
-                 <input type="number" min="0" value="1" class="form-control" placeholder="Quantity" name="quantity" required> {{product.timestamp}}
+                 <input type="number" min="0" value="1" class="form-control" placeholder="Quantity" name="quantity" required> {{request.timestamp}}
               </div>
               <div class="col-10">
-                 {{product.product.price}}
+                 {{request.product.price}}
               </div>
               <div class="col-10" style="justify-content: center;">
-                from : *start date* to *end date* {{product.status}}
+                from : *start date* to *end date* {{request.status}}
               </div>
               <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
                 <button type="submit" name="status" value="approve" class="btn btn-info">APPROVE</button>
@@ -148,6 +151,9 @@
             </form>
             </div>
             <hr>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
             <!-- for loop end -->
         </div>
       </div>

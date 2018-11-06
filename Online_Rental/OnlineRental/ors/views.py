@@ -374,7 +374,7 @@ def orderHistory(request):
 		if request.method == "POST":
 			product_id = request.POST['cancel']
 			OrderHistory.objects.get(customer=u, product=product_id).delete()
-			RequestSeller.objects.get(customer=u, product=product_id).delete()
+			RequestSeller.objects.get(buyer=u, product=product_id).delete()
 			return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
 		feed = OrderHistory.objects.filter(customer=buyer).order_by('-timestamp')
@@ -561,6 +561,11 @@ def notificationShow(request, notification_id):
 		return HttpResponseRedirect(reverse('ors:login'))
 		
 
+def distinctProducts(detail):
+	product=[]
+	for i in detail:
+		product.append(i.product.id)
+	return list(set(product))
 def requests(request):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
@@ -568,8 +573,14 @@ def requests(request):
 		user = UserProfile.objects.get(user=u)		
 		detail = RequestSeller.objects.filter(seller=user).order_by('-timestamp')
 		print(detail)
+		product = distinctProducts(detail)
+		products=[]
+		for i in product:
+			products.append(Product.objects.get(id=int(i)))
+		
 		context = {}
-		context['detail'] = detail
+		context['products'] = products
+		context['requests'] = detail
 		context['user'] = user
 		print(context)
 		return render(request, 'requested.html', context)
