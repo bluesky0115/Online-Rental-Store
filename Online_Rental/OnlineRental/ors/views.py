@@ -227,11 +227,8 @@ def addProduct(request):
 				pr = Product(owner=owner, name=name, image=image_r, description=description,category=category, quantity=quantity,
 								price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
 				pr.save()
-				# print(pr.id,pr.owner,"******************************")
-				# s=productImage(product_id=pr,owner=owner,image=image_r)
-				# s.save()
+				
 				for i in range(len(image)):
-					print(image[i], "image")
 					pro = productImage(product_id=pr, owner=owner, name = pr, image=image[i] )
 					print(pro)
 					pro.save()
