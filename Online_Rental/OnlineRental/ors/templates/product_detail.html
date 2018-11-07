@@ -24,6 +24,9 @@
     a { 
       color: inherit; 
     }
+    .modal.and.carousel {
+          position: fixed; 
+    }
     </style>
 
   
@@ -110,8 +113,62 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-12 col-lg-4"><a href="{{ product.image.url }}">
-        <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center></a>
+      <div class="col-12 col-lg-4">
+        
+
+    <div class="container">
+      <ul class="nav nav-pills nav-stacked">
+        <center> <a href="#lightbox" data-toggle="modal"><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></a></center>
+        </li>
+      </ul>
+        
+        <div class="modal fade and carousel slide" id="lightbox">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                {% if images %}
+                <ol class="carousel-indicators">
+                  <!-- loop start -->
+                  
+                  <li data-target="#lightbox" data-slide-to="0" class="active"></li>
+                  {% for i in length %}
+                  <li data-target="#lightbox" data-slide-to="{{i}}"></li>
+                  <!-- loop ends -->
+                  {% endfor %}
+                  
+                </ol>
+                {% endif %}
+                {% if images %}
+                <div class="carousel-inner">
+                  <!-- loop start -->
+                  <div class="carousel-item active">
+                    <img src="{{product.image.url}}" alt="slide" style="height: 600px; width: 700px">
+                  </div>
+                  {% for imager in images %}
+                  <div class="carousel-item">
+                    <img src="{{imager.image.url}}" alt="slide" style="height: 600px; width: 700px">
+                  </div>
+                  {% endfor %}
+                  
+                  <!-- loop ends -->
+                </div><!-- /.carousel-inner -->
+                {% endif %}
+
+                <a class="carousel-control-prev" href="#lightbox" data-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#lightbox" data-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </a>
+              </div><!-- /.modal-body -->
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+      </div><!-- /.container -->
+
+
+
       </div>
       <div class="col-12 col-lg-4">
         <form action="{% url 'ors:requestSeller' product.id %}">

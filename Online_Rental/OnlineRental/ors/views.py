@@ -249,10 +249,17 @@ def productPage(request, product_id):
 		user = UserProfile.objects.get(email=request.user.email)
 		product = Product.objects.get(id=product_id)
 		feed = ProductRating.objects.filter(product=product)
+		images = ProductImage.objects.filter(product=product_id)
+		length = []
+		for i in range(len(images)):
+			length.append(i+1)
+		length.pop()
 		context = dict()
 		context['product'] = product
 		context['feed'] = feed
 		context['user'] = user
+		context['images'] = images[1:]
+		context['length'] = length
 		form = ReportForm()
 		context['form']=form
 		return render(request, 'product_detail.html', context)
