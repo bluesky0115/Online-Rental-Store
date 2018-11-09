@@ -416,7 +416,7 @@ def orderHistory(request):
 				order = OrderHistory.objects.get(customer=u, product=product_id)
 				RequestSeller.objects.get(buyer=u, product=product_id).delete()
 				order.status = "confirmed"
-				order.dateStart = datetime.datetime.now()
+				order.boughtDate = datetime.datetime.now()
 				order.save()
 				return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
@@ -666,7 +666,7 @@ def approveRequest(request, req_id):
 				notify = Notification(user=req.buyer, message=message, typ='product reject')
 				notify.save()
 				req.status = 'rejected'
-				#req.delete()
+				req.delete()
 				history.status = 'rejected'
 
 		history.modified_by = user.name
