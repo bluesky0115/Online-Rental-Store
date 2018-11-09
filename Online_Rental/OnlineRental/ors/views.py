@@ -417,6 +417,7 @@ def orderHistory(request):
 				RequestSeller.objects.get(buyer=u, product=product_id).delete()
 				order.status = "confirmed"
 				order.dateStart = datetime.datetime.now()
+				order.save()
 				return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
 		feed = OrderHistory.objects.filter(customer=buyer).order_by('-timestamp')

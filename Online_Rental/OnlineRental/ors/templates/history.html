@@ -100,6 +100,8 @@
           <button type="button" class="btn btn-success" disabled>ACCEPTED</button>
         {% elif product.status == "rejected" %}
           <button type="button" class="btn btn-danger" disabled>REJECTED</button>
+        {% elif product.status == "confirmed" %}
+        <button type="button" class="btn btn-warning" disabled>CONFIRMED</button>
         {% else %}
           <button type="button" class="btn btn-warning" disabled>REQUESTED</button>
         {% endif %}
@@ -126,6 +128,7 @@
         </div>
         <div class="col-lg-2 col-xs-12" style="">
             <div class="row" style=" height: 100%;">
+
               {% if product.status == "confirmed" %}
                 <div class="col-lg-12">
                   <div class="form-group">
@@ -155,7 +158,7 @@
                 <form method="post" >
                   {% csrf_token %}
                     <input value="{{product.product.id}}" type="hidden" name="confirmed">
-                    <button class="btn btn-danger" id = "{{product.product.id}}" >CONFIRMED</button>
+                    <button class="btn btn-danger" id = "{{product.product.id}}" >CONFIRM</button>
                 </form>
               </div>
               {% elif product.status == "rejected" %}
