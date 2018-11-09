@@ -262,7 +262,8 @@ def productPage(request, product_id):
 		length = []
 		for i in range(len(images)):
 			length.append(i+1)
-		length.pop()
+		if len(length):
+			length.pop()
 		context = dict()
 		context['product'] = product
 		context['feed'] = feed
