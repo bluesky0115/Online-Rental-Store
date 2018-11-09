@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.contrib.auth import authenticate, login
@@ -116,7 +115,7 @@ def dashboard(request):
 	if request.user.is_authenticated:
 		print(request.user.email)
 		user = UserProfile.objects.get(email=request.user.email)
-		feed = Product.objects.all().exclude(owner=user)
+		feed = Product.objects.all().exclude(owner=user).order_by('postdate')
 		print(type(feed))
 		context=dict()
 		
@@ -151,6 +150,7 @@ def searchProduct(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		lis=[]
+		feed = Product.objects.none()
 
 		if request.method == 'POST':
 			query = request.POST['search']
@@ -159,11 +159,12 @@ def searchProduct(request):
 				feeds = dictfetchall(cursor)
 				for i in feeds:
 					lis.append(i['id'])
-				feed = Product.objects.filter(id__in=lis)
+				feed = Product.objects.filter(id__in=lis).order_by('-postdate')
 				#print(feed)
+			messages.success(request, str(feed.count())+" products found !!!")
 			context = dict()
 			context['feed'] = feed
-			messages.success(request, str(feed.count())+" products found !!!")
+			context['user'] = user
 				#return HttpResponseRedirect(reverse('ors:dashboard', kwargs={'feed':feed}))
 			return render(request, 'dashboard.html', context)
 		return HttpResponseRedirect(reverse('ors:dashboard'))
@@ -193,6 +194,14 @@ def searchTag(request, tag):
 			feed = Product.objects.raw('SELECT * from ors_product WHERE ptype=%s', [tag])
 			#feed = Product.objects.filter(ptype=tag).exclude(owner=user)
 
+		page = request.GET.get('page', 1)
+		paginator = Paginator(feed, 10)
+		try:
+			feed = paginator.page(page)
+		except PageNotAnInteger:
+			feed = paginator.page(1)
+		except EmptyPage:
+			feed = paginator.page(paginator.num_pages)
 		context = dict()
 		context['feed'] = feed
 		context['user'] = user
@@ -273,7 +282,14 @@ def wishlist(request):
 		feed = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		notifications = Notification(user=user, message='request')
 		notifications.save()
-		print(type(feed))
+		page = request.GET.get('page', 1)
+		paginator = Paginator(feed, 2)
+		try:
+			feed = paginator.page(page)
+		except PageNotAnInteger:
+			feed = paginator.page(1)
+		except EmptyPage:
+			feed = paginator.page(paginator.num_pages)
 		context = dict()
 		context['feed'] = feed
 		context['user'] = user
@@ -573,6 +589,8 @@ def distinctProducts(detail):
 	for i in detail:
 		product.append(i.product.id)
 	return list(set(product))
+
+
 def requests(request):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
@@ -631,8 +649,6 @@ def approveRequest(request, req_id):
 		return HttpResponseRedirect(reverse('ors:requests'))
 
 
-
-
 def report(request):
 	print("Report")
 	if request.user.is_authenticated:
@@ -667,4 +683,3 @@ def report(request):
 		
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
-
