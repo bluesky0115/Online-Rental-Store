@@ -362,7 +362,9 @@ def requestSeller(request, product_id):
 		buyer = UserProfile.objects.get(email=user.email)
 		seller = product.owner
 		print(request.path)
-
+		quantity = 1
+		if request.method == "POST":
+			quantity = request.POST['quantity']
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product, seller=seller).count()
 			if (exist == 0) and (product.owner != buyer):

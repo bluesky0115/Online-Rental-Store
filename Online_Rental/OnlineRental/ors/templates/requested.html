@@ -134,7 +134,7 @@
               <form method="post" action="{% url 'ors:approveRequest' request.id  %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="col-10">
-                 <input type="number" min="0" value="1" class="form-control" placeholder="Quantity" name="quantity" required> {{request.timestamp}}
+                 <input type="number" min="0" value="{{request.quantity}}" class="form-control" placeholder="Quantity" name="quantity" required> {{request.timestamp}}
               </div>
               <div class="col-10">
                  {{request.product.price}}
