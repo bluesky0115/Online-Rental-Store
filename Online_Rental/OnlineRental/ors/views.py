@@ -647,6 +647,7 @@ def approveRequest(request, req_id):
 				notify = Notification(user=req.buyer, message=message, typ='product reject')
 				notify.save()
 				req.status = 'rejected'
+				#req.delete()
 				history.status = 'rejected'
 
 		history.modified_by = user.name

@@ -94,7 +94,7 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             {% if notifications %}
             {% for notification in notifications %}
-            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} {{ notification.viewed }}</a>
+            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
             {% endfor %}
             {% endif %}
           </div>
@@ -256,17 +256,6 @@
           $("#message").fadeOut(6000);
       });
 </script>
-<script>
-    var infinite = new Waypoint.Infinite({
-      element: $('.card bg-light mb-3')[0],
-      onBeforePageLoad: function () {
-        $('.loading').show();
-      },
-      onAfterPageLoad: function ($items) {
-        $('.loading').hide();
-      }
-    });
-  </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
