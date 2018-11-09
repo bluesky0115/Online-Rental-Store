@@ -109,7 +109,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-4 col-xs-12 border" style="vertical-align: middle; ">
-          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
+          <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none; padding: auto;">
             <center><img src="{{ product.product.image.url }}" style="height:100%;max-height: 245px;"></center>
           </a>
         </div>
@@ -126,7 +126,7 @@
         </div>
         <div class="col-lg-2 col-xs-12" style="">
             <div class="row" style=" height: 100%;">
-              {% if product.status == "accepted" %}
+              {% if product.status == "confirmed" %}
                 <div class="col-lg-12">
                   <div class="form-group">
                     <!-- ** Rate product ** -->
@@ -149,6 +149,15 @@
                 <div class="col-12">
                   <center><button class="row btn btn-primary" type="submit">Submit</button></center>
                 </div>
+              {% elif product.status == "accepted" %}
+              <div>
+                User has accepted your request. Get your product and Confirm here.
+                <form method="post" >
+                  {% csrf_token %}
+                    <input value="{{product.product.id}}" type="hidden" name="confirmed">
+                    <button class="btn btn-danger" id = "{{product.product.id}}" >CONFIRMED</button>
+                </form>
+              </div>
               {% elif product.status == "rejected" %}
                 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
                   <button class="btn btn-warning">OKAY</button>

@@ -131,7 +131,7 @@
               <div class="col-2">
                 {{request.buyer.name}}
               </div>
-              <form method="post" action="{% url 'ors:approveRequest' product.id  %}" enctype="multipart/form-data">
+              <form method="post" action="{% url 'ors:approveRequest' request.id  %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="col-10">
                  <input type="number" min="0" value="1" class="form-control" placeholder="Quantity" name="quantity" required> {{request.timestamp}}

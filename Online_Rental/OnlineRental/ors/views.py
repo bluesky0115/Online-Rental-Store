@@ -264,11 +264,21 @@ def productPage(request, product_id):
 			length.append(i+1)
 		if len(length):
 			length.pop()
+		
+		if len(images) == 2:
+			images=images[:1]
+		elif len(images) > 2:
+			images = images[0:1]+images[2:]
+		elif len(images) == 0:
+			images = []
+		if len(images) == 0:
+			images = []
 		context = dict()
+		print(images, length, " images multiple testing")
 		context['product'] = product
 		context['feed'] = feed
 		context['user'] = user
-		context['images'] = images[1:]
+		context['images'] = images
 		context['length'] = length
 		form = ReportForm()
 		context['form']=form
@@ -396,10 +406,18 @@ def orderHistory(request):
 		u = UserProfile.objects.get(user=user).id
 		print(u)
 		if request.method == "POST":
-			product_id = request.POST['cancel']
-			OrderHistory.objects.get(customer=u, product=product_id).delete()
-			RequestSeller.objects.get(buyer=u, product=product_id).delete()
-			return redirect('ors:orderHistory')
+			if "cancel" in request.POST:
+				product_id = request.POST['cancel']
+				OrderHistory.objects.get(customer=u, product=product_id).delete()
+				RequestSeller.objects.get(buyer=u, product=product_id).delete()
+				return redirect('ors:orderHistory')
+			if "confirmed" in request.POST:
+				product_id = request.POST['confirmed']
+				order = OrderHistory.objects.get(customer=u, product=product_id)
+				RequestSeller.objects.get(buyer=u, product=product_id).delete()
+				order.status = "confirmed"
+				order.dateStart = datetime.datetime.now()
+				return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
 		feed = OrderHistory.objects.filter(customer=buyer).order_by('-timestamp')
 # 		print(feed[0], feed[0].status)

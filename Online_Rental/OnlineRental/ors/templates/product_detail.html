@@ -138,12 +138,14 @@
                   
                 </ol>
                 {% endif %}
-                {% if images %}
+                
                 <div class="carousel-inner">
                   <!-- loop start -->
+                  
                   <div class="carousel-item active">
                     <img src="{{product.image.url}}" alt="slide" style="height: 600px; width: 700px">
                   </div>
+                  {% if images %}
                   {% for imager in images %}
                   <div class="carousel-item">
                     <img src="{{imager.image.url}}" alt="slide" style="height: 600px; width: 700px">
@@ -151,8 +153,9 @@
                   {% endfor %}
                   
                   <!-- loop ends -->
+                  {% endif %}
                 </div><!-- /.carousel-inner -->
-                {% endif %}
+                
 
                 <a class="carousel-control-prev" href="#lightbox" data-slide="prev">
                   <span class="carousel-control-prev-icon"></span>
