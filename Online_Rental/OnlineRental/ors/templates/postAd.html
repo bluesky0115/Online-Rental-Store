@@ -137,8 +137,12 @@
               <input type="number" min="0" class="form-control" placeholder="Price" name="price" id="price_drop" required>
             </div>
             <div class="col">
-              <label for="Duration"> Duration </label>
-              <input type="number" min="0" class="form-control" placeholder="Duration" name="duration" id="duration_drop" required>
+              <label for="Duration"> Period </label>
+              <select name="period" class="form-control" id="duration_drop">
+                  <option value="per Day" selected>per Day</option>
+                  <option value="per Week">per Week</option>
+                  <option value="per Month">per Month</option>
+                </select>
             </div>
           </div>
           <div class="col">

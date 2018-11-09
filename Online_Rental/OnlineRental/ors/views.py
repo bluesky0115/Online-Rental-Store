@@ -227,13 +227,14 @@ def addProduct(request):
 				description = request.POST['desc']
 				quantity = request.POST['quantity']
 				price = request.POST.get('price')
-				duration = request.POST.get('duration')
+				period = request.POST.get('period')
 				category = request.POST['category']
 				ptype = request.POST['ptype']
 				image_r=image[0]
+				print(period)
 				print(image, "naya wala")
 				pr = Product(owner=owner, name=name, image=image_r, description=description, category=category, quantity=quantity,
-								duration=duration, price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
+								period=period, price=price, ptype=ptype, created_by=user.email, created_at=datetime.datetime.now())
 				pr.save()
 				
 				for i in range(len(image)):

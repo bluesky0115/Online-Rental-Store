@@ -135,13 +135,10 @@
               {% csrf_token %}
               <div class="col-10">
 
-                 <input type="number" min="0" value="{{request.quantity}}" max="{{request.product.quantity}}" class="form-control" placeholder="Quantity" name="quantity" required> {{request.timestamp}}
+                 <input type="number" min="0" value="{{request.quantity}}" max="{{request.product.quantity}}" class="form-control" placeholder="Quantity" name="quantity" required> Requested on: {{request.timestamp}}
               </div>
               <div class="col-10">
                  {{request.product.price}}
-              </div>
-              <div class="col-10" style="justify-content: center;">
-                from : *start date* to *end date* {{request.status}}
               </div>
               <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
                 <button type="submit" name="status" value="approve" class="btn btn-info">APPROVE</button>

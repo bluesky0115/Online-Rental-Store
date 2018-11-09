@@ -176,16 +176,18 @@
       <div class="col-12 col-lg-4">
         <form action="{% url 'ors:requestSeller' product.id %}" method="post">
           {% csrf_token %}
-          {% if product.ptype != "free" %}
-            <input class="form-control" type="text" placeholder="PRICE: {{product.price}}" readonly>
-          {% else %}
+          {% if product.ptype == "free" %}
             <input class="form-control" type="text" placeholder="FREE PRODUCT" readonly>
+          {% elif product.ptype == "sell" %}
+            <input class="form-control" type="text" placeholder="PRICE: {{product.price}}" readonly>
+          {%else%}
+            <input class="form-control" type="text" placeholder="PRICE: {{product.price}}/{{product.period}}" readonly>
           {% endif %}
           {% if product.ptype == "rent" %}
-            <input type="number" max="{{ product.duration }}" placeholder="DURATION">
+            
           {% endif %}
 
-            <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})" name="quantity">
+            <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})" name="quantity" required>
             <input type="number" class="form-control" placeholder="RATING: {{product.rating}}" readonly>
             <center><button type="submit" class="btn btn-success">REQUEST SELLER</button></center>
         </form>

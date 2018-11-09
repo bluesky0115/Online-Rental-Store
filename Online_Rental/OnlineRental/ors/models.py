@@ -76,7 +76,8 @@ class Product(models.Model):
 												('sports','sports'),('lifestyle', 'lifestyle'),('other', 'other')))
 	price = models.FloatField(blank=True, null=True)
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
-	duration = models.IntegerField(null=True, blank=True)
+	period = models.CharField(max_length=60, choices=(
+												('per Day','per Day'),('per Week','per Week'),('per Month','per Month')), default='per Day')
 	quantity = models.IntegerField(blank=False, default=1)
 	status = models.CharField(max_length=10, choices=(
 												('InStock','InStock'),('OutofStock','OutofStock')), default='InStock')
