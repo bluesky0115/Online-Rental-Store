@@ -111,6 +111,7 @@ class RequestSeller(models.Model):
 	seller = models.ForeignKey(UserProfile, related_name='buyer', on_delete=models.CASCADE)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	price = models.FloatField(blank=True, null=True)
+	quantity = models.IntegerField(blank=False, default=1)
 	status = models.CharField(max_length=20, choices=(
 							('requested','requested'),('accepted','accepted'),('rejected','rejected'),
 							('confirmed','confirmed')), default='requested')
@@ -128,6 +129,7 @@ class OrderHistory(models.Model):
 	seller = models.ForeignKey(UserProfile, related_name='customer', on_delete=models.CASCADE)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	price = models.FloatField(blank=True, null=True)
+	quantity = models.IntegerField(blank=False, default=1)
 	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 	dateStart = models.DateField(blank=True,null=True)
 	dateEnd = models.DateField(blank=True,null=True)
