@@ -402,7 +402,7 @@ def orderHistory(request):
 			return redirect('ors:orderHistory')
 		buyer = UserProfile.objects.get(email=user.email)
 		feed = OrderHistory.objects.filter(customer=buyer).order_by('-timestamp')
-		print(feed[0], feed[0].status)
+# 		print(feed[0], feed[0].status)
 		context = dict()
 		context['feed'] = feed
 		context['user'] = buyer
