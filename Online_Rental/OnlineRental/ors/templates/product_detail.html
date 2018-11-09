@@ -196,7 +196,12 @@
               
         </form>
         <hr>
-        <h5>{{product.status}}</h5></center>
+        {% if product.quantity == 0  %}
+        <h5>OutofStock</h5>
+        {% else %}
+        <h5>InStock</h5>
+        {%endif%}
+      </center>
       </div>
       <div class="col-12 col-lg-4">
         <div class="card">

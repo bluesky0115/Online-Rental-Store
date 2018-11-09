@@ -117,7 +117,7 @@ def dashboard(request):
 		context=dict()
 		
 		context['user'] = user
-		context['notifications'] = Notification.objects.filter(user=user)
+		context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 		numbers_list = range(1, feed.count())
 		page = request.GET.get('page', 1)
 		paginator = Paginator(feed, 10)
@@ -365,14 +365,15 @@ def requestSeller(request, product_id):
 		quantity = 1
 		if request.method == "POST":
 			quantity = request.POST['quantity']
+		print("quantity" , quantity)
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product, seller=seller).count()
 			if (exist == 0) and (product.owner != buyer):
-				req = RequestSeller(buyer=buyer, seller=seller, product=product, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
+				req = RequestSeller(buyer=buyer, seller=seller, product=product,quantity=quantity, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
 				req.created_by = buyer.name
 				req.created_at = datetime.datetime.now()
 				req.save()
-				history = OrderHistory(customer=buyer, seller=seller, product=product, status='requested', created_by=user.email, created_at=datetime.datetime.now())
+				history = OrderHistory(customer=buyer, seller=seller, product=product, quantity=quantity, status='requested', created_by=user.email, created_at=datetime.datetime.now())
 				history.created_by = buyer.name
 				history.created_at = datetime.datetime.now()
 				history.save()
@@ -645,7 +646,7 @@ def approveRequest(request, req_id):
 		product = Product.objects.get(id=req.product.id)
 		
 		#print("+++++++++  ",req.buyer,user,req.product)
-		print(OrderHistory.objects.get(seller=user, product=req.product))
+		# print(OrderHistory.objects.get(seller=user, product=req.product))
 		history = OrderHistory.objects.get(customer=req.buyer, seller=user, product=req.product)
 		print(history)
 
@@ -656,6 +657,9 @@ def approveRequest(request, req_id):
 			status = request.POST['status']
 			if status == 'approve':
 				product.quantity = product.quantity - int(quantity)
+				if product.quantity <= 0:
+					product.quantity = 0
+					product.status = "OutofStock"
 				product.save()
 				message = 'Your request for '+req.product.name+' has been ACCEPT by Seller! Grab it now!'
 				notify = Notification(user=req.buyer, message=message, typ='product approve')
