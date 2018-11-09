@@ -75,9 +75,6 @@ def signin(request):
 			else:
 				loginTrail(request,email,'success')
 				login(request, user)
-				userp = UserProfile.objects.get(user=user)
-				notifications = Notification(user=userp, message='request')
-				notifications.save()
 				return HttpResponsePermanentRedirect(reverse('ors:dashboard'))
 		else:
 			messages.error(request, 'User not registered')
@@ -368,7 +365,10 @@ def requestSeller(request, product_id):
 				history.created_at = datetime.datetime.now()
 				history.save()
 				print("requested")
+				message = 'You have a new request for ' + product.name
 				messages.success(request, "Requested the Seller")
+				notify = Notification(user=seller, message=message, typ='product request')
+				notify.save()
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
 			elif product.owner==buyer:
@@ -560,6 +560,9 @@ def rateProduct(request, product_id):
 					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment, created_by=request.user.email, created_at=datetime.datetime.now())
 					review.save()
 					messages.success(request, "Thanks for your review !")
+					message = 'Review of your product '+product.name+'by '+buyer.name
+					notify = Notification(user=product.owner, message=message, typ='product review')
+					notify.save()
 					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 			else:
 				print("baar baar nhi...")
@@ -616,9 +619,11 @@ def requests(request):
 def approveRequest(request, req_id):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(user=request.user)
-		#product = Product.objects.get(id=product_id)
+		print(req_id)
 		req = RequestSeller.objects.get(id=req_id)
-		print("+++++++++  ",req.buyer,user,req.product)
+		product = Product.objects.get(id=req.product.id)
+		
+		#print("+++++++++  ",req.buyer,user,req.product)
 		print(OrderHistory.objects.get(seller=user, product=req.product))
 		history = OrderHistory.objects.get(customer=req.buyer, seller=user, product=req.product)
 		print(history)
@@ -629,12 +634,18 @@ def approveRequest(request, req_id):
 			dateEnd = request.POST.get('dateEnd')
 			status = request.POST['status']
 			if status == 'approve':
-				product.quantity = product.quantity - quantity
+				product.quantity = product.quantity - int(quantity)
 				product.save()
+				message = 'Your request for '+req.product.name+' has been ACCEPT by Seller! Grab it now!'
+				notify = Notification(user=req.buyer, message=message, typ='product approve')
+				notify.save()
 				req.status = 'accepted'
 				history.status = 'accepted'
 
 			else:
+				message = 'Your request for '+req.product.name+' has been DECLINED by Seller'
+				notify = Notification(user=req.buyer, message=message, typ='product reject')
+				notify.save()
 				req.status = 'rejected'
 				history.status = 'rejected'
 
@@ -645,8 +656,6 @@ def approveRequest(request, req_id):
 		history.save()
 		req.save()
 		print(history.status)
-		notification = Notification(user=req.buyer, message='your request')
-		notification.save()
 		return HttpResponseRedirect(reverse('ors:requests'))
 
 
@@ -655,7 +664,6 @@ def report(request):
 	if request.user.is_authenticated:
 		u = User.objects.get(id=request.user.id)
 		us = UserProfile.objects.get(user=u)
-		print("HIIIIIIIIIII")
 		if request.method == 'POST':
 			form = ReportForm(request.POST)
 			if form.is_valid():
@@ -665,7 +673,6 @@ def report(request):
 				report_form.product = Product.objects.get(id=request.POST['product_id'])
 				report_form.respondant = report_form.product.owner
 				
-				print("Hiiiiiii")
 				report_form.timestamp = datetime.datetime.now()
 				report_form.created_by = us.name
 				report_form.created_at = datetime.datetime.now()

@@ -112,7 +112,8 @@ class RequestSeller(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	price = models.FloatField(blank=True, null=True)
 	status = models.CharField(max_length=20, choices=(
-							('requested','requested'),('accepted','accepted'),('rejected','rejected')), default='requested')
+							('requested','requested'),('accepted','accepted'),('rejected','rejected'),
+							('confirmed','confirmed')), default='requested')
 	timestamp = models.DateTimeField(default=datetime.now, blank=True)
 	created_by = models.CharField(max_length=60, default=buyer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
@@ -133,13 +134,14 @@ class OrderHistory(models.Model):
 	status = models.CharField(max_length=20, choices=(
 							('requested','requested'),('accepted','accepted'),('rejected','rejected'),
 							('confirmed','confirmed')), default='requested')
+	boughtDate = models.DateField(blank=True,null=True)
 	created_by = models.CharField(max_length=60, default=customer)
 	created_at = models.DateTimeField(default=datetime.now, blank=False)
 	modified_by = models.CharField(max_length=60, null=True)
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.customer.name)+'\'s OrderHistory'
+		return str(self.customer.name) + '\'s OrderHistory'
 
 
 class ProductRating(models.Model):
@@ -154,7 +156,7 @@ class ProductRating(models.Model):
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.buyer.name)+'\'s rating of '+self.product.name
+		return str(self.buyer.name) + '\'s rating of ' + self.product.name
 
 class SellerRating(models.Model):
 	seller = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -168,7 +170,7 @@ class SellerRating(models.Model):
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.seller.name)+'\'s rating by '+self.buyer.name
+		return str(self.seller.name) + '\'s rating by ' + self.buyer.name
 
 
 class Report(models.Model):
@@ -183,7 +185,7 @@ class Report(models.Model):
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.complainant)+'\'s report'
+		return str(self.complainant) + '\'s report'
 
 
 class ArchivedProduct(models.Model):
@@ -204,14 +206,15 @@ class ArchivedProduct(models.Model):
 	modified_at = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return str(self.owner.name)+'\'s '+self.name
+		return str(self.owner.name)+'\'s ' + self.name
 
 
 class Notification(models.Model):
 	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-	message = models.CharField(max_length=255, choices=(
-								('request', 'product request!!!'),('your request','rejected')), default='request')
+	message = models.CharField(max_length=255)
+	typ = models.CharField(max_length=36, default='request')
 	viewed = models.BooleanField(default=False)
+	timestamp = models.DateTimeField(default=datetime.now)
 
 	def __str__(self):
 		return str(self.user.name) + '\'s Notification'
@@ -219,7 +222,6 @@ class Notification(models.Model):
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-	#name = models.ForeignKey(Product, related_name="product_id", on_delete=models.CASCADE)
 	image = models.FileField(upload_to=image_directory_path, blank=False, default='default.jpg')
 
 	def __str__(self):
