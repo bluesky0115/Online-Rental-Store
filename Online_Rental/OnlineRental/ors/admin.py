@@ -14,4 +14,5 @@ admin.site.register([UserProfile,
 						OrderHistory,
 						ArchivedProduct,
 						ProductImage,
+						Notification,
 						])
