@@ -381,7 +381,7 @@ def requestSeller(request, product_id):
 				print("requested")
 				message = 'You have a new request for ' + product.name
 				messages.success(request, "Requested the Seller")
-				notify = Notification(user=seller, message=message, typ='product request')
+				notify = Notification(user=seller, product=product, message=message, typ='product request')
 				notify.save()
 				return HttpResponseRedirect(request.META['HTTP_REFERER'])
 				#return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id': product_id}))
@@ -584,7 +584,7 @@ def rateProduct(request, product_id):
 					review.save()
 					messages.success(request, "Thanks for your review !")
 					message = 'Review of your product '+product.name+'by '+buyer.name
-					notify = Notification(user=product.owner, message=message, typ='product review')
+					notify = Notification(user=product.owner, product=product, message=message, typ='product review')
 					notify.save()
 					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 			else:
@@ -606,6 +606,11 @@ def notificationShow(request, notification_id):
 		notification = Notification.objects.get(id=notification_id)
 		notification.viewed = True
 		notification.save()
+		
+		if notification.typ == 'product request':
+			return HttpResponseRedirect(reverse('ors:requests'))
+		if notification.typ == 'product reject' or notification.typ == 'product approve':
+			return HttpResponseRedirect(reverse('ors:orderHistory'))
 		return HttpResponseRedirect(request.META['HTTP_REFERER'])
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -639,6 +644,7 @@ def requests(request):
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
 
+
 def approveRequest(request, req_id):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(user=request.user)
@@ -662,15 +668,15 @@ def approveRequest(request, req_id):
 					product.quantity = 0
 					product.status = "OutofStock"
 				product.save()
-				message = 'Your request for '+req.product.name+' has been ACCEPT by Seller! Grab it now!'
-				notify = Notification(user=req.buyer, message=message, typ='product approve')
+				message = 'Your request for '+req.product.name+' has been ACCEPTED by Seller! Grab it now!'
+				notify = Notification(user=req.buyer, message=message, product=product, typ='product approve')
 				notify.save()
 				req.status = 'accepted'
 				history.status = 'accepted'
 
 			else:
 				message = 'Your request for '+req.product.name+' has been DECLINED by Seller'
-				notify = Notification(user=req.buyer, message=message, typ='product reject')
+				notify = Notification(user=req.buyer, product=product, message=message, typ='product reject')
 				notify.save()
 				req.status = 'rejected'
 				req.delete()
@@ -714,7 +720,6 @@ def report(request):
 		form = ReportForm()
 		context={'form':form}
 		#context['form'] = form
-		return render(request,'product_detail.html', context=context)
-		
+		return render(request,'product_detail.html', context=context)	
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
