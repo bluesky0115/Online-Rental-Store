@@ -175,10 +175,18 @@
             by - {{product.owner}}
           </div>
           <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
-             {{ product.description }}
+             {{ product.description }}<br>
+             <br><hr><h6><b>Posted On:</b> {{ product.postdate }}</h6>
           </div>
+          
           <div class="row" style="padding: 2%;height: 45px;">
-            <h4> Price: {{product.price}}</h4>
+             
+              {% if product.ptype == 'sell' or product.ptype == 'free' %}
+              <h4> Price: {{product.price}}</h4>
+              {%else%}
+              <h4> Price: {{product.price}} {{product.period}}</h4>
+              {%endif%}
+            
           </div>
           <hr>
           {% if product.quantity > 0 %}
