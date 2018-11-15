@@ -48,7 +48,7 @@
   		<li class="nav-item">
           <form class="form-inline"  method="POST" action="{% url 'ors:search' %}" enctype="multipart/form-data">
             {% csrf_token %}
-             <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+             <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search" required>
                 <div class="dropdown show" style="margin-right: 6px;">
                   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                   Category
