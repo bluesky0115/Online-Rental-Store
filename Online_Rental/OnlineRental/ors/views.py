@@ -188,9 +188,13 @@ def searchTag(request, tag):
 			#feed = Product.objects.all().exclude(owner=user).order_by('-price')
 			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY price DESC', [uid])
 
+		if tag == 'availability':
+			feed = Product.objects.filter(status="InStock").exclude(owner=user).order_by('-postdate')
+
 		if tag == 'free':
 			feed = Product.objects.raw('SELECT * from ors_product WHERE ptype=%s', [tag])
 			#feed = Product.objects.filter(ptype=tag).exclude(owner=user)
+
 
 		page = request.GET.get('page', 1)
 		paginator = Paginator(feed, 10)
