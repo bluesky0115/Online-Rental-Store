@@ -48,7 +48,7 @@
   		<li class="nav-item">
           <form class="form-inline"  method="POST" action="{% url 'ors:search' %}" enctype="multipart/form-data">
             {% csrf_token %}
-             <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+             <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search" required>
                 <div class="dropdown show" style="margin-right: 6px;">
                   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                   Category
@@ -122,15 +122,19 @@
         </center>
       </div>
   {% endfor %}
-  <div class="collapse" id="collapseExample">
+  <div class="collapse" id="sortBy">
     <a href="{% url 'ors:searchTag' 'newest' %}"> <button type="button" class="btn btn-outline-light" >Newest First</button></a>
     <a href="{% url 'ors:searchTag' 'pricelow2high' %}"><button type="button" class="btn btn-outline-light">Price - Low to High</button></a>
     <a href="{% url 'ors:searchTag' 'pricehigh2low' %}"><button type="button" class="btn btn-outline-light">Price - High to Low</button></a>
-    <!-- <a href="{% url 'ors:searchTag' 'free' %}"><button type="button" class="btn btn-outline-light">Free</button></a>
-    <button type="button" class="btn btn-outline-light">Availability</button> -->
+  </div>
+  <div class="collapse" id="filter">
+    <button class="btn btn-outline-warning btn-sm" disabled>FILTER</button>
+    <a href="{% url 'ors:searchTag' 'free' %}"><button type="button" class="btn btn-outline-light">Free</button></a>
+    <button type="button" class="btn btn-outline-light">Availability</button>
   </div>
   <div class="ml-auto">
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-outline-warning" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">FILTER</button>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sortBy" aria-expanded="false" aria-controls="sortBy">
         SORT BY
     </button>
   </div>
@@ -216,7 +220,8 @@
     </div>
   </div>
   {% endfor %}
-
+  <div class="row">
+    <center>
   {% if feed.has_other_pages %}
     <ul class="pagination">
       {% if feed.has_previous %}
@@ -238,7 +243,8 @@
       {% endif %}
     </ul>
   {% endif %}
-
+  </center>
+</div>
 
   {% else %}
      <div class="emptyList">
