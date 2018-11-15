@@ -204,7 +204,8 @@
     </div>
   </div>
   {% endfor %}
-
+  <div class="row">
+    <center>
   {% if feed.has_other_pages %}
     <ul class="pagination">
       {% if feed.has_previous %}
@@ -226,7 +227,8 @@
       {% endif %}
     </ul>
   {% endif %}
-
+  </center>
+</div>
 
   {% else %}
      <div class="emptyList">
