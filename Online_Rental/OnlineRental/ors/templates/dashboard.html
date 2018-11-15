@@ -144,10 +144,13 @@
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0">
       <div class="row" style="width: 100%">
-        <div class="col-11">
+        <div class="col-10">
           <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none">
             <h5 class="card-title">{{product.name}}</h5>
           </a>
+        </div>
+        <div class="col-1" style="font-size: 20px;">
+          <b>{{ product.quantity }}</b>
         </div>
         <div class="col-1">
           {% if product.ptype == "free" %}
