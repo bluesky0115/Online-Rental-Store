@@ -27,6 +27,7 @@
     .modal.and.carousel {
           position: fixed; 
     }
+
     </style>
 
   
@@ -229,7 +230,7 @@
       <div class="col-12 col-lg-2">
         <div class="row">
           <div class="col-6">
-            <center><button class="btn btn-info" id="shareButton" onclick=" CopyToClipboard()" onmouseout="outFunc()" data-placement="top" title="Copy link"><i class="material-icons">share</i></button></center>
+            <center><button class="btn btn-info" id="shareButton" onclick="CopyToClipboard()"><i class="material-icons">share</i></button></center>
           </div>
           <div class="col-6">
             <center><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="material-icons">flag</i></button></center>
@@ -319,23 +320,6 @@
     </div>
   </footer>
 
-    <!-- Optional JavaScript
-   
-    <script>
-      function myFunction() {
-        var copyText = document.getElementById("myInput");
-        copyText.select();
-        document.execCommand("copy");
-        
-        var tooltip = document.getElementById("myTooltip");
-        tooltip.innerHTML = "Copied: " + copyText.value;
-      }
-
-      function outFunc() {
-        var tooltip = document.getElementById("myTooltip");
-        tooltip.innerHTML = "Copy to clipboard";
-      }
-</script-->
 <script>  
 
   $(document).ready(function(){
@@ -344,17 +328,17 @@
       });
 
   function CopyToClipboard() {
-    var link = window.location.href;
-    link.select();
-    document.execCommand("copy");
-    
-    var tooltip = document.getElementById("shareButton");
-    tooltip.title = "Copied: " + copyText.value;
-  }
+    var dummy = document.createElement('input'),
+    text = window.location.href;
 
-  function outFunc() {
-    var tooltip = document.getElementById("shareButton");
-    tooltip.title = "Copy to clipboard";
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
+    
+    var btnn = document.getElementById('shareButton');
+    btnn.style.backgroundColor = "#008000" ;
   }
 
 </script>
