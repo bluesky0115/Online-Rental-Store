@@ -126,8 +126,8 @@
     <a href="{% url 'ors:searchTag' 'newest' %}"> <button type="button" class="btn btn-outline-light" >Newest First</button></a>
     <a href="{% url 'ors:searchTag' 'pricelow2high' %}"><button type="button" class="btn btn-outline-light">Price - Low to High</button></a>
     <a href="{% url 'ors:searchTag' 'pricehigh2low' %}"><button type="button" class="btn btn-outline-light">Price - High to Low</button></a>
-    <a href="{% url 'ors:searchTag' 'free' %}"><button type="button" class="btn btn-outline-light">Free</button></a>
-    <button type="button" class="btn btn-outline-light">Availability</button>
+    <!-- <a href="{% url 'ors:searchTag' 'free' %}"><button type="button" class="btn btn-outline-light">Free</button></a>
+    <button type="button" class="btn btn-outline-light">Availability</button> -->
   </div>
   <div class="ml-auto">
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -181,7 +181,11 @@
             <h4> Price: {{product.price}}</h4>
           </div>
           <hr>
-          <h5>{{product.status}}</h5>
+          {% if product.quantity > 0 %}
+            <h5>InStock</h5>
+          {% else %}
+            <h5>OutofStock</h5>
+          {%endif%}
         </div>
         <div class="col-lg-1 col-xs-12" style="">
             <div class="row" style=" height: 100%;">
