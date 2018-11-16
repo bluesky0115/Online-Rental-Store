@@ -212,31 +212,30 @@
     </div>
   </div>
   {% endfor %}
-  <div class="row">
-    <center>
-  {% if feed.has_other_pages %}
-    <ul class="pagination">
-      {% if feed.has_previous %}
-        <li><a href="?page={{ feed.previous_page_number }}">&laquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&laquo;</span></li>
+
+  <div class="row" style="width: 100%; justify-content:center; font-size: 30px;">
+      {% if feed.has_other_pages %}
+        <ul class="pagination">
+          {% if feed.has_previous %}
+            <li><a href="?page={{ feed.previous_page_number }}">&laquo;</a></li>
+          {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+          {% endif %}
+          {% for i in feed.paginator.page_range %}
+            {% if feed.number == i %}
+              <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+              <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if feed.has_next %}
+            <li><a href="?page={{ feed.next_page_number }}">&raquo;</a></li>
+          {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+          {% endif %}
+        </ul>
       {% endif %}
-      {% for i in feed.paginator.page_range %}
-        {% if feed.number == i %}
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-        {% else %}
-          <li><a href="?page={{ i }}">{{ i }}</a></li>
-        {% endif %}
-      {% endfor %}
-      {% if feed.has_next %}
-        <li><a href="?page={{ feed.next_page_number }}">&raquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&raquo;</span></li>
-      {% endif %}
-    </ul>
-  {% endif %}
-  </center>
-</div>
+  </div>
 
   {% else %}
      <div class="emptyList">
