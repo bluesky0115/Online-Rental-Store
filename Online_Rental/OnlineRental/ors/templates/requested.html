@@ -149,6 +149,7 @@
         </div>
         <div class="row">
            <form class="form-inline" method="post" action="{% url 'ors:approveRequest' request.id  %}" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="col-3">
               QUANTITY
             </div>

@@ -59,9 +59,11 @@
            Notification
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
+            {% if notifications %}
+            {% for notification in notifications %}
+            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+            {% endfor %}
+            {% endif %}
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -117,6 +119,7 @@
           <div class="row" style="padding: 2%;height: 45px;">
             <h4> {{product.product.status }}</h4>
           </div>
+          <hr>
           <div class="row" style="padding: 2%;height: 45px;">
             <h4> Price: {{product.product.price}}</h4>
           </div>
