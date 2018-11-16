@@ -77,7 +77,7 @@ class Product(models.Model):
 	price = models.FloatField(blank=True, null=True)
 	postdate = models.DateTimeField(auto_now_add=True, blank=False)
 	rating = models.DecimalField(max_digits=2, decimal_places=1, default=1)
-	period = models.CharField(max_length=60, choices=(
+	period = models.CharField(max_length=60, null=True, blank=True, choices=(
 												('per Day','per Day'),('per Week','per Week'),('per Month','per Month'),('None','None')), default='None')
 	quantity = models.IntegerField(blank=False, default=1)
 	status = models.CharField(max_length=10, choices=(

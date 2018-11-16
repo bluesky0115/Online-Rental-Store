@@ -112,7 +112,7 @@ def dashboard(request):
 	if request.user.is_authenticated:
 		print(request.user.email)
 		user = UserProfile.objects.get(email=request.user.email)
-		feed = Product.objects.all().exclude(owner=user).order_by('postdate')
+		feed = Product.objects.all().exclude(owner=user).order_by('-postdate')
 		print(type(feed))
 		context=dict()
 		
