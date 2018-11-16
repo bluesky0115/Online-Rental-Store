@@ -130,7 +130,7 @@
   <div class="collapse" id="filter">
     <button class="btn btn-outline-warning btn-sm" disabled>FILTER</button>
     <a href="{% url 'ors:searchTag' 'free' %}"><button type="button" class="btn btn-outline-light">Free</button></a>
-    <button type="button" class="btn btn-outline-light">Availability</button>
+     <a href="{% url 'ors:searchTag' 'availability' %}"><button type="button" class="btn btn-outline-light">Availability(InStock)</button></a>
   </div>
   <div class="ml-auto">
     <button class="btn btn-outline-warning" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">FILTER</button>
@@ -179,10 +179,18 @@
             by - {{product.owner}}
           </div>
           <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
-             {{ product.description }}
+             {{ product.description }}<br>
+             <br><hr><h6><b>Posted On:</b> {{ product.postdate }}</h6>
           </div>
+          
           <div class="row" style="padding: 2%;height: 45px;">
-            <h4> Price: {{product.price}}</h4>
+             
+              {% if product.ptype == 'sell' or product.ptype == 'free' %}
+              <h4> Price: {{product.price}}</h4>
+              {%else%}
+              <h4> Price: {{product.price}} {{product.period}}</h4>
+              {%endif%}
+            
           </div>
           <hr>
           {% if product.quantity > 0 %}

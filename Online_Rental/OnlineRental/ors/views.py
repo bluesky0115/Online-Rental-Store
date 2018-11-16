@@ -162,6 +162,7 @@ def searchProduct(request):
 			context = dict()
 			context['feed'] = feed
 			context['user'] = user
+			context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 				#return HttpResponseRedirect(reverse('ors:dashboard', kwargs={'feed':feed}))
 			return render(request, 'dashboard.html', context)
 		return HttpResponseRedirect(reverse('ors:dashboard'))
@@ -187,9 +188,13 @@ def searchTag(request, tag):
 			#feed = Product.objects.all().exclude(owner=user).order_by('-price')
 			feed = Product.objects.raw('SELECT * FROM ors_product WHERE NOT(owner_id=%s) ORDER BY price DESC', [uid])
 
+		if tag == 'availability':
+			feed = Product.objects.filter(status="InStock").exclude(owner=user).order_by('-postdate')
+
 		if tag == 'free':
 			feed = Product.objects.raw('SELECT * from ors_product WHERE ptype=%s', [tag])
 			#feed = Product.objects.filter(ptype=tag).exclude(owner=user)
+
 
 		page = request.GET.get('page', 1)
 		paginator = Paginator(feed, 10)
@@ -202,6 +207,7 @@ def searchTag(request, tag):
 		context = dict()
 		context['feed'] = feed
 		context['user'] = user
+		context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 		return render(request, 'dashboard.html', context)
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -273,11 +279,14 @@ def productPage(request, product_id):
 			images = []
 		context = dict()
 		print(images, length, " images multiple testing")
+		product.rating = productAverageRating(product_id)
+		product.save()
 		context['product'] = product
 		context['feed'] = feed
 		context['user'] = user
 		context['images'] = images
 		context['length'] = length
+		context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 		form = ReportForm()
 		context['form']=form
 		return render(request, 'product_detail.html', context)
@@ -302,6 +311,7 @@ def wishlist(request):
 		context = dict()
 		context['feed'] = feed
 		context['user'] = user
+		context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 		return render(request, 'wishlist.html', context)
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -417,7 +427,10 @@ def orderHistory(request):
 				return redirect('ors:orderHistory')
 			if "confirmed" in request.POST:
 				product_id = request.POST['confirmed']
-				order = OrderHistory.objects.get(customer=u, product=product_id)
+				product = Product.objects.get(id=product_id)
+				#order = OrderHistory.objects.filter(customer=u, product=product_id)
+				hist = OrderHistory.objects.filter(customer=u, product=product).exclude(status='confirmed' or 'rejected')
+				order = hist[0]
 				RequestSeller.objects.get(buyer=u, product=product_id).delete()
 				order.status = "confirmed"
 				order.boughtDate = datetime.datetime.now()
@@ -429,6 +442,7 @@ def orderHistory(request):
 		context = dict()
 		context['feed'] = feed
 		context['user'] = buyer
+		context['notifications'] = Notification.objects.filter(user=u).order_by('-timestamp')
 		return render(request, 'history.html', context)
 
 	else:
@@ -442,6 +456,7 @@ def myPosts(request):
 		context = dict()
 		context['feed'] = feed
 		context['user'] = user
+		context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 		print(feed)
 		return render(request, 'managePosts.html', context)
 	else:
@@ -521,6 +536,7 @@ def profile(request):
 		detail = UserProfile.objects.get(user=u)
 		context = {}
 		context['detail'] = detail
+		context['notifications'] = Notification.objects.filter(user=detail).order_by('-timestamp')
 		return render(request, 'profile_detail.html', context)
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -533,6 +549,7 @@ def editProfile(request):
 			print("get")
 			context = {}
 			context['user'] = user
+			context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 			return render(request, 'profile_edit.html', context)
 		else:
 			return HttpResponseRedirect(reverse('ors:login'))
@@ -569,8 +586,10 @@ def rateProduct(request, product_id):
 		product = Product.objects.get(id=product_id)
 		context=dict()
 		context['product_id']=product_id
+		hist = OrderHistory.objects.filter(customer=buyer,product=product)
+		history = hist[0]
 
-		if RequestSeller.objects.filter(product=product).count()>0:
+		if history.status == 'confirmed':
 			if (ProductRating.objects.filter(buyer=buyer, product=product).count()==0):
 				if request.method == 'GET':
 					print('get')
@@ -591,7 +610,6 @@ def rateProduct(request, product_id):
 				print("baar baar nhi...")
 				messages.warning(request, "You have already reviewed this Product")
 				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
-
 		else:
 			print("pahle istemaal kare fir vichaar bate!!!")
 			messages.error(request, "Can't review Products you haven't used.")
@@ -639,6 +657,7 @@ def requests(request):
 		context['products'] = products
 		context['requests'] = detail
 		context['user'] = user
+		context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
 		print(context)
 		return render(request, 'requested.html', context)
 	else:
@@ -654,8 +673,9 @@ def approveRequest(request, req_id):
 		
 		#print("+++++++++  ",req.buyer,user,req.product)
 		# print(OrderHistory.objects.get(seller=user, product=req.product))
-		history = OrderHistory.objects.get(customer=req.buyer, seller=user, product=req.product)
-		print(history)
+		hist = OrderHistory.objects.filter(customer=req.buyer, seller=user, product=req.product).exclude(status='confirmed' or 'rejected')
+		history = hist[0]
+		print("----------------------------",hist, history)
 
 		if request.method == 'POST':
 			quantity = request.POST['quantity']
@@ -723,3 +743,14 @@ def report(request):
 		return render(request,'product_detail.html', context=context)	
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
+
+def productAverageRating(product_id):
+	product = Product.objects.get(id=product_id)
+	reviews = ProductRating.objects.filter(product=product)
+	sm,avgRating  = 0,0.0
+	for review in reviews:
+		sm = sm + review.rating
+	if sm == 0:
+		return 0
+	avgRating = round(sm/reviews.count(), 1)
+	return avgRating

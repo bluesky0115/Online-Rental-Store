@@ -58,9 +58,11 @@
            Notification
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
+            {% if notifications %}
+            {% for notification in notifications %}
+            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+            {% endfor %}
+            {% endif %}
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -122,8 +124,15 @@
           <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
              {{ product.product.description }}
           </div>
+          <hr>
+             Requested On: {{ product.timestamp }}
+          <hr>
           <div class="row" style="padding: 2%;height: 45px;">
-            <h4> Price: {{product.product.price}}</h4>
+            {% if product.product.ptype == 'sell' or product.product.ptype == 'free' %}
+              <h4> Price: {{product.product.price}}</h4>
+              {%else%}
+              <h4> Price: {{product.product.price}} {{product.product.period}}</h4>
+              {%endif%}
           </div>
         </div>
         <div class="col-lg-2 col-xs-12" style="">
@@ -133,8 +142,10 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <!-- ** Rate product ** -->
+                    <form method="post" action="{% url 'ors:rateProduct' product.product.id %}">
+                    {% csrf_token %}
                     <label for = "sell1">Select Rating:</label>
-                    <select class = "form-control" id="sell1">
+                    <select class = "form-control" id="sell1" name="rating">
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -146,7 +157,7 @@
                 <div class="col-lg-12">
                   <div class="row form-group">
                     <label for="usr">Comment:</label>
-                    <input type="text" class="form-control" id="usr" style="width: 100%;">
+                    <input type="text" name="comment" class="form-control" id="usr" style="width: 100%;">
                   </div>
                 </div>
                 <div class="col-12">

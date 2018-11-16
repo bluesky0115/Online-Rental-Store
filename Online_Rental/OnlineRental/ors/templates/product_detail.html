@@ -67,9 +67,11 @@
            Notification
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
+            {% if notifications %}
+            {% for notification in notifications %}
+            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+            {% endfor %}
+            {% endif %}
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -182,14 +184,16 @@
           {% elif product.ptype == "sell" %}
             <input class="form-control" type="text" placeholder="PRICE: {{product.price}}" readonly>
           {%else%}
-            <input class="form-control" type="text" placeholder="PRICE: {{product.price}}/{{product.period}}" readonly>
+            <input class="form-control" type="text" placeholder="PRICE: {{product.price}} {{product.period}}" readonly>
           {% endif %}
           {% if product.ptype == "rent" %}
             
           {% endif %}
 
             <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})" name="quantity" required>
-            <input type="number" class="form-control" placeholder="RATING: {{product.rating}}" readonly>
+            <input type="number" class="form-control" placeholder="{% if product.rating == 0 %}NO RATINGS YET
+                                                                   {% else %}RATING: {{product.rating}}
+                                                                   {% endif %}" readonly>
             <center><button type="submit" class="btn btn-success">REQUEST SELLER</button></center>
         </form>
         <form action="{% url 'ors:addWishlist' product.id %}" style="margin: 3px;">
@@ -204,6 +208,8 @@
         {% else %}
         <h5>InStock</h5>
         {%endif%}
+        <hr>
+        <b>Posted On:</b> {{ product.postdate }}
       </center>
       </div>
       <div class="col-12 col-lg-4">
@@ -244,7 +250,14 @@
         <center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#RateModal">RATE PRODUCT</button></center>
       </div>
       <div class="col-12" style="width: 100%;">
-        
+        {%if feed%}
+        {% for review in feed %}
+        {{review.buyer}}<br>
+        {{review.rating}}<br>
+        {{review.description}}<br>
+        {{review.timestamp}}
+        {% endfor %}
+        {%endif%}
       </div>
     </div>
   </div>
