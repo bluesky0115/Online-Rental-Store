@@ -104,65 +104,70 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="row">
-        <div class="col-lg-3 col-xs-12 border" style="vertical-align: middle; ">
-          <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
-            <img src="{{ product.image.url }}" style="width:100%; max-height: 245px">
-          </a>
-        </div>
-        <div class="col-lg-3 col-xs-12">
-          <div class="row" style="padding: 2%; height: 45px">
+    <div class="row">
+      <div class="col-lg-6 col-xs-12">
+        <div class="row">
+          <div class="col-12">
+            <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
+              <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center>
+            </a>
+          </div>
+          <div class="col-12" style="height: 255px;">
+            <div class="row" style="padding: 2%;">
             by - {{product.owner}}
           </div>
-          <div class="row" style="padding: 2%; height: 155px;overflow-y: hidden;" >
+          <div class="row" style="padding: 2%; overflow-y: hidden; height: 155px;" >
              {{ product.description }}
           </div>
-          <div class="row" style="padding: 2%;height: 45px;">
+          <div class="row" style="padding: 2%;">
             {% if product.ptype == 'sell' or product.ptype == 'free' %}
               <h4> Price: {{product.price}}</h4>
               {%else%}
               <h4> Price: {{product.price}} {{product.period}}</h4>
               {%endif%}
           </div>
-        </div>
-        <div class="col-lg-6 col-xs-12" style="border: 1px solid; overflow-y : auto; height: 400px ">
-          <!-- for loop start -->
-          {% if requests %}
-          {% for request in requests %}
-              <!-- {% if request.product == product %} -->
-            <div class="row">
-              <div class="col-2">
-                <img src="{{ request.buyer.dp.url }}" style="width: 100%">
-              </div>
-              <div class="col-2">
-                {{request.buyer.name}}
-              </div>
-              <form method="post" action="{% url 'ors:approveRequest' request.id  %}" enctype="multipart/form-data">
-              {% csrf_token %}
-              <div class="col-10">
-
-                 <input type="number" min="0" value="{{request.quantity}}" max="{{request.product.quantity}}" class="form-control" placeholder="Quantity" name="quantity" required> Requested on: {{request.timestamp}}
-              </div>
-              <div class="col-10">
-                 {{request.product.price}}
-              </div>
-              <div class="row">
-                <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
-                  <button type="submit" name="status" value="approve" class="btn btn-info">APPROVE</button>
-                </div>
-                <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
-                  <button type="submit" class="btn btn-danger" name="status" value="decline">DECLINE</button>
-                </div>
-              </div>
-            </form>
-            </div>
-            <hr>
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-            <!-- for loop end -->
+          </div>
         </div>
       </div>
+      <div class="col-lg-6 col-xs-12" style="height: 500px; overflow-y:auto;">
+        {% if requests %}
+        {% for request in requests %}
+        <div class="row">
+          <div class="col-2">
+            <img src="{{ request.buyer.dp.url }}" style="width: 100%">
+          </div>
+          <div class="col-3">
+            {{request.buyer.name}}
+          </div>
+          {% csrf_token %}
+          <div class="col-4">
+            Requested on: {{request.timestamp}}
+          </div>
+          <div class="col-3">
+            {{request.product.price}}
+          </div>
+        </div>
+        <div class="row">
+           <form class="form-inline" method="post" action="{% url 'ors:approveRequest' request.id  %}" enctype="multipart/form-data">
+            <div class="col-3">
+              QUANTITY
+            </div>
+          <div class="col-3">
+            <input class="form-control" type="number" min="0" value="{{request.quantity}}" max="{{request.product.quantity}}" id="Quantity" placeholder="Quantity" name="quantity" required>
+          </div>
+          <div class="col-3" style="display: flex; justify-content: center; align-items: center;">
+            <button type="submit" name="status" value="approve" class="btn btn-info">APPROVE</button>
+          </div>
+          <div class="col-3" style="display: flex; justify-content: center; align-items: center;">
+            <button type="submit" class="btn btn-danger" name="status" value="decline">DECLINE</button>
+          </div>
+        </form>
+        </div>
+        <hr>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
     </div>
   </div>
    {% endfor %}
