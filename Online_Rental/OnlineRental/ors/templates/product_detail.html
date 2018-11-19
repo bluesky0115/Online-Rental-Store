@@ -28,45 +28,18 @@
           position: fixed; 
     }
 
+    table {
+    width:100%;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
 
-
-    html, body
-      height: 100%
-      background: #800000
-    .orange
-      background: #F8971D !important
-    .card-content > .card
-      margin: 1%
-      width: calc(96% / 2)
-      background: #1a92b7
-      border-radius: 7px
-      box-sizing: border-box
-      text-align: center
-      font-size: 141px
-      text-transform: uppercase
-      padding: 10px 0
-      float: left
-      color: #fff
-      transition: .5s
-      -webkit-transition: .5s
-      cursor: pointer
-      -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.11)
-      -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.11)
-      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.11)
-      &:active
-        background-color: #F8971D
-        user-select: none
-        transition: 0s
-        -webkit-transition: 0s
-
-    .card-header-title
-      background: #f4f4f4
-
-    .card-element-title
-      text-transform: uppercase
-      text-align: center
-      font-size: 33px
-      color: #7f7f7f
     </style>
 
   
@@ -287,7 +260,9 @@
     <div class="row" style="max-height: 300px; height: 200px; width: 100%; overflow-y: auto; margin-top: 20px;">
       <div class="col-12" style="width: 100%;">
         <center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#RateModal">RATE PRODUCT</button></center><br>
-        <center><button type="button" class="btn btn-info btn-lg center-block" data-toggle="modal" data-target="#RatingModal">VIEW RATINGS</button></center>
+        {% if ratings %}
+        <center><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#RatingModal">VIEW RATINGS</button></center>
+        {% endif %}
       </div>
       <div class="col-12" style="width: 100%;">
         {%if feed%}
@@ -359,20 +334,38 @@
 </div>
 
 
-<div id="RatingModal" class="modal fade" role="dialog">
+<div class="modal" id="RatingModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header card-header-title">
-        <h4 class="modal-title card-element-title">RATINGS</h4>
+    <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">RATINGS</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
+    <!-- Modal body -->
       <div class="modal-body">
-        <div class="card-content clearfix">
-          <div id="A" class="card left-half">a</div>
-          <div id="B" class="card right-half">b</div>
-          <div id="C" class="card left-half">c</div>
-          <div id="D" class="card right-half">d</div>
-        </div>
-      </div>
+        {% if ratings %}
+        <table >
+          {% for rating in ratings %}
+            
+              <tr>
+                <td>
+                 <img  src="{{rating.buyer.dp.url}}" height="80px" width="80px"> <br>
+                  <p class="text-primary">{{rating.buyer.name}}</p>
+                </td>
+
+                <td>
+                  {{rating.rating}}<br>
+                  {{rating.description}}<br>
+                  {{rating.timestamp}}
+                </td>
+
+              </tr>
+            
+            {% endfor %}
+            </table>
+          {% endif %}
+      </div>       
     </div>
   </div>
 </div>
@@ -411,32 +404,6 @@
     var btnn = document.getElementById('shareButton');
     btnn.style.backgroundColor = "#008000" ;
   }
-
-
-  var timeout;
-var $cards = $(".card");
-var size = $cards.length - 1;
-
-function highlight(count){
-  timeout = setTimeout(function(){ 
-    $cards.removeClass("orange");
-    $cards[count].classList.add("orange");
-    
-    clearTimeout(timeout);
-    if(size === count){
-       highlight((count - size));
-    }else{
-      highlight(count + 1);
-    }
-    
-  }, 1000); 
-}
-
-$cards.off("click").on( "click", function() {
-  clearTimeout(timeout);
-});
-
-highlight(0)
 
 </script>
 
