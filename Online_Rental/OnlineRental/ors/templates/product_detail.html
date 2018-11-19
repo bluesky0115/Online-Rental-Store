@@ -227,7 +227,7 @@
       <div class="col-12 col-lg-4">
         <div class="card">
           <div class="card-header">
-            <h5>{{product.owner.name}}</h5>
+            <a href = "{% url 'ors:sellerProfile' product.owner.id %}"><h5>{{product.owner.name}}</h5></a>
           </div>
           <div class="card-body">
           <center><img src="{{ product.owner.dp.url }}" style="height: 100%; max-height: 150px;"></center>

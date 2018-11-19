@@ -82,6 +82,15 @@ def signin(request):
 			return HttpResponseRedirect(reverse('ors:login'))
 
 
+def sellerProfile(request, id):
+	context = {}
+	user = UserProfile.objects.get(id=id)
+	context["user"] = user
+	product = Product.objects.filter(owner=user)
+	context["products"] = product 
+	return render(request, 'sellerProfile.html', context)
+
+
 def loginTrail(request, email, status):
 	email = email
 	ip = request.get_host()
