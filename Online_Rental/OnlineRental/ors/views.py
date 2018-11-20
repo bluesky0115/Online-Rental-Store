@@ -298,8 +298,6 @@ def wishlist(request):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Wishlist.objects.filter(user=user).order_by('-timestamp')
-		notifications = Notification(user=user, message='request')
-		notifications.save()
 		page = request.GET.get('page', 1)
 		paginator = Paginator(feed, 2)
 		try:
@@ -587,29 +585,31 @@ def rateProduct(request, product_id):
 		context=dict()
 		context['product_id']=product_id
 		hist = OrderHistory.objects.filter(customer=buyer,product=product)
-		history = hist[0]
+		print(hist)
+		if hist.count() > 0:
+			history = hist[0]
 
-		if history.status == 'confirmed':
-			if (ProductRating.objects.filter(buyer=buyer, product=product).count()==0):
-				if request.method == 'GET':
-					print('get')
-					return render(request, 'product_detail.html', context)
+			if history.status == 'confirmed':
+				if (ProductRating.objects.filter(buyer=buyer, product=product).count()==0):
+					if request.method == 'GET':
+						print('get')
+						return render(request, 'product_detail.html', context)
 
-				if request.method == 'POST':
-					rating = request.POST.get('rating')
-					comment = request.POST['comment']
-					print('post')
-					review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment, created_by=request.user.email, created_at=datetime.datetime.now())
-					review.save()
-					messages.success(request, "Thanks for your review !")
-					message = 'Review of your product '+product.name+'by '+buyer.name
-					notify = Notification(user=product.owner, product=product, message=message, typ='product review')
-					notify.save()
+					if request.method == 'POST':
+						rating = request.POST.get('rating')
+						comment = request.POST['comment']
+						print('post')
+						review = ProductRating(buyer=buyer, product=product, rating=rating, description=comment, created_by=request.user.email, created_at=datetime.datetime.now())
+						review.save()
+						messages.success(request, "Thanks for your review !")
+						message = 'Review of your product '+product.name+'by '+buyer.name
+						notify = Notification(user=product.owner, product=product, message=message, typ='product review')
+						notify.save()
+						return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+				else:
+					print("baar baar nhi...")
+					messages.warning(request, "You have already reviewed this Product")
 					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
-			else:
-				print("baar baar nhi...")
-				messages.warning(request, "You have already reviewed this Product")
-				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 		else:
 			print("pahle istemaal kare fir vichaar bate!!!")
 			messages.error(request, "Can't review Products you haven't used.")
@@ -754,3 +754,20 @@ def productAverageRating(product_id):
 		return 0
 	avgRating = round(sm/reviews.count(), 1)
 	return avgRating
+
+def dateSearch(request):
+	if request.user.is_authenticated:
+		user = UserProfile.objects.get(email=request.user.email)
+		if request.method == 'POST':
+			start = request.POST['start']
+			end = request.POST['end']
+			print(str(start),"----------",str(end))
+			feed = Product.objects.filter(postdate__range=[str(start), str(end)])
+			print(feed)
+			messages.success(request, str(feed.count())+" products found between "+str(start)+" and "+str(end))
+			context = dict()
+			context['feed'] = feed
+			context['user'] = user
+			context['notifications'] = Notification.objects.filter(user=user).order_by('-timestamp')
+
+			return render(request, 'dashboard.html', context)
