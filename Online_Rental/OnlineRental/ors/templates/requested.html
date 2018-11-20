@@ -135,10 +135,10 @@
           {% if request.product.id == product.id %}
         <div class="row">
           <div class="col-2">
-            <img src="{{ request.buyer.dp.url }}" style="width: 100%">
-          </div>
+            <a href = "{% url 'ors:sellerProfile' request.buyer.id %}"><img src="{{ request.buyer.dp.url }}" style="width: 100%">
+          </div></a>
           <div class="col-3">
-            {{request.buyer.name}}
+            <a href = "{% url 'ors:sellerProfile' request.buyer.id %}">{{request.buyer.name}}</a>
           </div>
           {% csrf_token %}
           <div class="col-4">

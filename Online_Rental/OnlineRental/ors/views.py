@@ -84,8 +84,10 @@ def signin(request):
 
 def sellerProfile(request, id):
 	context = {}
+	u = UserProfile.objects.get(email=request.user.email)
 	user = UserProfile.objects.get(id=id)
 	context["user"] = user
+	context["u"] = u
 	product = Product.objects.filter(owner=user)
 	context["products"] = product 
 	return render(request, 'sellerProfile.html', context)

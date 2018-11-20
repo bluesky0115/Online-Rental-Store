@@ -58,14 +58,16 @@
            Notification
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
+            {% if notifications %}
+            {% for notification in notifications %}
+            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+            {% endfor %}
+            {% endif %}
           </div>
       </li>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{detail.name}}
+            {{u.name}}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:wishlist' %}">Wishlist</a>
@@ -86,6 +88,8 @@
         </center>
       </div>
       <div class="row">
+        {{user.name}}<br>
+        {{user.email}}<br>
         {{user.mobileNumber}}<br>
         {{user.roll_no}}<br>
         {{user.bio}}
@@ -96,12 +100,14 @@
       <!-- user products loop start -->
       {% if products %}
         {% for product in products %}
-      <div class="row">
+      <a href = "{% url 'ors:productPage' product.id %}"><div class="row">
         <div class="col-6">
           <img src="{{product.image.url}}" height="100px" width="100px">
         </div>
         <div class="col-6">
-          {{product.name}}
+          {{product.name}}</a><br>
+          Price: {{product.price}}<br>
+          {{product.status}}
         </div>
       </div><hr>
       <!-- end -->

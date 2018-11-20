@@ -194,7 +194,7 @@
           {% if product.ptype == "free" %}
             <input class="form-control" type="text" placeholder="FREE PRODUCT" readonly>
           {% elif product.ptype == "sell" %}
-            <input class="form-control" type="text" placeholder="PRICE: {{product.price}}" readonly>
+            <input class="form-control" type="text" id="price" placeholder="PRICE: {{product.price}}" value="{{product.price}}" readonly>
           {%else%}
             <input class="form-control" type="text" placeholder="PRICE: {{product.price}} {{product.period}}" readonly>
           {% endif %}
@@ -202,7 +202,7 @@
             
           {% endif %}
 
-            <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})" name="quantity" required>
+            <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})" name="quantity" id="quantity" onChange="changePrice();" required>
             <input type="number" class="form-control" placeholder="{% if product.rating == 0 %}NO RATINGS YET
                                                                    {% else %}RATING: {{product.rating}}
                                                                    {% endif %}" readonly>
@@ -227,11 +227,11 @@
       <div class="col-12 col-lg-4">
         <div class="card">
           <div class="card-header">
-            <a href = "{% url 'ors:sellerProfile' product.owner.id %}"><h5>{{product.owner.name}}</h5></a>
+            <a href = "{% url 'ors:sellerProfile' product.owner.id %}"><h5>{{product.owner.name}}</h5>
           </div>
           <div class="card-body">
           <center><img src="{{ product.owner.dp.url }}" style="height: 100%; max-height: 150px;"></center>
-          </div>
+          </div></a>
           <div class="card-footer">
             <b>Rating:</b> {{product.owner.rating}}<br>
             <b>Mobile:</b>{{product.owner.mobileNumber}}
@@ -264,10 +264,11 @@
         <center><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#RatingModal">VIEW RATINGS</button></center>
         {% endif %}
       </div>
+<!-- -------------------------------------------------------------------------------------------------- -->
       <div class="col-12" style="width: 100%;">
         {%if feed%}
         {% for review in feed %}
-        {{review.buyer}}<br>
+        <a href = "{% url 'ors:sellerProfile' product.owner.id %}">{{review.buyer}}<br></a>
         {{review.rating}}<br>
         {{review.description}}<br>
         {{review.timestamp}}
@@ -350,8 +351,8 @@
             
               <tr>
                 <td>
-                 <img  src="{{rating.buyer.dp.url}}" height="80px" width="80px"> <br>
-                  <p class="text-primary">{{rating.buyer.name}}</p>
+                 <a href = "{% url 'ors:sellerProfile' rating.buyer.id %}"><img  src="{{rating.buyer.dp.url}}" height="80px" width="80px"></a> <br>
+                  <p class="text-primary"><a href = "{% url 'ors:sellerProfile' rating.buyer.id %}">{{rating.buyer.name}}</a></p>
                 </td>
 
                 <td>
@@ -404,6 +405,18 @@
     var btnn = document.getElementById('shareButton');
     btnn.style.backgroundColor = "#008000" ;
   }
+
+  function changePrice() {
+    //quantity = 1;
+    //price = 1;
+    var quantity = document.getElementById("quantity").value;
+    //var option = no.options[no.selectedIndex].text;
+    //var txt = document.getElementById("result").value;
+    var p = document.getElementById("price");
+    price = p.defaultValue;
+    price = price * quantity;
+    document.getElementById("price").value = price;
+}
 
 </script>
 
