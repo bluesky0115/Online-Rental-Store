@@ -82,24 +82,31 @@
     <div class="col-xs-12 col-lg-6 bg-light" style="width: 100%">
       <div class="row">
         <center>
-          <img img src="{{ detail.dp.url }} " style="max-width: 100%;max-height: 200px;">
+          <img img src="{{ user.dp.url }} " style="max-width: 100%;max-height: 200px;">
         </center>
       </div>
       <div class="row">
-        * user discrption *
+        {{user.mobileNumber}}<br>
+        {{user.roll_no}}<br>
+        {{user.bio}}
+
       </div>
     </div>
-    <div class="card bg-light col-xs-12 col-lg-6">
+    <div class="card bg-light col-xs-12 col-lg-6" style="height: 500px; overflow-y:auto;">
       <!-- user products loop start -->
+      {% if products %}
+        {% for product in products %}
       <div class="row">
         <div class="col-6">
-          *product image*
+          <img src="{{product.image.url}}" height="100px" width="100px">
         </div>
         <div class="col-6">
-          *product name*
+          {{product.name}}
         </div>
       </div><hr>
       <!-- end -->
+      {% endfor %}
+    {% endif %}
     </div>
   </div>
 </div>

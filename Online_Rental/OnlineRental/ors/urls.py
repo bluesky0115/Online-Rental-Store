@@ -31,4 +31,5 @@ urlpatterns = [
 	path('approveRequest/<int:req_id>', views.approveRequest, name="approveRequest"),
 	path('report', views.report, name="report"),
 	path('notification/<int:notification_id>', views.notificationShow, name='notificationShow'),
+	path('sellerProfile/<int:id>/', views.sellerProfile, name='sellerProfile'),
 ]

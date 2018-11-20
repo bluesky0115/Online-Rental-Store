@@ -82,6 +82,15 @@ def signin(request):
 			return HttpResponseRedirect(reverse('ors:login'))
 
 
+def sellerProfile(request, id):
+	context = {}
+	user = UserProfile.objects.get(id=id)
+	context["user"] = user
+	product = Product.objects.filter(owner=user)
+	context["products"] = product 
+	return render(request, 'sellerProfile.html', context)
+
+
 def loginTrail(request, email, status):
 	email = email
 	ip = request.get_host()
@@ -261,7 +270,7 @@ def productPage(request, product_id):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		product = Product.objects.get(id=product_id)
-		feed = ProductRating.objects.filter(product=product)
+		rating = ProductRating.objects.filter(product=product)
 		images = ProductImage.objects.filter(product=product_id)
 		length = []
 		for i in range(len(images)):
@@ -282,7 +291,7 @@ def productPage(request, product_id):
 		product.rating = productAverageRating(product_id)
 		product.save()
 		context['product'] = product
-		context['feed'] = feed
+		context['ratings'] = rating
 		context['user'] = user
 		context['images'] = images
 		context['length'] = length
