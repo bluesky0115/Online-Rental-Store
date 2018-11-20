@@ -194,7 +194,7 @@
           {% if product.ptype == "free" %}
             <input class="form-control" type="text" placeholder="FREE PRODUCT" readonly>
           {% elif product.ptype == "sell" %}
-            <input class="form-control" type="text" id="price" placeholder="PRICE: {{product.price}}" value="{{product.price}}" readonly>
+            <input class="form-control" type="text" id="price" name="price" placeholder="PRICE: {{product.price}}" value="{{product.price}}" readonly>
           {%else%}
             <input class="form-control" type="text" placeholder="PRICE: {{product.price}} {{product.period}}" readonly>
           {% endif %}

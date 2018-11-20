@@ -128,10 +128,13 @@
              Requested On: {{ product.timestamp }}
           <hr>
           <div class="row" style="padding: 2%;height: 45px;">
-            {% if product.product.ptype == 'sell' or product.product.ptype == 'free' %}
-              <h4> Price: {{product.product.price}}</h4>
+            {% if product.product.ptype == 'sell' %}
+              <h4> Price: {{product.price}}</h4>
+              {% elif product.product.ptype == 'free' %}
+              <h4> FREE </h4>
               {%else%}
               <h4> Price: {{product.product.price}} {{product.product.period}}</h4>
+
               {%endif%}
           </div>
         </div>

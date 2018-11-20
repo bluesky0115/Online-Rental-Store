@@ -385,15 +385,21 @@ def requestSeller(request, product_id):
 		quantity = 1
 		if request.method == "POST":
 			quantity = request.POST['quantity']
-		print("quantity" , quantity)
+			if product.ptype == "free":
+				price = 0
+			elif product.ptype == "rent":
+				price = product.price
+			else:
+				price = float(quantity)*product.price
+		print(price)
 		if product.quantity > 0:
 			exist = RequestSeller.objects.filter(buyer=buyer, product=product, seller=seller).count()
 			if (exist == 0) and (product.owner != buyer):
-				req = RequestSeller(buyer=buyer, seller=seller, product=product,quantity=quantity, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
+				req = RequestSeller(buyer=buyer, seller=seller, product=product, quantity=quantity, price=price, timestamp=datetime.datetime.now(), created_by=buyer.email, created_at=datetime.datetime.now())
 				req.created_by = buyer.name
 				req.created_at = datetime.datetime.now()
 				req.save()
-				history = OrderHistory(customer=buyer, seller=seller, product=product, quantity=quantity, status='requested', created_by=user.email, created_at=datetime.datetime.now())
+				history = OrderHistory(customer=buyer, seller=seller, product=product, quantity=quantity, price=price, status='requested', created_by=user.email, created_at=datetime.datetime.now())
 				history.created_by = buyer.name
 				history.created_at = datetime.datetime.now()
 				history.save()
