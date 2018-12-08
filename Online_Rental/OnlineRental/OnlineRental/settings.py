@@ -90,10 +90,10 @@ DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
         'NAME' : 'ors',
-        'USER' : 'deepak022',
-        'PASSWORD' : 'qwerty1106',
-        'HOST' : 'deepakdbinstance.chvxxqsxfg09.ap-south-1.rds.amazonaws.com',
-        'PORT' : 3306,
+        'USER' : 'orsproject',
+        'PASSWORD' : 'Group10ors',
+        'HOST' : 'ors.cpjlun4ym4rm.us-east-1.rds.amazonaws.com',
+        'PORT' : 3308,
     }
 }
         
