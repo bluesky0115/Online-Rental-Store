@@ -41,7 +41,7 @@
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
+            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an AD</a>
             <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
           </div>
       </li>
@@ -145,8 +145,9 @@
       </div>
     </div>
   </div>
-   {% endfor %}
+  {% endfor %}
    
+  <div class="row" style="width: 100%; justify-content:center; font-size: 30px;">
    {% if feed.has_other_pages %}
     <ul class="pagination">
       {% if feed.has_previous %}
@@ -168,6 +169,7 @@
       {% endif %}
     </ul>
   {% endif %}
+  </div>
 
 {% else %}
   <div class="emptyList" style="height: 100vh;">

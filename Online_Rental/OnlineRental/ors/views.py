@@ -310,7 +310,7 @@ def wishlist(request):
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		page = request.GET.get('page', 1)
-		paginator = Paginator(feed, 2)
+		paginator = Paginator(feed, 6)
 		try:
 			feed = paginator.page(page)
 		except PageNotAnInteger:
@@ -627,6 +627,9 @@ def rateProduct(request, product_id):
 					print("baar baar nhi...")
 					messages.warning(request, "You have already reviewed this Product")
 					return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
+			else:
+				messages.error(request, "Can't review product you haven't confirmed yet.")
+				return HttpResponseRedirect(reverse('ors:productPage', kwargs={'product_id':product_id}))
 		else:
 			print("pahle istemaal kare fir vichaar bate!!!")
 			messages.error(request, "Can't review Products you haven't used.")

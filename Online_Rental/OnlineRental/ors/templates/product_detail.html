@@ -61,7 +61,7 @@
             Post
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an add</a>
+            <a class="dropdown-item" href="{% url 'ors:addProduct' %}">Post an AD</a>
             <a class="dropdown-item" href="{% url 'ors:myPosts' %}">Manage post</a>
           </div>
       </li>
@@ -233,7 +233,6 @@
           <center><img src="{{ product.owner.dp.url }}" style="height: 100%; max-height: 150px;"></center>
           </div></a>
           <div class="card-footer">
-            <b>Rating:</b> {{product.owner.rating}}<br>
             <b>Mobile:</b>{{product.owner.mobileNumber}}
           </div>
         </div>
