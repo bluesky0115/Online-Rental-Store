@@ -83,10 +83,7 @@
   <div class="row" style=" ">
   {% if feed %}
   {% for product in feed %}
-    <div class="col-xs-12 col-lg-4 col-md-3" style="margin-bottom: 6px;">
-        {% if product.quantity == 0 %}
-        <div style="pointer-events: none; opacity: 0.4;" >
-      {% endif %}
+    <div class="col-xs-12 col-lg-4 col-md-3" style="margin-bottom: 6px;"> 
       <div class="card">
         <div class="card-header">
           <div class="row">
@@ -99,15 +96,18 @@
           </div>
         </div>
         <div class="card-body" style="height: 152px; overflow-y: hidden;">
-        <h5><b>Product Description:</b></h5>
-        {{product.description}}
+          {% if product.quantity == 0 %}
+          <div style="pointer-events: none; opacity: 0.4; background-color: grey; height: 100%;" >
+          {% endif %}
+          <h5><b>Product Description:</b></h5>
+          {{product.description}}
+          {% if product.quantity == 0 %}
+          </div>
+        {% endif %}
         </div>
         <div class="card-footer">
         </div>
       </div>
-      {% if product.quantity == 0 %}
-        </div>
-      {% endif %}
     </div>
     {% endfor %}
 {% endif %}
