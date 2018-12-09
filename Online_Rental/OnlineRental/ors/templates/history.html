@@ -16,8 +16,8 @@
     body {
       text-decoration: none;
     }
-    a { 
-      color: inherit; 
+    a {
+      color: inherit;
     }
     </style>
 
@@ -60,7 +60,12 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             {% if notifications %}
             {% for notification in notifications %}
-            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+              {% if notification.viewed is False %}
+                <a class="dropdown-item" style="background-color:#FF5252" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+              {% endif %}
+              <hr>
             {% endfor %}
             {% endif %}
           </div>
@@ -90,7 +95,7 @@
   {% for product in feed %}
 
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
-    <div class="card-header" style="background-color:#e0e0e0"> 
+    <div class="card-header" style="background-color:#e0e0e0">
       <div class="row" style="width: 100%">
         <div class="col-11">
           <a href="{% url 'ors:productPage' product.product.id %}" style="text-decoration:none">
@@ -198,7 +203,7 @@
    {% else %}
       <div class="emptyList">
         <div class="row">
-            
+
         </div>
       </div>
     {% endif %}
