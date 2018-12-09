@@ -381,7 +381,7 @@ def requestSeller(request, product_id):
 		product = Product.objects.get(id=product_id)
 		buyer = UserProfile.objects.get(email=user.email)
 		seller = product.owner
-		print(request.path)
+		price = 0
 		quantity = 1
 		if request.method == "POST":
 			quantity = request.POST['quantity']
