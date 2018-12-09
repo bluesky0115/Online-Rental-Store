@@ -13,6 +13,7 @@
        rel="stylesheet">
 
     <title>EDIT POST</title>
+
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
     <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;"> ONLINE RENTAL STORE</a>
@@ -73,13 +74,16 @@
 <div class="container-fluid" style="margin-top:112px;">
 <div class="card" >
   <div class="row card-header">
-    <div class="col-8 col-lg-9">
+    <div class="col-3 col-lg-3" >
+      <center><button type="submit" class="btn btn-warning mb-2" style="display: inline; right: 2px; color:white;">BACK</button></center>
+    </div>
+    <div class="col-5 col-lg-6">
       <h4 style="display: inline;">EDIT PRODUCT INFO</h4>
     </div>
     <div class="col-4 col-lg-3">
       <form  method="post" action="{% url 'ors:deletePost' product.id %}" enctype="multipart/form-data" style="display: inline;">
         {% csrf_token %}
-        <center> <button type="submit" class="btn btn-danger mb-2" style="display: inline; right: 2px;">DELETE PRODUCT</button></center>
+        <center> <button type="submit" class="btn btn-danger mb-2" style="display: inline; right: 2px;">DELETE</button></center>
       </form>
     </div>
   </div>
@@ -108,10 +112,10 @@
               <label for="quantity"> Quantity</label>
               <input type="number" min="0" class="form-control" placeholder="{{ product.quantity }}" name="quantity">
             </div>
-          
+
           </div>
 
-          
+
           <div class="form-group">
               <label for="category">FOR</label>
                 <select name="ptype" class="form-control" id="for_drop" onChange="changetextbox();" selected="{{ product.ptype }}">
@@ -166,7 +170,7 @@
       </div>
     </div>
   </footer>
-  
+
   <script>
   function readURL(input) {
           if (input.files && input.files[0]) {
@@ -180,11 +184,12 @@
               reader.readAsDataURL(input.files[0]);
           }
       }
+
   </script>
 
   <script type="text/javascript">
     function changetextbox()
-    { 
+    {
         if(document.getElementById("for_drop").value === "free") {
             document.getElementById("price_drop").disabled= true;
             document.getElementById("duration_drop").disabled= false;
@@ -194,12 +199,12 @@
             document.getElementById("price_drop").disabled= false;
             document.getElementById("duration_drop").disabled= false;
             // console.log("True found");
-        } 
+        }
         else if(document.getElementById("for_drop").value === "sell") {
             document.getElementById("price_drop").disabled= false;
             document.getElementById("duration_drop").disabled= true;
             // console.log("True found");
-        } 
+        }
     }
   </script>
 

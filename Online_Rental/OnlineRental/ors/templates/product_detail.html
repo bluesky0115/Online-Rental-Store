@@ -14,6 +14,52 @@
       rel="stylesheet">
     <title>Product Detailed</title>
 
+    <!-- JUST FOR A NOTIFICATION :\ -->
+    <style>
+    #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+    }
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+    }
+
+    @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+    }
+    </style>
+    <!-- -->
+
      <style type="text/css">
     .emptyList {
         height : 100vh;
@@ -21,11 +67,11 @@
     body {
       text-decoration: none;
     }
-    a { 
-      color: inherit; 
+    a {
+      color: inherit;
     }
     .modal.and.carousel {
-          position: fixed; 
+          position: fixed;
     }
 
     table {
@@ -42,7 +88,7 @@
 
     </style>
 
-  
+
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
 
@@ -129,14 +175,14 @@
   <div class="card-body">
     <div class="row">
       <div class="col-12 col-lg-4">
-        
+
 
     <div class="container">
       <ul class="nav nav-pills nav-stacked">
         <center> <a href="#lightbox" data-toggle="modal"><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></a></center>
         </li>
       </ul>
-        
+
         <div class="modal fade and carousel slide" id="lightbox">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -144,19 +190,19 @@
                 {% if images %}
                 <ol class="carousel-indicators">
                   <!-- loop start -->
-                  
+
                   <li data-target="#lightbox" data-slide-to="0" class="active"></li>
                   {% for i in length %}
                   <li data-target="#lightbox" data-slide-to="{{i}}"></li>
                   <!-- loop ends -->
                   {% endfor %}
-                  
+
                 </ol>
                 {% endif %}
-                
+
                 <div class="carousel-inner">
                   <!-- loop start -->
-                  
+
                   <div class="carousel-item active">
                     <img src="{{product.image.url}}" alt="slide" style="height: 600px; width: 700px">
                   </div>
@@ -166,11 +212,11 @@
                     <img src="{{imager.image.url}}" alt="slide" style="height: 600px; width: 700px">
                   </div>
                   {% endfor %}
-                  
+
                   <!-- loop ends -->
                   {% endif %}
                 </div><!-- /.carousel-inner -->
-                
+
 
                 <a class="carousel-control-prev" href="#lightbox" data-slide="prev">
                   <span class="carousel-control-prev-icon"></span>
@@ -199,7 +245,7 @@
             <input class="form-control" type="text" placeholder="PRICE: {{product.price}} {{product.period}}" readonly>
           {% endif %}
           {% if product.ptype == "rent" %}
-            
+
           {% endif %}
 
             <input type="number" class="form-control" max="{{ product.quantity }}" min="1" placeholder="QUANTITY (MAX: {{ product.quantity }})" name="quantity" id="quantity" onChange="changePrice();" required>
@@ -212,7 +258,7 @@
               <center><button type="submit" class="btn btn-warning">
               ADD TO WISHLIST
                 </button>
-              
+
         </form>
         <hr>
         {% if product.quantity == 0  %}
@@ -240,7 +286,7 @@
     </div>
   </div>
   <div class="card-footer">
-    <div class="row"> 
+    <div class="row">
       <div class="col-12 col-lg-10">
         <b>DESCRIPTION: </b>{{product.description}}
       </div>
@@ -307,7 +353,7 @@
           </div>
           <center><input class="btn btn-warning" type="submit"/></center>
         </form>
-      </div>       
+      </div>
     </div>
   </div>
 </div>
@@ -328,7 +374,7 @@
           <input type="hidden" value="{{ product.id }}" name="product_id" />
           <center><input class="btn btn-warning" type="submit"/></center>
         </form>
-      </div>       
+      </div>
     </div>
   </div>
 </div>
@@ -347,7 +393,7 @@
         {% if ratings %}
         <table >
           {% for rating in ratings %}
-            
+
               <tr>
                 <td>
                  <a href = "{% url 'ors:sellerProfile' rating.buyer.id %}"><img  src="{{rating.buyer.dp.url}}" height="80px" width="80px"></a> <br>
@@ -361,14 +407,16 @@
                 </td>
 
               </tr>
-            
+
             {% endfor %}
             </table>
           {% endif %}
-      </div>       
+      </div>
     </div>
   </div>
 </div>
+
+<div id="snackbar">Copied to clipboard! </div>
 
 <footer id="main-footer" class="bg-dark text-white mt-5 p-1" style="bottom: 0; position: fixed; width: 100%;">
     <div class="container">
@@ -384,7 +432,7 @@
     </div>
   </footer>
 
-<script>  
+<script>
 
   $(document).ready(function(){
           $("#message").fadeIn();
@@ -400,9 +448,13 @@
     dummy.select();
     document.execCommand('copy');
     document.body.removeChild(dummy);
-    
+
     var btnn = document.getElementById('shareButton');
     btnn.style.backgroundColor = "#008000" ;
+
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
   }
 
   function changePrice() {
