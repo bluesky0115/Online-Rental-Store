@@ -49,10 +49,14 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            Notification
           </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="padding:1px;">
             {% if notifications %}
             {% for notification in notifications %}
-            <a class="dropdown-item" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+              {% if notification.viewed is False %}
+                <a class="dropdown-item" style="background-color:#FF5252; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+              {% else %}
+                <a class="dropdown-item" style="margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+              {% endif %}
             {% endfor %}
             {% endif %}
           </div>
@@ -115,10 +119,10 @@
               <label for="quantity"> Quantity</label>
               <input type="number" min="0" class="form-control" placeholder="quantity" name="quantity" required>
             </div>
-          
+
           </div>
 
-          
+
           <div class="form-group">
               <label for="category">FOR</label>
                 <select name="ptype" class="form-control" id="for_drop" onChange="changetextbox();">
@@ -126,10 +130,10 @@
                   <option value="sell">Sell</option>
                   <option value="free">Free</option>
                 </select>
-              
+
                 <!-- <div class="row">
                   <input type="radio" name="for" value="rent" id="rent">Rent
-                  <input type="radio" name="for" value="sell" id="sell">Sell 
+                  <input type="radio" name="for" value="sell" id="sell">Sell
                   <input type="radio" name="for" value="free" id="free" onChange="changetextbox();">Free
                 </div> -->
           </div>
@@ -183,7 +187,7 @@
       </div>
     </div>
   </footer>
-    <script>  
+    <script>
   $(document).ready(function(){
           $("#message").fadeIn();
           $("#message").fadeOut(6000);
@@ -203,18 +207,18 @@
               reader.readAsDataURL(input.files[0]);
           }
           var formData = new FormData();
- 
+
           var file;
 
-          
+
           var i;
-          
-          for (i = 0; i < input.files.length; i++) { 
+
+          for (i = 0; i < input.files.length; i++) {
                 file = document.getElementById("inputGroupFile").files[i];
                 formData.append("Filedata", file);
           }
           // console.log(formData.length);
-          
+
           var t = file.type.split('/').pop().toLowerCase();
           if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
               alert('Please select a valid image file');
@@ -227,7 +231,7 @@
 
   <script type="text/javascript">
     function changetextbox()
-    { 
+    {
         if(document.getElementById("for_drop").value === "free") {
             document.getElementById("price_drop").disabled= true;
             document.getElementById("duration_drop").disabled= false;
@@ -237,12 +241,12 @@
             document.getElementById("price_drop").disabled= false;
             document.getElementById("duration_drop").disabled= false;
             // console.log("True found");
-        } 
+        }
         else if(document.getElementById("for_drop").value === "sell") {
             document.getElementById("price_drop").disabled= false;
             document.getElementById("duration_drop").disabled= true;
             // console.log("True found");
-        } 
+        }
     }
   </script>
 
