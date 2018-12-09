@@ -11,7 +11,7 @@
     <style type="text/css">
       .info h5,
       .info b{
-        display: inline; 
+        display: inline;
       }
       .f {
         border: 1px solid grey;
@@ -83,32 +83,42 @@
   <div class="row" style="margin: 4px;" >
     <div class="col-xs-12 col-lg-6 bg-light" style="width: 100%">
       <div class="row">
+      <div class="col-12" style="padding: 4%;">
         <center>
           <img img src="{{ user.dp.url }} " style="max-width: 100%;max-height: 200px;">
         </center>
       </div>
-      <div class="row">
-        {{user.name}}<br>
-        {{user.email}}<br>
-        {{user.mobileNumber}}<br>
-        {{user.roll_no}}<br>
-        {{user.bio}}
-
+      <div class="card col-12" style="padding:2%;">
+        <center>
+        <h4>{{user.name}}<h4>
+        <h4>{{user.email}}</h4>
+        <h4>{{user.mobileNumber}}</h4>
+        <h4>{{user.roll_no}}</h4>
+        <h4>{{user.bio}}</h4>
+        <center/>
       </div>
+    </div>
     </div>
     <div class="card bg-light col-xs-12 col-lg-6" style="height: 500px; overflow-y:auto;">
       <!-- user products loop start -->
       {% if products %}
         {% for product in products %}
-      <a href = "{% url 'ors:productPage' product.id %}"><div class="row">
-        <div class="col-6">
-          <img src="{{product.image.url}}" height="100px" width="100px">
-        </div>
-        <div class="col-6">
-          {{product.name}}</a><br>
-          Price: {{product.price}}<br>
-          {{product.status}}
-        </div>
+      <a href = "{% url 'ors:productPage' product.id %}">
+        <div class="card">
+          <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <img src="{{product.image.url}}"style="max-height:100px; max-width:100%;">
+                </div>
+                <div class="col-6">
+                  <center>
+                    <h6>{{product.name}}</h6>
+                    <h6>Price: {{product.price}}</h6>
+                    <h6>{{product.status}}</h6>
+                  </center>
+                </div>
+              </div>
+          </div>
       </div><hr>
       <!-- end -->
       {% endfor %}
