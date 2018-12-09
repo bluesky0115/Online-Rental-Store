@@ -42,7 +42,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ors:orderHistory' %}">My Orders</a>
-              <a class="dropdown-item" href="{% url 'ors:requests' %}">requests</a>
+              <a class="dropdown-item" href="{% url 'ors:requests' %}">Requests</a>
           </div>
       </li>
       <li class="nav-item dropdown">
@@ -79,7 +79,7 @@
 <div class="card" >
   <div class="row card-header">
     <div class="col-3 col-lg-3" >
-      <center><button type="submit" class="btn btn-warning mb-2" style="display: inline; right: 2px; color:white;">BACK</button></center>
+      <center><a href="{% url 'ors:myPosts' %}"><button type="submit" class="btn btn-warning mb-2" style="display: inline; right: 2px; color:white;">BACK</button></a></center>
     </div>
     <div class="col-5 col-lg-6">
       <h4 style="display: inline;">EDIT PRODUCT INFO</h4>
