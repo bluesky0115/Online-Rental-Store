@@ -447,7 +447,7 @@ def orderHistory(request):
 				product_id = request.POST['confirmed']
 				product = Product.objects.get(id=product_id)
 				#order = OrderHistory.objects.filter(customer=u, product=product_id)
-				hist = OrderHistory.objects.filter(customer=u, product=product).exclude(status='confirmed' or 'rejected')
+				hist = OrderHistory.objects.filter(customer=u, product=product).exclude(status='confirmed' or 'rejected').order_by('-timestamp')
 				order = hist[0]
 				RequestSeller.objects.get(buyer=u, product=product_id).delete()
 				order.status = "confirmed"

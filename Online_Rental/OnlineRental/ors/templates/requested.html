@@ -120,9 +120,10 @@
             <div class="row" style="padding: 2%;">
             by - {{product.owner}}
           </div>
-          <div class="row" style="padding: 2%; overflow-y: hidden; height: 155px;" >
+          <div class="row" style="padding: 2%; overflow-y: hidden; max-height: 150px;" >
              {{ product.description }}
           </div>
+          <div><h4> Quantity: {{product.quantity}} </h4></div>
           <div class="row" style="padding: 2%;">
             {% if product.ptype == 'sell' or product.ptype == 'free' %}
               <h4> Price: {{product.price}}</h4>
