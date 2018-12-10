@@ -183,7 +183,10 @@
 <div class="card" style="margin-top:112px; margin-left: 10px; margin-right: 10px; margin-bottom: 60px;">
   <div class="card-header">
     <div class="row" style="width: 100%">
-        <div class="col-11">
+      <div class="col-3" >
+        <center><button type="submit" class="btn btn-warning mb-2" style="display: inline; right: 2px; color:white;" onclick="goBack()">BACK</button></center>
+      </div>
+        <div class="col-8">
           <h5 class="card-title">{{product.name}}</h5>
       </div>
       <div class="col-1">
@@ -495,6 +498,12 @@
 }
 
 </script>
+
+  <script>
+    function goBack() {
+        window.history.back();
+    }
+  </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -102,7 +102,7 @@
 <div class="card" >
   <div class="row card-header">
     <div class="col-3 col-lg-3" >
-      <center><a href="{% url 'ors:myPosts' %}"><button type="submit" class="btn btn-warning mb-2" style="display: inline; right: 2px; color:white;">BACK</button></a></center>
+      <center><button type="submit" class="btn btn-warning mb-2" style="display: inline; right: 2px; color:white;" onclick="goBack();">BACK</button></center>
     </div>
     <div class="col-5 col-lg-6">
       <h4 style="display: inline;">EDIT PRODUCT INFO</h4>
@@ -240,6 +240,11 @@
     }
   </script>
 
+ <script>
+    function goBack() {
+        window.history.back();
+    }
+  </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
