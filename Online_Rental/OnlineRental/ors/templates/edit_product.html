@@ -14,6 +14,29 @@
 
     <title>EDIT POST</title>
 
+    <style>
+      /* width */
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888; 
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+      }
+    </style>
+
+
   </head>
   <body style="background-image: url({% static 'ors/image/BackgroundBlur.jpg' %}); background-size: cover; background-repeat: no-repeat;">
     <a class="navbar-brand" href="{% url 'ors:dashboard' %}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/IIIT_Sri_City_Logo.png/220px-IIIT_Sri_City_Logo.png" style="width: 32px; height: 32px; margin-right: 8px;"> ONLINE RENTAL STORE</a>
@@ -49,11 +72,11 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            Notification
           </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="padding:1px;">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="padding:1px; max-height: 200px; overflow-y: auto;">
             {% if notifications %}
             {% for notification in notifications %}
               {% if notification.viewed is False %}
-                <a class="dropdown-item" style="background-color:#FF5252; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+                <a class="dropdown-item" style="background-color:#7C4DFF; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
               {% else %}
                 <a class="dropdown-item" style="margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
               {% endif %}
@@ -145,13 +168,13 @@
           </div>
           <!-- <div class="col">
               <label for="tttype">Category</label>
-                <select name="category" class="form-control" id="tttype" selected="{{ product.category }}" disabled>
-                  <option value="electronics">Electronics</option>
+                <select name="category" class="form-control" id="tttype" disabled>
+                  <!-- <option value="electronics">Electronics</option>
                   <option value="stationary">Stationary</option>
                   <option value="fashion">Fashion</option>
                   <option value="sports">Sports</option>
                   <option value="lifestyle">Lifestyle</option>
-                  <option value="other">Other</option>
+                  <option value="other">Other</option> -->
                 </select>
             </div> -->
           <div class="form-group">
