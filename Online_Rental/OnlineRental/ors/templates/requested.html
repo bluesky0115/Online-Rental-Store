@@ -110,6 +110,7 @@
 
 {% if products %}
   {% for product in products %}
+  {% if product.quantity > 0 %}
   <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
     <div class="card-header" style="background-color:#e0e0e0">
       <div class="row" style="width: 100%">
@@ -159,7 +160,7 @@
       <div class="col-lg-6 col-xs-12" style="height: 300px; overflow-y:auto;">
         {% if requests %}
         {% for request in requests %}
-          {% if request.product.id == product.id and request.product.quantity > 0 %}
+          {% if request.product.id == product.id %}
 
         <div class="row">
           <div class="col-2">
@@ -201,7 +202,9 @@
     </div>
     </div>
   </div>
+   {% endif %}
    {% endfor %}
+
 
    {% else %}
        <div class="emptyList">
