@@ -113,7 +113,7 @@
         <div class="row">
           <div class="col-12">
             <a href="{% url 'ors:productPage' product.id %}" style="text-decoration:none; padding: auto;">
-              <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px"></center>
+              <center><img src="{{ product.image.url }}" style="height:100%; max-height: 245px; max-width: 100%;"></center>
             </a>
           </div>
           <div class="col-12" style="height: 255px;">
@@ -133,7 +133,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-xs-12" style="height: 500px; overflow-y:auto;">
+      <div class="col-lg-6 col-xs-12" style="height: 300px; overflow-y:auto;">
         {% if requests %}
         {% for request in requests %}
           {% if request.product.id == product.id and request.product.quantity > 0 %}
