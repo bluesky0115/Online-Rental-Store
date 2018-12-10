@@ -675,7 +675,7 @@ def requests(request):
 		u = User.objects.get(id=request.user.id)
 		print(u)
 		user = UserProfile.objects.get(user=u)		
-		detail = RequestSeller.objects.filter(seller=user).order_by('-timestamp')
+		detail = RequestSeller.objects.filter(seller=user, status='requested').order_by('-timestamp')
 		print(detail)
 		product = distinctProducts(detail)
 		products=[]

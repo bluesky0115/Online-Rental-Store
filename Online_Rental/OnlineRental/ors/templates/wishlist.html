@@ -182,9 +182,9 @@
       {% endif %}
       {% for i in feed.paginator.page_range %}
         {% if feed.number == i %}
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          <li class="active"><span>&nbsp;{{ i }}&nbsp; <span class="sr-only">(current)</span></span></li>
         {% else %}
-          <li><a href="?page={{ i }}">{{ i }}</a></li>
+          <li><a href="?page={{ i }}">{{ i }}&nbsp;</a></li>
         {% endif %}
       {% endfor %}
       {% if feed.has_next %}

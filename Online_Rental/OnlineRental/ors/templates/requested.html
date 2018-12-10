@@ -158,7 +158,8 @@
       <div class="col-lg-6 col-xs-12" style="height: 300px; overflow-y:auto;">
         {% if requests %}
         {% for request in requests %}
-          {% if request.product.id == product.id %}
+          {% if request.product.id == product.id and request.product.quantity > 0 %}
+
         <div class="row">
           <div class="col-2">
             <a href = "{% url 'ors:sellerProfile' request.buyer.id %}"><img src="{{ request.buyer.dp.url }}" style="width: 100%">
