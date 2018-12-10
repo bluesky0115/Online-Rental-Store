@@ -76,7 +76,7 @@
             {% if notifications %}
             {% for notification in notifications %}
               {% if notification.viewed is False %}
-                <a class="dropdown-item" style="background-color:#7C4DFF; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+                <a class="dropdown-item" style="background-color:#BDBDBD; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
               {% else %}
                 <a class="dropdown-item" style="margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
               {% endif %}

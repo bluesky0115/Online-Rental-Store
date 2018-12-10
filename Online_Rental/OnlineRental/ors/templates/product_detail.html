@@ -149,7 +149,7 @@
             {% if notifications %}
             {% for notification in notifications %}
               {% if notification.viewed is False %}
-                <a class="dropdown-item" style="background-color:#7C4DFF; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
+                <a class="dropdown-item" style="background-color:#BDBDBD; margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
               {% else %}
                 <a class="dropdown-item" style="margin-bottom:1px;" href="{% url 'ors:notificationShow' notification.id %}">{{ notification.message }} | {{ notification.viewed }}</a>
               {% endif %}
@@ -327,7 +327,7 @@
       </div>
     </div>
     <hr>
-    <div class="row" style="max-height: 300px; height: 200px; width: 100%; overflow-y: auto; margin-top: 20px;">
+    <div class="row" style="height: 150px; width: 100%; overflow-y: auto; margin-top: 20px;">
       <div class="col-12" style="width: 100%;">
         <center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#RateModal">RATE PRODUCT</button></center><br>
         {% if ratings %}
@@ -335,7 +335,7 @@
         {% endif %}
       </div>
 <!-- -------------------------------------------------------------------------------------------------- -->
-      <div class="col-12" style="width: 100%;">
+      <!-- <div class="col-12" style="width: 100%;">
         {%if feed%}
         {% for review in feed %}
         <a href = "{% url 'ors:sellerProfile' product.owner.id %}">{{review.buyer}}<br></a>
@@ -344,7 +344,7 @@
         {{review.timestamp}}
         {% endfor %}
         {%endif%}
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -414,7 +414,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
     <!-- Modal body -->
-      <div class="modal-body">
+      <div class="modal-body" style="max-height: 350px; overflow-y: auto;">
         {% if ratings %}
         <table >
           {% for rating in ratings %}
