@@ -124,6 +124,9 @@ def dashboard(request):
 		print(request.user.email)
 		user = UserProfile.objects.get(email=request.user.email)
 		feed = Product.objects.all().exclude(owner=user).order_by('-postdate')
+		with connection.cursor() as cursor:
+				cursor.callproc('async')
+				cursor.callproc('sync')
 		print(type(feed))
 		context=dict()
 		
@@ -496,7 +499,7 @@ def editPost(request, product_id):
 			image = request.FILES.get('image')
 			price = request.POST.get('price')
 			category = request.POST.get('category')
-			duration = request.POST.get('duration')
+			period = request.POST.get('period')
 			description = request.POST.get('desc') 
 			#print(dp,"1     ",name,"2...   ",bio)
 			if name is not '':
@@ -509,8 +512,8 @@ def editPost(request, product_id):
 				product.price = price
 			if category is not product.category:
 				product.category = category
-			if duration is not '':
-				product.duration = duration
+			if period is not '':
+				product.period = period
 			if description is not '':
 				product.description = description
 			if image is not None:
@@ -518,6 +521,9 @@ def editPost(request, product_id):
 			product.modified_by = request.user.email
 			product.modified_at = datetime.datetime.now()
 			product.save()
+			with connection.cursor() as cursor:
+				cursor.callproc('async')
+				cursor.callproc('sync')
 			return HttpResponseRedirect(reverse('ors:myPosts'))
 	else:
 		return HttpResponseRedirect(reverse('ors:login'))
@@ -528,12 +534,15 @@ def deletePost(request, product_id):
 		u = User.objects.get(id=request.user.id)
 		user = UserProfile.objects.get(email=u.email)
 		product = Product.objects.get(owner=user, id=product_id)
-		product.quantity = 0
-		if product.quantity == 0:
-			product.status = "OutofStock"
-		else:
-			product.status = "InStock"
-		product.save()
+		with connection.cursor() as cursor:
+			cursor.callproc('deleteProduct', [product_id])
+			cursor.callproc('sync')
+		# product.quantity = 0
+		# if product.quantity == 0:
+		# 	product.status = "OutofStock"
+		# else:
+		# 	product.status = "InStock"
+		# product.save()
 		# feed = Product.objects.filter(owner=user).order_by('-postdate')
 		# context = dict()
 		# context['feed'] = feed
