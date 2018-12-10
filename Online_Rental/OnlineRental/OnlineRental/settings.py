@@ -80,9 +80,13 @@ WSGI_APPLICATION = 'OnlineRental.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     'default' : {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME' : 'ors',
+#         'USER' : 'root',
+#         'PASSWORD' : 'root',
+#         #'HOST' : 'ors.cpjlun4ym4rm.us-east-1.rds.amazonaws.com',
+#         #'PORT' : 3308,
 #     }
 # }
 

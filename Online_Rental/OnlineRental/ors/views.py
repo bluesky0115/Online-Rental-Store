@@ -711,11 +711,17 @@ def approveRequest(request, req_id):
 			dateStart = request.POST.get('dateStart')
 			dateEnd = request.POST.get('dateEnd')
 			status = request.POST['status']
+			history.quantity = quantity
+
 			if status == 'approve':
+				history.price = product.price * int(quantity)
 				product.quantity = product.quantity - int(quantity)
+
+
 				if product.quantity <= 0:
 					product.quantity = 0
 					product.status = "OutofStock"
+				history.save()
 				product.save()
 				message = 'Your request for '+req.product.name+' has been ACCEPTED by Seller! Grab it now!'
 				notify = Notification(user=req.buyer, message=message, product=product, typ='product approve')
