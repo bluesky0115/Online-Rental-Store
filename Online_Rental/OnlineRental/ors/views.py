@@ -275,7 +275,7 @@ def productPage(request, product_id):
 	if request.user.is_authenticated:
 		user = UserProfile.objects.get(email=request.user.email)
 		product = Product.objects.get(id=product_id)
-		rating = ProductRating.objects.filter(product=product)
+		rating = ProductRating.objects.filter(product=product).order_by('-timestamp')
 		images = ProductImage.objects.filter(product=product_id)
 		length = []
 		for i in range(len(images)):
