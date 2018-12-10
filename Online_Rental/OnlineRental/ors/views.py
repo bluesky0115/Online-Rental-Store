@@ -704,18 +704,22 @@ def approveRequest(request, req_id):
 		# print(OrderHistory.objects.get(seller=user, product=req.product))
 		hist = OrderHistory.objects.filter(customer=req.buyer, seller=user, product=req.product).exclude(status='confirmed' or 'rejected')
 		history = hist[0]
-		print("----------------------------",hist, history)
+		
 
 		if request.method == 'POST':
 			quantity = request.POST['quantity']
-			dateStart = request.POST.get('dateStart')
-			dateEnd = request.POST.get('dateEnd')
 			status = request.POST['status']
+			history.quantity = int(quantity)
+			print("quantity ***** ", history.quantity, " == ", quantity)
 			if status == 'approve':
+				history.price = product.price * int(quantity)
 				product.quantity = product.quantity - int(quantity)
+
+
 				if product.quantity <= 0:
 					product.quantity = 0
 					product.status = "OutofStock"
+				history.save()
 				product.save()
 				message = 'Your request for '+req.product.name+' has been ACCEPTED by Seller! Grab it now!'
 				notify = Notification(user=req.buyer, message=message, product=product, typ='product approve')
