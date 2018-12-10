@@ -127,9 +127,9 @@
       </div>
   {% endfor %}
   <div class="collapse" id="sortBy">
-    <a href="{% url 'ors:searchTag' 'newest' %}"> <button type="button" class="btn btn-outline-light" >Newest First</button></a>
-    <a href="{% url 'ors:searchTag' 'pricelow2high' %}"><button type="button" class="btn btn-outline-light">Price - Low to High</button></a>
-    <a href="{% url 'ors:searchTag' 'pricehigh2low' %}"><button type="button" class="btn btn-outline-light">Price - High to Low</button></a>
+    <button type="button" class="btn btn-outline-light" onclick="NF()">Newest First</button>
+    <button type="button" class="btn btn-outline-light" onclick="LtoH()">Price - Low to High</button>
+    <button type="button" class="btn btn-outline-light" onclick="HtoL()">Price - High to Low</button>
   </div>
   <div class="collapse" id="filter">
     <button class="btn btn-outline-warning btn-sm" disabled>FILTER</button>
@@ -146,10 +146,10 @@
 
 
 <div style="margin-top: 168px ; padding: 2%; z-index:-1" >
-
+<div id="mainDiv">
 {% if feed %}
   {% for product in feed %}
-  <div class="card bg-light mb-3" id="Product" style="border: hidden;" >
+  <div class="card bg-light mb-3" id="Product{{product.id}}" style="border: hidden;" data-price="{{product.price}}" >
     <div class="card-header" style="background-color:#e0e0e0">
       <div class="row" style="width: 100%">
         <div class="col-10">
@@ -225,7 +225,7 @@
     </div>
   </div>
   {% endfor %}
-
+</div>
   <div class="row" style="width: 100%; justify-content:center; font-size: 30px;">
       {% if feed.has_other_pages %}
         <ul class="pagination">
@@ -279,6 +279,47 @@
           $("#message").fadeIn();
           $("#message").fadeOut(6000);
       });
+</script>
+
+<script >
+  
+
+  function sortUsingLowToHigh(parent, childSelector) {
+    var items = parent.children(childSelector).sort(function(a, b) {
+       
+        var vA = $(a).attr("data-price");
+        var vB = $(b).attr("data-price");
+        
+       
+        if(vA == 'None') vA = 0;
+        if(vB == 'None') vB = 0;
+        vA = parseFloat(vA);
+        vB = parseFloat(vB);
+        return (vA < vB) ? -1 : (vA > vB) ? 1 : 0;
+    });
+    parent.append(items);
+}
+  function LtoH(){
+    
+    sortUsingLowToHigh($('#mainDiv'), "div");
+  }
+
+  function sortUsingHighToLow(parent, childSelector) {
+    var items = parent.children(childSelector).sort(function(a, b) {
+        var vA = $(a).attr("data-price");
+        var vB = $(b).attr("data-price");  
+        if(vA == 'None') vA = 0;
+        if(vB == 'None') vB = 0;
+        vA = parseFloat(vA);
+        vB = parseFloat(vB);
+        return (vA < vB) ? 1 : (vA > vB) ? -1 : 0;
+    });
+    parent.append(items);
+  }
+
+  function HtoL(){
+    sortUsingHighToLow($('#mainDiv'), "div")
+  }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
