@@ -155,7 +155,7 @@
 <div id="mainDiv">
 {% if feed %}
   {% for product in feed %}
-  <div class="card bg-light mb-3" id="Product{{product.id}}" style="border: hidden;" data-price="{{product.price}}" >
+  <div class="card bg-light mb-3" id="Product{{product.id}}" style="border: hidden;" data-date="{{product.postdate}}" data-price="{{product.price}}" >
     <div class="card-header" style="background-color:#e0e0e0">
       <div class="row" style="width: 100%">
         <div class="col-10">
@@ -324,7 +324,23 @@
   }
 
   function HtoL(){
-    sortUsingHighToLow($('#mainDiv'), "div")
+    sortUsingHighToLow($('#mainDiv'), "div");
+  }
+
+
+  function sortUsingNewestFirst(parent, childSelector) {
+    var items = parent.children(childSelector).sort(function(a, b) {
+        var vA = $(a).attr("data-date");
+        var vB = $(b).attr("data-date");  
+        
+        return (vA < vB) ? 1 : (vA > vB) ? -1 : 0;
+    });
+    parent.append(items);
+  }
+
+
+  function NF(){
+    sortUsingNewestFirst($('#mainDiv'), "div");
   }
 </script>
 
