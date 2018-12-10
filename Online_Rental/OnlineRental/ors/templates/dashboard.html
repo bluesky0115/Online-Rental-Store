@@ -49,20 +49,26 @@
           <form class="form-inline"  method="POST" action="{% url 'ors:search' %}" enctype="multipart/form-data">
             {% csrf_token %}
              <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search" required>
-                <div class="dropdown show" style="margin-right: 6px;">
-                  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
-                  Category
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Electronics</a>
-                    <a class="dropdown-item" href="#">Lifestyle</a>
-                  </div>
-                </div>
                 <center>
                 <button is="sr" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </center>
           </form>
   		</li>
+      <li>
+        <div class="dropdown show" style="margin-left: 6px;">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+          Category
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">Electronics</a>
+            <a class="dropdown-item" href="#">stationary</a>
+            <a class="dropdown-item" href="#">Fashion</a>
+            <a class="dropdown-item" href="#">Sports</a>
+            <a class="dropdown-item" href="#">Lifestyle</a>
+            <a class="dropdown-item" href="#">Others</a>
+          </div>
+        </div>
+      </li>
   	</ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">

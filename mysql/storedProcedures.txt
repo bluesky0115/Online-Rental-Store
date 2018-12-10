@@ -4,3 +4,23 @@ BEGIN
 SELECT * FROM ors_product
 WHERE name LIKE query;
 END //
+
+CREATE PROCEDURE deleteProduct( IN pid INT(20))
+BEGIN
+UPDATE ors_product
+SET quantity = 0
+WHERE id = pid;
+END //
+
+
+CREATE PROCEDURE sync()
+UPDATE ors_product
+SET status = 'OutofStock'
+WHERE quantity = 0;
+END //
+
+CREATE PROCEDURE async()
+UPDATE ors_product
+SET status = 'InStock'
+WHERE quantity > 0;
+END //
