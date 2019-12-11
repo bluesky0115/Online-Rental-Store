@@ -33,7 +33,6 @@ def signup(request):
 			if User.objects.get(email=email):
 				context = dict()
 				context['error_message'] = 'Email already registered!!!'
-				print('firse')
 				return render(request, 'signup.html', context)
 		except User.DoesNotExist:
 			user = User.objects.create_user(username=username, email=email, password=password)
@@ -41,9 +40,7 @@ def signup(request):
 			userp = UserProfile(user=user, name=fullname, email=email, roll_no=roll_no, mobileNumber=phone_number,
 								 dp=dp, year=batchYear, gender=gender, created_by=user.email, created_at=datetime.datetime.now())
 			userp.save()
-			print('hogya!')
 			return HttpResponseRedirect(reverse('ors:login'))
-		print('kuchna')
 	return render(request, 'signup.html')
 
 
@@ -59,14 +56,12 @@ def signin(request):
 			
 		try:
 			u = User.objects.get(email=email)
-			print(u.password)
 		except User.DoesNotExist:
 			u = None
 
 		if u is not None:
 			username = u.username
 			user = authenticate(request, username=username, password=password)
-			print(username)
 
 			if user is None:
 				messages.error(request, 'Invalid Credentials')
