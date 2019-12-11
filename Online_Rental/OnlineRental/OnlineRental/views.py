@@ -53,25 +53,23 @@ def addNewUser(data):
 		userp.save()
 			
 def login_api(request,token_id):
-	print(token_id)
+	
 	pay = {'token':token_id,
 		'secret':"2d1c5eda8a6f6674b3973f76d94861e1637baafd5d840192f547c708f2fee2d6a4e32cdc0eb5353aaea8d7e7def12489134e32be8b8507a18d5b64c20d0267de"
 	}
 	url = " https://serene-wildwood-35121.herokuapp.com/oauth/getDetails"
 	reponse = requests.post(url,data=pay)
 	data = reponse.json()
-	print(data)
 	email = data['student'][0]['Student_Email']
 	try:
 			u = User.objects.get(email=email)
-			print(u.password)
+			
 	except User.DoesNotExist:
 			u = None
 	if u is not None:
 			username = u.username
 			password = "iamstudent"
 			user = authenticate(request, username=username, password=password)
-			print(username,user)
 
 			if user is None:
 				messages.error(request, 'Invalid Credentials')
@@ -87,7 +85,6 @@ def login_api(request,token_id):
 			addNewUser(data)
 			try:
 				u = User.objects.get(email=email)
-				print(u.password)
 			except User.DoesNotExist:
 				u = None
 			username = u.username
